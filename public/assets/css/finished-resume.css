@@ -1,0 +1,157 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+.msk-body{
+    width: 100%;
+    height:100%;
+    position:fixed;
+    overflow-y: auto;
+    background-color: transparent;
+}
+.cover-color{
+    width: 100%;
+    height:100%;
+    top:0;
+    left:0;
+    position: fixed;
+    overflow-y: auto;
+}
+body{
+    width: 100%;
+    height:100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.layer-app{
+    width: 100%;
+    height: 70px;
+    padding: 8px;
+}
+.logo{
+    width:auto;
+    height: auto;
+    transform: scale(0.7);
+    margin-left: -120px;
+}
+.layer-box{
+    width: 90%;
+    height: auto;
+    display:inline-flex;
+    margin-right: 30px;
+    margin-left: 100px;
+    gap:20px; 
+}
+.layer-mask{
+    width:850px;
+    height: 700px;
+    background-color: white;
+    overflow-y: auto;
+    font-family: 'Times New Roman', Times, serif;
+}
+.layer-sidebar{
+    height:20%;
+    height: auto;
+    background-color: transparent;
+    user-select: none;
+}
+.float-layer{
+    width: 100%;
+    height:60px;
+    position: fixed;
+    display: block;
+    padding:20px;
+    padding-bottom:70px;
+    bottom: 0;
+    background-color: white;
+    border-top: 2px solid #ddd;
+}
+.fks-layer{
+    width:100%;
+    height: auto;
+    display: inline-flex;
+    gap:30px;
+}
+.fks-mask{
+    width:100%;
+    height:50px;
+    border-radius: 8px;
+    font-size: 16px;
+    display: inline-flex;
+    gap: 8px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    color: black;
+    padding:6px;
+    user-select: none;
+    cursor: pointer;
+}
+.fks-mask:hover{
+    border-color:  #0095FF; 
+}
+.fks-mask span{
+    margin-top: 6px;
+}
+input:focus {
+    outline-color:  transparent; 
+    color: initial;
+}
+.color-picker{
+    height:37px;
+    width:40px;
+    border-style:none;
+    user-select: none;
+    cursor: pointer;
+}
+h5 a{
+    text-decoration: none;
+    color: white;
+}
+.fks-input{
+    width:100%;
+    height:35px;
+    padding: 10px;
+    border-style: none;
+    font-size: 16px;
+    user-select: none;
+    cursor: pointer;
+}
+.fsk-btn{
+    height: 50px;
+    width: auto;
+    padding: 10px;
+    background-color: #0095FF;
+    color: white;
+    border-radius: 30px;
+    border-style: none;
+    font-size: 18px;
+    user-select: none;
+    cursor: pointer;
+}
+.lks-btn{
+    width:auto;
+    height:40px;
+    background-color: transparent;
+    border-style: none;
+    padding:10px;
+    color:white;
+    font-size: 16px;
+    user-select: none;
+    cursor: pointer;
+    display:inline-flex;
+    gap:6px;
+}
+.lks-btn img{
+    width: 30px;
+    height:30px;
+    margin-top:-4px;
+    background-color: white;
+    padding:4px;
+    border-radius: 50%;
+}
+.layer-sidebar a{
+    text-decoration: none;
+}
+select{
+    outline-style: none;
+}

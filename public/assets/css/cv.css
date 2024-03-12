@@ -1,0 +1,338 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: whitesmoke;
+    display: inline-flex;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.sidebar-color{
+    width:22%;
+    height: 100%;
+    top:0;
+    left:0;
+    position: fixed;
+    padding: 20px;
+    background:linear-gradient(to bottom, #0FFF, #0095FF);
+}
+.sidebar-content{
+    width:78%;
+    height:100%;
+    top:0;
+    right:0;
+    position: fixed;
+    padding: 20px;
+    background-color: white;
+    overflow-y: auto;
+}
+.sidebar-content2{
+    width:78%;
+    height:100%;
+    top:0;
+    right:0;
+    position: fixed;
+    padding: 20px;
+    background-color: whitesmoke;
+    background-color: white;
+    overflow-y: auto;
+}
+.side-menu{
+    height: auto;
+    width: auto;
+    padding-left: 26px;
+    display:block;
+    user-select:none;
+}
+.side-menu a{
+    width: auto;
+    height: auto;
+    text-decoration: none;
+    user-select:none;
+}
+.logo{
+    user-select: none;
+    cursor: pointer;
+    transform: scale(0.5);
+    height: 100px;
+    margin-left: -28px;
+}
+.side-footer{
+    padding: 10px;
+    color: white;
+    bottom:0;
+    position: fixed;
+    margin-bottom: 30px;
+    user-select: none;
+    cursor: pointer;
+}
+.side-footer h5 a{
+    color:white;
+    text-decoration: none;
+}
+.side-footer span{
+    font-size: 12px;
+}
+input:focus {
+    outline-color:  #0095FF; 
+    color: initial;
+}
+select:focus {
+    outline-color:  #0095FF; 
+    color: initial;
+}
+select{
+    width:100%;
+    height:50px;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    color: #ddd;
+}
+.menu-btn{
+    width: auto;
+    height: auto;
+    gap:6px;
+    user-select:none;
+   display:inline-flex;
+}
+.side-menu a .menu-btn{
+    user-select: none;
+    cursor: pointer;
+    margin-bottom:34px;
+    list-style-type: none;
+    font-size: 21px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.rbs-content{
+    width:100%;
+    height:auto;
+    display: inline-flex;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+.rbs-layer-box{
+    width: 100%;
+    display: inline-flex;
+    gap:30px;
+}
+.cv-content{
+    width:100%;
+    height:auto;
+    display: inline-flex;
+    gap: 10px;
+    margin-bottom: 50px;
+    overflow-y: auto;
+    z-index: 1;
+}
+.rbs-card{
+    width:100%;
+    height:auto;
+    display: inline-flex;
+    padding: 20px;    
+    gap: 20px;
+    border: 2px solid #0095FF;
+    border-radius: 6px;
+}
+.rbs-radio{
+    width:30px;
+    height: 30px;
+    visibility: hidden;
+}
+.rbs-content a{
+    text-decoration: none;
+    user-select: none;
+}
+.active{
+    background-color: rgba(0, 255, 255, 0.185);
+}
+a:hover{
+    opacity: 0.8;
+}
+a:hover .rbs-radio{
+    visibility: visible;
+}
+.active .rbs-radio{
+    visibility: visible;
+}
+.rbs-content a{
+    list-style-type: none;
+    color: black;
+    border-radius: 6px;
+}
+.control-btn a{
+    list-style-type: none;
+    text-align: center;
+}
+.control-btn{
+    width:80%;
+    height: auto;
+    user-select: none;
+    cursor: pointer;
+}
+
+.cbs-btn1{
+    width:100px;
+    padding:20px;
+    background-color: #0FFF;
+    border-style: none;
+    border-radius: 50px;
+    color:white;
+    font-size: 13px;
+    float: right;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.cbs-btn{
+    width:100px;
+    padding:20px;
+    background-color: transparent;
+    border:2px solid #0095FF;
+    border-radius: 50px;
+    color:#0095FF;
+    font-size: 13px;
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.page-prompt{
+    margin-top: 80px;
+    width: 100%;
+    height:auto;
+    display:inline-flex;
+    gap:10px;
+}
+.page-prompt1{
+    width: 65%;
+    height:auto;
+}
+.page-prompt2{
+    margin-top: 8px;
+    width: 35%;
+    height:auto;
+    float:right;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.preview-cv {
+    width: 100%;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 3px #ddd;
+    margin-bottom: 20px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.preview-cv{
+    width: 93%;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow:0px 2px 3px #ddd;
+    margin-bottom: 20px;
+    overflow:hidden;
+    padding:0px;
+}
+.rbs-layer{
+    width:100%;
+    height: auto;
+    display: inline-block;
+    gap: 30px;
+    margin-bottom: 10px;
+}
+.rbs-input{
+    width:100%;
+    height:50px;
+    padding:20px;
+    margin-top:5px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    color: #ddd;
+}
+.rbs-content-layer{
+    width:65%;
+    height: auto;
+}
+.double-box{
+    width: 100%;
+    height:480px;
+    display:inline-flex;
+    gap:30px;
+    overflow-y: auto;
+}
+.double-layer{
+    height:540px;
+    width:100%;
+    padding:6px;
+    background-color: whitesmoke;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.double-input{
+    height:42px;
+    padding: 16px;
+    width: 100%;
+    border-style: none;
+    outline-color: #0095FF;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-size: 16px;
+    padding-right:35px;
+}
+.search-container {
+    position: relative;
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 40%;
+    right: 10px; /* Adjust the right position as needed */
+    transform: translateY(-50%);
+    font-size: 18px;
+    cursor: pointer;
+  }
+.double-cont{
+    height:450px;
+    padding: 6px;
+    margin-top: 6px;
+    width: 100%;
+    overflow-y: auto;
+    border-style: none;
+    border-radius: 4px;
+}
+.my-card{
+    height:auto;
+    padding: 16px;
+    margin-top: 6px;
+    width: 100%;
+    border-style: none;
+    border-color: #ddd;
+    background-color: white;
+    user-select: none;
+    border-radius: 4px;
+    display:inline-flex;
+    gap: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.add-content{
+    height: auto;
+    width: auto;
+    font-size: 30px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}

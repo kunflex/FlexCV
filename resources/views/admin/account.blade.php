@@ -1,0 +1,377 @@
+@extends('admin-layout')
+
+@section('title', 'Admindashboard | Account Details')
+
+@section('styles')
+<style>
+.header{
+    user-select:none;
+}
+.header a{
+    text-decoration:none;
+    color:black;
+}
+h3{
+    text-align:center;
+}
+
+table{
+    width:100%;
+    height:auto;
+    border: 1px solid #ddd;
+}
+tr th,td{
+    height:50px;
+    width:auto;
+    text-align: center;
+}
+tr:nth-child(odd) {
+    background-color:#ffffff; /* Color for odd-numbered rows */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;  /* Color for even-numbered rows */
+}
+</style>
+@endsection
+
+@section('content')
+<div>
+    <div class="header">
+        <a href="admin">
+            {{ __('AdminDashboard') }}
+        </a>/Account 
+    </div><br>
+
+    <h3>Account Details</h3><br>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone </th>
+                    <th>Profile</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Vincent</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Victor</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Valencia</td>
+                    <td>example@gmail.com</td>
+                    <td>059326548</td>
+                    <td></td>
+                    <td>Accra</td>
+                    <td></td>
+                </tr>
+            </table>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+
+</script>
+@endsection
