@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
@@ -94,3 +95,7 @@ To set up your PATH environment variable by auto detecting your php installed di
 ##                                           --- THANK YOU ---
 =======
 # FlexCV
+=======
+# FlexCV
+CV Builder
+>>>>>>> bc518c726c849522c2a99524382939153a617bbe
