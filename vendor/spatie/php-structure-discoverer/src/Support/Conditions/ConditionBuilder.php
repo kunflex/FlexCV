@@ -13,6 +13,11 @@ class ConditionBuilder implements HasConditions
     ) {
     }
 
+    public static function create(): self
+    {
+        return new self();
+    }
+
     public function conditionsStore(): ExactDiscoverCondition
     {
         return $this->conditions;

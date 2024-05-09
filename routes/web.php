@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TemplatesController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\PDF_TO_TEXTController;
+use Illuminate\Support\Facades\Log;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,7 +65,6 @@ Route::post('education-info', [CV_Controller::class, 'education_info'])->name('e
 Route::post('reference-info', [CV_Controller::class, 'reference_info'])->name('reference-info');
 Route::post('additional-info', [CV_Controller::class, 'addtional_info'])->name('additional-info');
 
-
 // <================= Update CV Controller=====================>
 Route::put('/update-skills', [CV_Controller::class, 'updateSkills'])->name('update-skills');
 Route::put('/update-summary', [CV_Controller::class, 'updateSummary'])->name('update-summary');
@@ -101,6 +102,9 @@ Route::get('jobs', [AdminController::class, 'Jobs']);
 
 // <================= Employer Controller=====================>
 Route::get('employer', [EmployerController::class, 'ControlPanel']);
+Route::post('job-application', [EmployerController::class, 'JobApplication'])->name('job-application');
+Route::post('new-jobs', [EmployerController::class, 'JobPostings'])->name('job.post');
+
 // <================= End Employer Controller=====================>
 
 
@@ -112,6 +116,7 @@ Route::get('/upload-resume', [HomeController::class, 'showUploadResumeForm'])->n
 
 
 // <============Home Controller================>
+Route::get('filter', [HomeController::class, 'JobSearch'])->name('filter');
 Route::get('Index', [HomeController::class, 'LandingPage'])->name('landingpage');
 Route::get('/about', [HomeController::class, 'About']);
 Route::get('/contact', [HomeController::class, 'Contact']);

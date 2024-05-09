@@ -2,10 +2,12 @@
 
 namespace Amp\Parallel\Ipc;
 
+use Amp\Cache\LocalCache;
 use Amp\Cancellation;
 use Amp\DeferredFuture;
 use Amp\ForbidCloning;
 use Amp\ForbidSerialization;
+use Amp\NullCancellation;
 use Amp\Socket;
 use Amp\Socket\ResourceSocket;
 use Amp\Socket\SocketAddressType;
@@ -20,21 +22,19 @@ final class SocketIpcHub implements IpcHub
     public const DEFAULT_KEY_RECEIVE_TIMEOUT = 5;
     public const DEFAULT_KEY_LENGTH = 64;
 
-    private int $nextId = 0;
-
     /** @var non-empty-string */
     private readonly string $uri;
 
-    /** @var array<string, int> */
-    private array $keys = [];
-
-    /** @var array<int, DeferredFuture> */
-    private array $pending = [];
+    /** @var array<string, DeferredFuture> */
+    private array $waitingByKey = [];
 
     /** @var \Closure(): void */
     private readonly \Closure $accept;
 
     private bool $queued = false;
+
+    /** @var LocalCache<ResourceSocket> */
+    private LocalCache $clientsByKey;
 
     /**
      * @param float $keyReceiveTimeout Timeout to receive the key on accepted connections.
@@ -51,23 +51,25 @@ final class SocketIpcHub implements IpcHub
             SocketAddressType::Internet => 'tcp://' . $address->toString(),
         };
 
+        $this->clientsByKey = new LocalCache(1024, $keyReceiveTimeout);
+
         $queued = &$this->queued;
-        $keys = &$this->keys;
-        $pending = &$this->pending;
+        $waitingByKey = &$this->waitingByKey;
+        $clientsByKey = &$this->clientsByKey;
         $this->accept = static function () use (
             &$queued,
-            &$keys,
-            &$pending,
+            &$waitingByKey,
+            &$clientsByKey,
             $server,
             $keyReceiveTimeout,
             $keyLength,
         ): void {
-            while ($pending) {
+            while ($waitingByKey) {
                 $client = $server->accept();
                 if (!$client) {
                     $queued = false;
                     $exception = new Socket\SocketException('IPC socket closed before the client connected');
-                    foreach ($pending as $deferred) {
+                    foreach ($waitingByKey as $deferred) {
                         $deferred->error($exception);
                     }
                     return;
@@ -80,22 +82,12 @@ final class SocketIpcHub implements IpcHub
                     continue; // Ignore possible foreign connection attempt.
                 }
 
-                $id = $keys[$received] ?? null;
-
-                if ($id === null) {
-                    $client->close();
-                    continue; // Ignore possible foreign connection attempt.
+                if (isset($waitingByKey[$received])) {
+                    $waitingByKey[$received]->complete($client);
+                    unset($waitingByKey[$received]);
+                } else {
+                    $clientsByKey->set($received, $client);
                 }
-
-                $deferred = $pending[$id] ?? null;
-                unset($pending[$id], $keys[$received]);
-
-                if ($deferred === null) {
-                    $client->close();
-                    continue; // Client accept cancelled.
-                }
-
-                $deferred->complete($client);
             }
 
             $queued = false;
@@ -116,12 +108,12 @@ final class SocketIpcHub implements IpcHub
     {
         $this->server->close();
 
-        if (!$this->pending) {
+        if (!$this->waitingByKey) {
             return;
         }
 
         $exception = new Socket\SocketException('IPC socket closed before the client connected');
-        foreach ($this->pending as $deferred) {
+        foreach ($this->waitingByKey as $deferred) {
             $deferred->error($exception);
         }
     }
@@ -158,24 +150,35 @@ final class SocketIpcHub implements IpcHub
             ));
         }
 
-        if (isset($this->keys[$key])) {
+        if (isset($this->waitingByKey[$key])) {
             throw new \Error("An accept is already pending for the given key");
         }
 
-        $id = $this->nextId++;
+        $client = $this->clientsByKey->get($key);
+        if ($client !== null) {
+            $this->clientsByKey->delete($key);
+
+            return $client;
+        }
 
         if (!$this->queued) {
             EventLoop::queue($this->accept);
             $this->queued = true;
         }
 
-        $this->keys[$key] = $id;
-        $this->pending[$id] = $deferred = new DeferredFuture();
+        $cancellation ??= new NullCancellation();
+
+        $this->waitingByKey[$key] = $deferred = new DeferredFuture();
+
+        $waitingByKey = &$this->waitingByKey;
+        $cancellationId = $cancellation->subscribe(static function () use (&$waitingByKey, $key): void {
+            unset($waitingByKey[$key]);
+        });
 
         try {
             $client = $deferred->getFuture()->await($cancellation);
         } finally {
-            unset($this->pending[$id], $this->keys[$key]);
+            $cancellation->unsubscribe($cancellationId);
         }
 
         return $client;

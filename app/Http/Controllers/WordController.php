@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Shared\Html; // Add this use statement
+use PhpOffice\PhpWord\Shared\Html;
+use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
 {
@@ -18,7 +19,7 @@ class WordController extends Controller
         $renderedHtml = $view->render();
 
         // Log or output the HTML content for debugging
-        \Log::info($renderedHtml);
+        Log::info($renderedHtml);
 
         // Create a PhpWord object
         $phpWord = new PhpWord();
@@ -32,11 +33,11 @@ class WordController extends Controller
         if (Html::addHtml($section, $renderedHtml)) {
             // Log XML errors immediately after adding HTML
             $errors = libxml_get_errors();
-            \Log::info($errors);
+            Log::info($errors);
 
             libxml_clear_errors();
         } else {
-            \Log::error('Failed to add HTML content to PhpWord section.');
+            Log::error('Failed to add HTML content to PhpWord section.');
         }
 
         // Save the document

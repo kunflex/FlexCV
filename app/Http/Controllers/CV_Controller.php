@@ -6,7 +6,10 @@ use App\Models\CvAdditionalDetails;
 use App\Models\CvEducation;
 use App\Models\CvExperience;
 use App\Models\CvReference;
+use App\Models\JobApplication;
+use App\Models\JobDisplay;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 
@@ -639,4 +642,9 @@ class CV_Controller extends Controller
             return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred.']);
         }
     }
+
+
+
+
+
 }

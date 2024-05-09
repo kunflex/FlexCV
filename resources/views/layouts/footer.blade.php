@@ -112,6 +112,6 @@
                 @php
                     $currentYear = now()->format('Y');
                 @endphp
-        <div class="copyright">&copy; {{ $currentYear }} <b>FlexCV Limited</b>. All Copyright Reserved | Theme powered by <b>&#10084;</b> Kunflex <b>&trade;</b></div>
+        <div class="copyright">&copy; {{ $currentYear }} <b>FlexCV Limited</b>. All Copyright Reserved | Theme powered by <b style="color:red">&#10084;</b> Kunflex <b>&trade;</b></div>
     </div>
     <!-- ======End Footer======= -->

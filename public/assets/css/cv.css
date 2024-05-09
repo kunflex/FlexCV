@@ -33,7 +33,8 @@ body{
     height:100%;
     top:0;
     right:0;
-    position: fixed;
+    position: absolute;
+    z-index: 1000;
     padding: 20px;
     background-color: whitesmoke;
     background-color: white;

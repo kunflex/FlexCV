@@ -2,7 +2,9 @@
 
 namespace Amp\Sync;
 
+use SplObjectStorage;
 use function Amp\async;
+use function Amp\Future\awaitAll;
 
 /**
  * A handle on an acquired lock from a synchronization object.
@@ -12,6 +14,10 @@ use function Amp\async;
  */
 final class Lock
 {
+    private static ?\Fiber $testFiber = null;
+
+    private static ?\SplObjectStorage $pendingOperations = null;
+
     /** @var null|\Closure():void The function to be called on release or null if the lock has been released. */
     private ?\Closure $release;
 
@@ -23,6 +29,19 @@ final class Lock
     public function __construct(\Closure $release)
     {
         $this->release = $release;
+    }
+
+    private static function setupPendingOperations(): SplObjectStorage
+    {
+        $pending = new SplObjectStorage();
+
+        \register_shutdown_function(static function () use ($pending): void {
+            while ($pending->count() > 0) {
+                awaitAll($pending);
+            }
+        });
+
+        return $pending;
     }
 
     /**
@@ -48,7 +67,15 @@ final class Lock
         $release = $this->release;
         $this->release = null;
 
-        $release();
+        if ($this->isForceClosed()) {
+            $future = async($release);
+
+            $pending = self::$pendingOperations ??= self::setupPendingOperations();
+            $pending->attach($future);
+            $future->finally(fn () => $pending->detach($future));
+        } else {
+            $release();
+        }
     }
 
     /**
@@ -59,6 +86,27 @@ final class Lock
         if ($this->release) {
             async($this->release);
             $this->release = null;
+        }
+    }
+
+    private function isForceClosed(): bool
+    {
+        $fiber = self::$testFiber ??= new \Fiber(function () {
+            while (true) {
+                \Fiber::suspend();
+            }
+        });
+
+        try {
+            if ($fiber->isStarted()) {
+                $fiber->resume();
+            } else {
+                $fiber->start();
+            }
+
+            return false;
+        } catch (\FiberError) {
+            return true;
         }
     }
 }

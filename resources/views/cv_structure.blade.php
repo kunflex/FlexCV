@@ -147,7 +147,7 @@
             width: 490,
             toolbar: [
                 ['font', ['bold', 'underline', 'italic']],
-                ['para', ['ol','ul', 'paragraph']],
+                ['para', ['ol','ul']],
                 ['undo', ['undo']],
                 ['redo', ['redo']]
             ]

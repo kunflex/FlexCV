@@ -12,10 +12,10 @@ use Amp\Process\Process;
 use Amp\Process\ProcessException;
 
 /**
- * @template TResult
- * @template TReceive
+ * @template-covariant TResult
+ * @template-covariant TReceive
  * @template TSend
- * @template-extends AbstractContext<TResult, TReceive, TSend>
+ * @extends AbstractContext<TResult, TReceive, TSend>
  */
 final class ProcessContext extends AbstractContext
 {
@@ -35,10 +35,10 @@ final class ProcessContext extends AbstractContext
         "xdebug.client_host" => "localhost",
     ];
 
-    /** @var string|null External version of SCRIPT_PATH if inside a PHAR. */
+    /** @var non-empty-string|null External version of SCRIPT_PATH if inside a PHAR. */
     private static ?string $pharScriptPath = null;
 
-    /** @var string|null PHAR path with a '.phar' extension. */
+    /** @var non-empty-string|null PHAR path with a '.phar' extension. */
     private static ?string $pharCopy = null;
 
     /** @var non-empty-list<string>|null Cached path to located PHP binary. */
@@ -97,7 +97,7 @@ final class ProcessContext extends AbstractContext
         // Write process runner to external file if inside a PHAR,
         // because PHP can't open files inside a PHAR directly except for the stub.
         if (\str_starts_with(self::SCRIPT_PATH, "phar://")) {
-            if (self::$pharScriptPath) {
+            if (self::$pharScriptPath !== null) {
                 $scriptPath = self::$pharScriptPath;
             } else {
                 $path = \dirname(self::SCRIPT_PATH);
@@ -106,11 +106,7 @@ final class ProcessContext extends AbstractContext
                     self::$pharCopy = \sys_get_temp_dir() . "/phar-" . \bin2hex(\random_bytes(10)) . ".phar";
                     \copy(\Phar::running(false), self::$pharCopy);
 
-                    \register_shutdown_function(static function (): void {
-                        if (self::$pharCopy) {
-                            @\unlink(self::$pharCopy);
-                        }
-                    });
+                    \register_shutdown_function(static fn () => self::unlinkExternalCopy(self::$pharCopy));
 
                     $path = "phar://" . self::$pharCopy . "/" . \substr($path, \strlen(\Phar::running(true)));
                 }
@@ -121,11 +117,7 @@ final class ProcessContext extends AbstractContext
                 self::$pharScriptPath = $scriptPath = \sys_get_temp_dir() . "/amp-process-runner-" . $suffix . ".php";
                 \file_put_contents($scriptPath, $contents);
 
-                \register_shutdown_function(static function (): void {
-                    if (self::$pharScriptPath) {
-                        @\unlink(self::$pharScriptPath);
-                    }
-                });
+                \register_shutdown_function(static fn () => self::unlinkExternalCopy(self::$pharScriptPath));
             }
 
             // Monkey-patch the script path in the same way, only supported if the command is given as array.
@@ -176,6 +168,20 @@ final class ProcessContext extends AbstractContext
         return new self($process, $ipcChannel, $resultChannel);
     }
 
+    private static function unlinkExternalCopy(?string $filepath): void
+    {
+        if ($filepath === null) {
+            return;
+        }
+
+        \set_error_handler(static fn () => true);
+        try {
+            \unlink($filepath);
+        } finally {
+            \restore_error_handler();
+        }
+    }
+
     /**
      * @return non-empty-list<string>
      */
@@ -189,6 +195,7 @@ final class ProcessContext extends AbstractContext
 
         $executable = \PHP_OS_FAMILY === 'Windows' ? "php.exe" : "php";
 
+        /** @psalm-suppress RiskyTruthyFalsyComparison */
         $paths = \array_filter(\explode(
             \PATH_SEPARATOR,
             \getenv('PATH') ?: '/usr/bin' . \PATH_SEPARATOR . '/usr/local/bin',

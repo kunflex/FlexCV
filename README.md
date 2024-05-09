@@ -93,5 +93,4 @@ To set up your PATH environment variable by auto detecting your php installed di
 - [press and hold ctrl while you click on the URL link in the terminal to open the website in your default browser]
 
 ##                                           --- THANK YOU ---
-=======
-# FlexCV
+

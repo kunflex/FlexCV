@@ -54,7 +54,7 @@ class PDFObject
     public static $recursionStack = [];
 
     /**
-     * @var Document
+     * @var Document|null
      */
     protected $document;
 
@@ -69,7 +69,7 @@ class PDFObject
     protected $content;
 
     /**
-     * @var Config
+     * @var Config|null
      */
     protected $config;
 
@@ -80,9 +80,9 @@ class PDFObject
 
     public function __construct(
         Document $document,
-        Header $header = null,
-        string $content = null,
-        Config $config = null
+        ?Header $header = null,
+        ?string $content = null,
+        ?Config $config = null
     ) {
         $this->document = $document;
         $this->header = $header ?? new Header();
@@ -214,6 +214,34 @@ class PDFObject
             return '';
         }
 
+        // Outside of (String) and inline image content in PDF document
+        // streams, all text should conform to UTF-8. Test for binary
+        // content by deleting everything after the first open-
+        // parenthesis ( which indicates the beginning of a string, or
+        // the first ID command which indicates the beginning of binary
+        // inline image content. Then test what remains for valid
+        // UTF-8. If it's not UTF-8, return an empty string as this
+        // $content is most likely binary. Unfortunately, using
+        // mb_check_encoding(..., 'UTF-8') is not strict enough, so the
+        // following regexp, adapted from the W3, is used. See:
+        // https://www.w3.org/International/questions/qa-forms-utf-8.en
+        // We use preg_replace() instead of preg_match() to avoid "JIT
+        // stack limit exhausted" errors on larger files.
+        $utf8Filter = preg_replace('/(
+            [\x09\x0A\x0D\x20-\x7E] |            # ASCII
+            [\xC2-\xDF][\x80-\xBF] |             # non-overlong 2-byte
+            \xE0[\xA0-\xBF][\x80-\xBF] |         # excluding overlongs
+            [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} |  # straight 3-byte
+            \xED[\x80-\x9F][\x80-\xBF] |         # excluding surrogates
+            \xF0[\x90-\xBF][\x80-\xBF]{2} |      # planes 1-3
+            [\xF1-\xF3][\x80-\xBF]{3} |          # planes 4-15
+            \xF4[\x80-\x8F][\x80-\xBF]{2}        # plane 16
+        )/xs', '', preg_replace('/(\(|ID\s).*$/s', '', $content));
+
+        if ('' !== $utf8Filter) {
+            return '';
+        }
+
         // Find all strings () and replace them so they aren't affected
         // by the next steps
         $pdfstrings = [];
@@ -261,17 +289,6 @@ class PDFObject
             );
         }
 
-        // Now that all strings and dictionaries are hidden, the only
-        // PDF commands left should all be plain text.
-        // Detect text encoding of the current string to prevent reading
-        // content streams that are images, etc. This prevents PHP
-        // error messages when JPEG content is sent to this function
-        // by the sample file '12249.pdf' from:
-        // https://github.com/smalot/pdfparser/issues/458
-        if (false === mb_detect_encoding($content, null, true)) {
-            return '';
-        }
-
         // Normalize white-space in the document stream
         $content = preg_replace('/\s{2,}/', ' ', $content);
 
@@ -283,12 +300,12 @@ class PDFObject
         //       PDF 32000:2008 lists them as 'i' and 'ri' respectively. Both versions
         //       appear here in the list for completeness.
         $operators = [
-          'b*', 'b', 'BDC', 'BMC', 'B*', 'BI', 'BT', 'BX', 'B', 'cm', 'cs', 'c', 'CS',
-          'd0', 'd1', 'd', 'Do', 'DP', 'EMC', 'EI', 'ET', 'EX', 'f*', 'f', 'F', 'gs',
-          'g', 'G',  'h', 'i', 'ID', 'I', 'j', 'J', 'k', 'K', 'l', 'm', 'MP', 'M', 'n',
-          'q', 'Q', 're', 'rg', 'ri', 'rI', 'RG', 'scn', 'sc', 'sh', 's', 'SCN', 'SC',
-          'S', 'T*', 'Tc', 'Td', 'TD', 'Tf', 'TJ', 'Tj', 'TL', 'Tm', 'Tr', 'Ts', 'Tw',
-          'Tz', 'v', 'w', 'W*', 'W', 'y', '\'', '"',
+            'b*', 'b', 'BDC', 'BMC', 'B*', 'BI', 'BT', 'BX', 'B', 'cm', 'cs', 'c', 'CS',
+            'd0', 'd1', 'd', 'Do', 'DP', 'EMC', 'EI', 'ET', 'EX', 'f*', 'f', 'F', 'gs',
+            'g', 'G',  'h', 'i', 'ID', 'I', 'j', 'J', 'k', 'K', 'l', 'm', 'MP', 'M', 'n',
+            'q', 'Q', 're', 'rg', 'ri', 'rI', 'RG', 'scn', 'sc', 'sh', 's', 'SCN', 'SC',
+            'S', 'T*', 'Tc', 'Td', 'TD', 'Tf', 'TJ', 'Tj', 'TL', 'Tm', 'Tr', 'Ts', 'Tw',
+            'Tz', 'v', 'w', 'W*', 'W', 'y', '\'', '"',
         ];
         foreach ($operators as $operator) {
             $content = preg_replace(
@@ -361,7 +378,7 @@ class PDFObject
                 $inTextBlock = true;
                 $sections[] = $line;
 
-                // If an 'ET' is encountered, unset the $inTextBlock flag
+            // If an 'ET' is encountered, unset the $inTextBlock flag
             } elseif ('ET' == $line) {
                 $inTextBlock = false;
                 $sections[] = $line;
@@ -405,7 +422,7 @@ class PDFObject
         return $sections;
     }
 
-    private function getDefaultFont(Page $page = null): Font
+    private function getDefaultFont(?Page $page = null): Font
     {
         $fonts = [];
         if (null !== $page) {
@@ -433,7 +450,7 @@ class PDFObject
      *
      * @param array<int,array<string,string|bool>> $command
      */
-    private function getTJUsingFontFallback(Font $font, array $command, Page $page = null, float $fontFactor = 4): string
+    private function getTJUsingFontFallback(Font $font, array $command, ?Page $page = null, float $fontFactor = 4): string
     {
         $orig_text = $font->decodeText($command, $fontFactor);
         $text = $orig_text;
@@ -571,7 +588,7 @@ class PDFObject
      * so whitespace is inserted in a logical way for reading by
      * humans.
      */
-    public function getText(Page $page = null): string
+    public function getText(?Page $page = null): string
     {
         $this->addPositionWhitespace = true;
         $result = $this->getTextArray($page);
@@ -587,7 +604,7 @@ class PDFObject
      *
      * @throws \Exception
      */
-    public function getTextArray(Page $page = null): array
+    public function getTextArray(?Page $page = null): array
     {
         $result = [];
         $text = [];
@@ -690,7 +707,7 @@ class PDFObject
                             $xobject = $page->getXObject($id);
 
                             // @todo $xobject could be a ElementXRef object, which would then throw an error
-                            if (\is_object($xobject) && $xobject instanceof self && !\in_array($xobject->getUniqueId(), self::$recursionStack)) {
+                            if (\is_object($xobject) && $xobject instanceof self && !\in_array($xobject->getUniqueId(), self::$recursionStack, true)) {
                                 // Not a circular reference.
                                 $text[] = $xobject->getText($page);
                             }
@@ -1054,7 +1071,7 @@ class PDFObject
         Document $document,
         Header $header,
         ?string $content,
-        Config $config = null
+        ?Config $config = null
     ): self {
         switch ($header->get('Type')->getContent()) {
             case 'XObject':
