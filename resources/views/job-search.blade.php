@@ -249,7 +249,7 @@
                             <div class="dsc-details">{{ $Cat1['job']->contact }}</div>
                         </div>
                         <div class="display-contact" style="float:right;">
-                            <button class="btn-12" onclick="callfunction()">Read more</button>
+                            <a href="{{url('job-details/'.$Cat1['job']->id)}}"><button class="btn-12">Read more</button></a>
                         </div>
                     </div>
                     <!-- =======End Contact Info====== -->
@@ -269,11 +269,6 @@
 
 
 </x-app-layout>
-<script>
-    function callfunction() {
-        window.location.href = "{{ url('job-details') }}";
-    }
-</script>
 <style>
     .filter-input {
         padding: 6px;

@@ -89,15 +89,29 @@ class HomeController extends Controller
         return view('CV.upload');
     }
 
-    public function Job_details()
+    public function Job_details($id)
     {
-        return view('job-details');
+        try {
+            // Fetch job details based on the provided ID
+            $data = JobDisplay::where('id', $id)->first();
+            // Check if data is found
+            if($data) {
+                return view('job-details', compact('data'));
+            } else {
+                // If no data is found, return an error response
+                return response()->json(['error' => 'Job details not found for ID ' . $id], 404);
+            }
+        } catch (\Exception $e) {
+            // Handle any exceptions and return an error response
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+    
 
     public function JobSearch(Request $request)
     {
         // Default number of items per page
-        $perPage = $request->input('perPage',4); // Default to 4 if no input is provided
+        $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
 
         // Fetch paginated jobs in Information Technology category
         $IT = JobDisplay::where('category', 'Information Technology')->paginate($perPage);

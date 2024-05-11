@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TemplatesController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\PDF_TO_TEXTController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /*
@@ -24,8 +25,12 @@ use Illuminate\Support\Facades\Log;
 */
 
 
-Route::get('/', function(){
-    return view('splashscreen');
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('/Index');
+    } else {
+        return view('splashscreen');
+    }
 });
 
 // <================= Upload & Processing CV Controller=====================>
@@ -53,7 +58,7 @@ Route::get('experience', [CV_Controller::class, 'Experience']);
 Route::get('more-education', [CV_Controller::class, 'More_Education']);
 Route::get('review-education', [CV_Controller::class, 'Review_Education']);
 Route::get('education', [CV_Controller::class, 'Education']);
-Route::get('summary',[ CV_Controller::class, 'Summary']);
+Route::get('summary', [CV_Controller::class, 'Summary']);
 Route::get('finished-resume', [CV_Controller::class, 'Finished_Resume']);
 Route::get('preview-resume', [CV_Controller::class, 'Preview_Resume']);
 
@@ -80,11 +85,11 @@ Route::get('/template4', [TemplatesController::class, 'Template4'])->name('templ
 Route::get('/template3', [TemplatesController::class, 'Template3'])->name('template3');
 Route::get('/template2', [TemplatesController::class, 'Template2'])->name('template2');
 Route::get('/template1', [TemplatesController::class, 'Template1'])->name('template1');
-Route::get('/preview',[TemplatesController::class, 'TemplatePreview'])->name('preview');
+Route::get('/preview', [TemplatesController::class, 'TemplatePreview'])->name('preview');
 // <================ End Templates Controller=====================>
 
 // <================Templates Controller=====================>
-Route::get('modern1', function(){
+Route::get('modern1', function () {
     return view('ResumeTemplates.modern1');
 });
 Route::get('/template1', [TemplatesController::class, 'Template1']);
@@ -102,7 +107,7 @@ Route::get('jobs', [AdminController::class, 'Jobs']);
 
 // <================= Employer Controller=====================>
 Route::get('employer', [EmployerController::class, 'ControlPanel']);
-Route::post('job-application', [EmployerController::class, 'JobApplication'])->name('job-application');
+Route::post('job-application/{id}', [EmployerController::class, 'JobApplication'])->name('job-application');
 Route::post('new-jobs', [EmployerController::class, 'JobPostings'])->name('job.post');
 
 // <================= End Employer Controller=====================>
@@ -122,8 +127,8 @@ Route::get('/about', [HomeController::class, 'About']);
 Route::get('/contact', [HomeController::class, 'Contact']);
 Route::get('job-search', [HomeController::class, 'JobSearch']);
 Route::get('jobs-nearby', [HomeController::class, 'JobSearchNearby']);
-Route::get('job-details', [HomeController::class, 'Job_details']);
-Route::get('/dashboard',[HomeController::class, 'Index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('job-details/{id}', [HomeController::class, 'Job_details']);
+Route::get('/dashboard', [HomeController::class, 'Index'])->middleware(['auth', 'verified'])->name('dashboard');
 // <============Home Controller================>
 
 // <============Profile Controller================>
@@ -133,4 +138,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 // <============Profile Controller================>
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

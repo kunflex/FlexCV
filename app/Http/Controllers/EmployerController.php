@@ -62,7 +62,7 @@ class EmployerController extends Controller
     }
 
 
-    public function JobApplication(Request $request)
+    public function JobApplication(Request $request,$id)
     {
         $request->validate([
             'job_display_id' => 'nullable',
@@ -80,14 +80,12 @@ class EmployerController extends Controller
         $cvName = 'cv_' . time() . '.' . $cvFile->getClientOriginalExtension();
         $cvPath = $cvFile->storeAs('public/applicants/cv', $cvName);
     
-        // Retrieving the job_display_id from the session, defaulting to null if not found
-        $job_display_id = session('job_display_id', null);
     
         // Saving the application details
         $result_data = new JobApplication();
         $result_data->applicant_letter = $letterName;  // store filename only
         $result_data->applicant_cv = $cvName;          // store filename only
-        $result_data->job_display_id = $job_display_id;
+        $result_data->job_display_id = $id;
         
         $saveSuccess = $result_data->save();
     

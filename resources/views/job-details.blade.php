@@ -16,7 +16,7 @@
                         <div class="display-top">
                             <div class="icon-shape">M</div>
                             <div class="job-info">
-                                <b>Marketing Manager</b>
+                                <b>{{$data->job_title}}</b>
                                 <p>
                                     We're hiring a Marketing Manager at TechGen Innovations Inc.
                                     to drive marketing strategies and boost our brand. We need a
@@ -41,7 +41,7 @@
                                         <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
                                     </svg>
                                 </div>
-                                <div class="dsc-details">Full - Time</div>
+                                <div class="dsc-details">{{$data->job_type}}</div>
                             </div><br>
                             <div class="display-contact">
                                 <div class="icon-dsc">
@@ -51,7 +51,7 @@
                                             d="M8 2L8 6L4 6L4 48L15 48L15 39L19 39L19 48L30 48L30 6L26 6L26 2 Z M 10 10L12 10L12 12L10 12 Z M 14 10L16 10L16 12L14 12 Z M 18 10L20 10L20 12L18 12 Z M 22 10L24 10L24 12L22 12 Z M 32 14L32 18L34 18L34 20L32 20L32 22L34 22L34 24L32 24L32 26L34 26L34 28L32 28L32 30L34 30L34 32L32 32L32 34L34 34L34 36L32 36L32 38L34 38L34 40L32 40L32 42L34 42L34 44L32 44L32 48L46 48L46 14 Z M 10 15L12 15L12 19L10 19 Z M 14 15L16 15L16 19L14 19 Z M 18 15L20 15L20 19L18 19 Z M 22 15L24 15L24 19L22 19 Z M 36 18L38 18L38 20L36 20 Z M 40 18L42 18L42 20L40 20 Z M 10 21L12 21L12 25L10 25 Z M 14 21L16 21L16 25L14 25 Z M 18 21L20 21L20 25L18 25 Z M 22 21L24 21L24 25L22 25 Z M 36 22L38 22L38 24L36 24 Z M 40 22L42 22L42 24L40 24 Z M 36 26L38 26L38 28L36 28 Z M 40 26L42 26L42 28L40 28 Z M 10 27L12 27L12 31L10 31 Z M 14 27L16 27L16 31L14 31 Z M 18 27L20 27L20 31L18 31 Z M 22 27L24 27L24 31L22 31 Z M 36 30L38 30L38 32L36 32 Z M 40 30L42 30L42 32L40 32 Z M 10 33L12 33L12 37L10 37 Z M 14 33L16 33L16 37L14 37 Z M 18 33L20 33L20 37L18 37 Z M 22 33L24 33L24 37L22 37 Z M 36 34L38 34L38 36L36 36 Z M 40 34L42 34L42 36L40 36 Z M 36 38L38 38L38 40L36 40 Z M 40 38L42 38L42 40L40 40 Z M 10 39L12 39L12 44L10 44 Z M 22 39L24 39L24 44L22 44 Z M 36 42L38 42L38 44L36 44 Z M 40 42L42 42L42 44L40 44Z" />
                                     </svg>
                                 </div>
-                                <div class="dsc-details">TechGen Innovations Inc</div>
+                                <div class="dsc-details">{{$data->company}}</div>
                             </div><br>
                             <div class="display-contact">
                                 <div class="icon-dsc"><svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -60,7 +60,7 @@
                                         <path
                                             d="M256,32C167.78,32,96,100.65,96,185c0,40.17,18.31,93.59,54.42,158.78,29,52.34,62.55,99.67,80,123.22a31.75,31.75,0,0,0,51.22,0c17.42-23.55,51-70.88,80-123.22C397.69,278.61,416,225.19,416,185,416,100.65,344.22,32,256,32Zm0,224a64,64,0,1,1,64-64A64.07,64.07,0,0,1,256,256Z" />
                                     </svg></div>
-                                <div class="dsc-details">Silicon Valley, CA</div>
+                                <div class="dsc-details">{{$data->location}}</div>
                             </div><br>
                             <div class="display-contact">
                                 <div class="icon-dsc"><svg xmlns="http://www.w3.org/2000/svg" width="20"
@@ -68,7 +68,7 @@
                                         <path
                                             d="M424,80H88a56.06,56.06,0,0,0-56,56V376a56.06,56.06,0,0,0,56,56H424a56.06,56.06,0,0,0,56-56V136A56.06,56.06,0,0,0,424,80Zm-14.18,92.63-144,112a16,16,0,0,1-19.64,0l-144-112a16,16,0,1,1,19.64-25.26L256,251.73,390.18,147.37a16,16,0,0,1,19.64,25.26Z" />
                                     </svg></div>
-                                <div class="dsc-details">hr@techgeninnovations.com</div>
+                                <div class="dsc-details">{{$data->email}}</div>
                             </div><br>
                             <div class="display-contact">
                                 <div class="icon-dsc">
@@ -98,7 +98,7 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <div class="dsc-details">0593958236</div>
+                                <div class="dsc-details">{{$data->contact}}</div>
                             </div><br>
                             <div class="display-contact">
                                 <div class="icon-dsc">
@@ -129,7 +129,7 @@
                                         </g>
                                     </svg>
                                 </div>
-                                <div class="dsc-details">GHS2000 - GHS3000 monthly</div>
+                                <div class="dsc-details">{{$data->salary_range}}</div>
                             </div><br>
                         </div>
                         <!-- =======End Contact Info====== -->
@@ -138,88 +138,28 @@
             </div>
 
             <div class="content-bx">
-                <div><b>Key Responsibilities:</b></div>
-                <ul>
-                    <li class="bullets-bx">
-                        <b>Strategic Planning:</b>
-                        Develop and implement strategic marketing plans to achieve company
-                        objectives, collaborating closely with cross-functional teams.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Campaign Management:</b>
-                        Oversee end-to-end execution of marketing campaigns, including content
-                        creation, design, and distribution across various channels.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Brand Development:</b>
-                        Work to enhance and maintain the TechGen brand, ensuring consistency in
-                        messaging and visual identity across all platforms.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Market Research:</b>
-                        Conduct market research to identify trends, competitor activities, and
-                        opportunities for innovation. Use insights to inform marketing strategies.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Digital Marketing:</b>
-                        Lead digital marketing initiatives, including SEO, SEM, email marketing, and
-                        social media campaigns. Monitor and analyze performance metrics.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Event Coordination:</b>
-                        Plan and execute corporate events, trade shows, and conferences to enhance brand
-                        visibility and generate leads.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Collaboration:</b>
-                        Work closely with the sales team to align marketing efforts with sales goals and
-                        provide support through targeted campaigns.
-                    </li>
-                    <li class="bullets-bx">
-                        <b>Budget Management:</b>
-                        Responsible for the marketing budget, ensuring efficient allocation of resources
-                        and achieving maximum ROI.
-                    </li>
-                </ul>
-            </div><br>
-
-            <div class="content-bx">
-                <div><b>Qualifications:</b></div>
-                <ul>
-                    <li class="bullets">Bachelor's degree in Marketing, Business, or related field. Master's degree is a
-                        plus.</li>
-                    <li class="bullets">Minimum of 5 years of experience in B2B technology marketing, with a focus on
-                        campaign management and digital marketing.</li>
-                    <li class="bullets">Proven success in developing and implementing strategic marketing plans that
-                        contributed to business growth.</li>
-                    <li class="bullets">Strong analytical skills with the ability to interpret data and make data-driven
-                        decisions.</li>
-                    <li class="bullets">Excellent written and verbal communication skills.</li>
-                </ul>
+                {{$data->job_description}}
             </div><br>
 
             <div class="content-bx">
                 <div><b>How to Apply:</b></div>
                 <p>
-                    Interested candidates should submit their resume, cover letter,
-                    and a portfolio showcasing successful marketing campaigns to
-                    hr@techgeninnovations.com. Please include "Marketing Manager
-                    Application - [Your Name]" in the subject line.
+                    {{$data->application_instructions}}
                 </p>
             </div><br>
 
             <div class="content-bx">
                 <div><b>Application Deadline:</b></div>
                 <p>
-                    All applications must be received by [Insert Deadline].
+                    All applications must be received by <b>{{$data->deadline}}</b>.
                     Only shortlisted candidates will be contacted for interviews.
-                    TechGen Innovations Inc. is an equal opportunity employer.
+                    <b>{{$data->company}}</b> is an equal opportunity employer.
                     We encourage candidates from diverse backgrounds to apply.
                 </p>
             </div><br><br>
 
             <div class="form-bx">
-                <form action="{{ route('job-application') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url('job-application/'.$data->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="input-box">
                         <label for=""><b>
