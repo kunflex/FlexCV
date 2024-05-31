@@ -43,8 +43,8 @@ class EmployerController extends Controller
             $result_data->location = $request->input('location');
             $result_data->salary_range = $request->input('salary_range');
             $result_data->category = $request->input('category');
-            $result_data->application_instructions = $request->input('application_instructions');
-            $result_data->job_description = $request->input('job_description');
+            $result_data->application_instructions = htmlspecialchars($request->input('application_instructions'), ENT_QUOTES, 'UTF-8');
+            $result_data->job_description = htmlspecialchars($request->input('job_description'), ENT_QUOTES, 'UTF-8');
             $result_data->deadline = $request->input('deadline');
             $saveSuccess = $result_data->save();
 

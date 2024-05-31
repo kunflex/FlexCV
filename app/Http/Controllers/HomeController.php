@@ -6,16 +6,20 @@ use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use Spatie\Permission\Traits\HasRoles;
 use App\Models\CvPersonalDetails;
 use App\Models\CvAdditionalDetails;
 use App\Models\CvEducation;
 use App\Models\CvExperience;
 use App\Models\CvReference;
 use App\Models\JobDisplay;
+use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+
+    use HasRoles;
     public function LandingPage()
     {
         return view('welcome');
@@ -27,8 +31,10 @@ class HomeController extends Controller
         if (Auth::check()) {
             // Check if the user has the 'admin' role
             if (Auth::user()->hasRole('admin')) {
-                // Admin route logic
-                return view('admin.dashboard');
+
+                $countUsers = ModelsUser::all()->count();
+                $countJobs = JobDisplay::all()->count();
+                return view('admin.dashboard', compact('countUsers', 'countJobs'));
             }
 
             // Check if the user has the 'user' role
@@ -95,7 +101,11 @@ class HomeController extends Controller
             // Fetch job details based on the provided ID
             $data = JobDisplay::where('id', $id)->first();
             // Check if data is found
-            if($data) {
+            if ($data) {
+                // Decode HTML entities for fields that contain HTML content
+                $data->job_description = htmlspecialchars_decode($data->job_description, ENT_QUOTES);
+                $data->application_instructions = htmlspecialchars_decode($data->application_instructions, ENT_QUOTES);
+
                 return view('job-details', compact('data'));
             } else {
                 // If no data is found, return an error response
@@ -106,7 +116,7 @@ class HomeController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
 
     public function JobSearch(Request $request)
     {
@@ -138,8 +148,32 @@ class HomeController extends Controller
     }
 
 
-    public function JobSearchNearby()
+    public function JobSearchNearby(Request $request)
     {
-        return view('jobs-nearby');
+        // Default number of items per page
+        $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
+
+        // Fetch paginated jobs in Information Technology category
+        $IT = JobDisplay::where('category', 'Information Technology')->paginate($perPage);
+
+        // Get total number of jobs
+        $ITCount = $IT->total();
+
+        // Transform the items to include the first letter of each job
+        $transformed = $IT->getCollection()->map(function ($job) {
+            $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
+            // Include a debug log for each job processed
+            Log::debug('Job Title: ' . $job->job_title . ' - First Letter: ' . $firstLetter);
+            return [
+                'job' => $job,
+                'first_letter' => $firstLetter
+            ];
+        });
+
+        // Replace the original collection in the paginator
+        $IT->setCollection($transformed);
+
+        // Send data to the view
+        return view('jobs-nearby', compact('IT', 'ITCount', 'perPage'));
     }
 }

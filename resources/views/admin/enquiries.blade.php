@@ -1,6 +1,6 @@
 @extends('admin-layout')
 
-@section('title', 'Admindashboard | Account Details')
+@section('title', 'Admindashboard | Enquiries')
 
 @section('styles')
     <style>
@@ -56,18 +56,27 @@
             padding: 6px;
             border-radius: 6px;
         }
-        .search-bar{
-            margin:10px;
-            float: inline-end;
-            border-bottom: 2px solid #0095ff;
-            transition: 2ms ease;
+
+        .search-bar {
+            width: auto;
+            height: auto;
         }
-        .search-bar input{
+
+        .search-bar input {
             width: 200px;
-            height:40px;
-            padding:10px;
+            height: 40px;
+            padding: 10px;
+            float: inline-end;
             border-style: none;
             outline-style: none;
+            border-bottom: 2px solid #0095FF;
+        }
+
+        .search-bar .ols-blue {
+            float: inline-start;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
         }
     </style>
 @endsection
@@ -77,44 +86,46 @@
         <div class="header">
             <a href="admin">
                 {{ __('AdminDashboard') }}
-            </a>/Account
+            </a>/Enquiries
         </div><br>
 
-        <h3>Account Details</h3><br>
+        <h3>Enquiries Details</h3><br>
         <div style="background-color: #fff;border-radius:8px;padding:20px;">
             <div class="search-bar">
                 <form action="" method="GET">
                     <input type="text" placeholder="Search..." name="search-box">
                     <button hidden>Search</button>
                 </form>
-            </div>
+            </div><br><br>
+            <br>
             <table>
                 <tr>
-                    <th>Name</th>
+                    <th>Fullname</th>
                     <th>Email</th>
-                    <th>Phone </th>
-                    <th>Profile</th>
-                    <th>Location</th>
+                    <th>Advertisement</th>
+                    <th>Description</th>
                     <th>Action</th>
                 </tr>
 
-                @forelse ($dataUsers as $dataUsers)
+                @forelse ($enquiries as $enquiries)
                     <tr>
-                        <td>{{ $dataUsers->name }}</td>
-                        <td>{{ $dataUsers->email }}</td>
-                        <td>059326548</td>
-                        <td></td>
-                        <td>Accra</td>
+                        <td>{{ $enquiries->fullname }}</td>
+                        <td>{{ $enquiries->email }}</td>
+                        <td>{{ $enquiries->advertisement }}</td>
+                        <td>{{ $enquiries->description }}</td>
                         <td>
                             <div>
-                                <a href="{{ url('account/update/' . $dataUsers->id) }}"><button
+                                <a href="{{ url('enquiries/update/' . $enquiries->id) }}"><button
                                         class="ols-blue">update</button></a>
-                                <a href="{{ url('account/delete/' . $dataUsers->id) }}"><button
+                                <a href="{{ url('enquiries/delete/' . $enquiries->id) }}"><button
                                         class="ols-red">delete</button></a>
                             </div>
                         </td>
                     </tr>
                 @empty
+                    <tr>
+                        <td colspan="5">No queries found!</td>
+                    </tr>
                 @endforelse
             </table>
         </div>

@@ -99,7 +99,13 @@ Route::get('/custom-templates', [TemplatesController::class, 'TemplatePage'])->n
 // <================= admin Controller=====================>
 Route::get('admin', [AdminController::class, 'ControlPanel']);
 Route::get('suggestions', [AdminController::class, 'Suggestions']);
-Route::get('pages', [AdminController::class, 'Pages']);
+Route::get('track-jobs', [AdminController::class, 'Pages']);
+Route::get('track-applicants/{id}', [AdminController::class, 'Applicants']);
+Route::get('new-testimonials', [AdminController::class, 'UploadTestimonials']);
+Route::get('testimonials', [AdminController::class, 'Testimonials']);
+Route::get('enquiries', [AdminController::class, 'Enquiries']);
+Route::get('applicants/preview/{id}', [AdminController::class, 'PdfPreview'])->name('applicants.pdf');
+Route::get('/chat-us', [AdminController::class, 'ChatUs']);
 Route::get('account', [AdminController::class, 'Account']);
 Route::get('jobs', [AdminController::class, 'Jobs']);
 // <================= End admin Controller=====================>
@@ -121,6 +127,7 @@ Route::get('/upload-resume', [HomeController::class, 'showUploadResumeForm'])->n
 
 
 // <============Home Controller================>
+Route::get('filter1', [HomeController::class, 'JobSearchNearby'])->name('filter1');
 Route::get('filter', [HomeController::class, 'JobSearch'])->name('filter');
 Route::get('Index', [HomeController::class, 'LandingPage'])->name('landingpage');
 Route::get('/about', [HomeController::class, 'About']);

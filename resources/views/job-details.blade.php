@@ -138,13 +138,13 @@
             </div>
 
             <div class="content-bx">
-                {{$data->job_description}}
+                {!!$data->job_description!!}
             </div><br>
 
             <div class="content-bx">
                 <div><b>How to Apply:</b></div>
                 <p>
-                    {{$data->application_instructions}}
+                    {!!$data->application_instructions!!}
                 </p>
             </div><br>
 

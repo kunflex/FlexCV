@@ -79,7 +79,7 @@ h3{
 
                 <div>
                     <label for="Job Description">Job Description:</label>
-                    <textarea id="summernote" name="editordata"></textarea>
+                    <textarea id="editor1" name="editordata"></textarea>
                 </div>
         </div>
     </div>

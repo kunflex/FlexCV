@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <nav>
+    <nav class="nav">
         <ul class="pagination">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
@@ -46,7 +46,7 @@
 @endif
 <style>
     /* Container for pagination */
-nav {
+.nav {
     text-align: center; /* Centers the pagination bar */
 }
 

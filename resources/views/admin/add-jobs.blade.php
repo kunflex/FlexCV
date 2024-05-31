@@ -1,10 +1,10 @@
 @extends('admin-layout')
 
-    @if (auth()->user()->hasRole('admin'))
-        @section('title', 'Admin Dashboard | Jobs')
-    @elseif(auth()->user()->hasRole('employer'))
-        @section('title', 'Employer Dashboard | Jobs')
-    @endif
+@if (auth()->user()->hasRole('admin'))
+    @section('title', 'Admin Dashboard | Jobs')
+@elseif(auth()->user()->hasRole('employer'))
+    @section('title', 'Employer Dashboard | Jobs')
+@endif
 
 @section('styles')
     <style>
@@ -135,14 +135,14 @@
 
                 <div class="cbs">
                     <label for="Application Instructions">Application Instructions:</label>
-                    <textarea id="summernote2" name="application_instructions" style="height: 100px;outline-color:#0095ff"
+                    <textarea id="editor1" name="application_instructions" style="height: 100px;outline-color:#0095ff"
                         placeholder="Interested candidates should submit their resume"></textarea>
                 </div>
                 <br>
 
                 <div>
                     <label for="Job Description">Job Description:</label>
-                    <textarea id="summernote" name="job_description"></textarea>
+                    <textarea id="editor2" name="job_description" placeholder="Include Job Reposnsibilities & Requirements/Qualification"></textarea>
                 </div>
 
             </form>

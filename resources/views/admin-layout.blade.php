@@ -9,12 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
- <!-- include libraries(jQuery, bootstrap) -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 </head>
 @yield('styles')
 
@@ -51,17 +46,17 @@
                                         </li>
                                     </a><br>
 
-                                    <a href="{{ url('pages') }}">
+                                    <a href="{{ url('track-jobs') }}">
                                         <li class="menu-btn">
                                             <span class="progress-count"></span>
-                                            <span class="progress-label">Pages</span>
+                                            <span class="progress-label">Track Jobs</span>
                                         </li>
                                     </a><br>
 
-                                    <a href="">
+                                    <a href="{{url('testimonials')}}">
                                         <li class="menu-btn">
                                             <span class="progress-count"></span>
-                                            <span class="progress-label">Messages</span>
+                                            <span class="progress-label">Testimonials</span>
                                         </li>
                                     </a><br>
 
@@ -72,10 +67,10 @@
                                         </li>
                                     </a><br>
 
-                                    <a href="">
+                                    <a href="{{url('enquiries')}}">
                                         <li class="menu-btn">
                                             <span class="progress-count"></span>
-                                            <span class="progress-label">Settings</span>
+                                            <span class="progress-label">Enquiries</span>
                                         </li>
                                     </a><br>
 
@@ -109,10 +104,10 @@
                                                     </li>
                                                 </a><br>
 
-                                                <a href="">
+                                                <a href="{{ url('track-jobs') }}">
                                                     <li class="menu-btn">
                                                         <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
+                                                        <span class="progress-label">Track Jobs</span>
                                                     </li>
                                                 </a><br>
 
@@ -204,17 +199,25 @@
                 @if (Route::has('login'))
                     @auth
                         <div class="dropdown">
-                            <img src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
+                            <img class="dropdown-img" src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
                             <div class="dropdown-content" style="width:190px; margin-left: -130px;">
-                                <a style="user-select:none;">
-                                    <li><b>{{ Auth::user()->name }}</b> <br>
-                                        <span style="font-size:12px;color:gray;margin-right:10px;">
-                                            {{ Auth::user()->email }}
-                                        </span>
-                                    </li>
+                                <div class="bg-color"></div>
+                                <div class="div-pro">
+                                    @if (!empty(Auth::user()->profile))
+                                        <img src="{{ Auth::user()->profile }}" alt="avarta">
+                                    @else
+                                        <img src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
+                                    @endif
+                                    <b>{{ Auth::user()->name }}</b> <br>
+                                    <span style="font-size:12px;color:gray;margin-right:10px;">
+                                        {{ Auth::user()->email }}
+                                    </span>
+                                </div>
+                                <a style="user-select:none"href="{{ route('dashboard') }}">
+                                    <li>Dashboard</li>
                                 </a>
                                 <a style="user-select:none"href="{{ route('profile.edit') }}">
-                                    <li>profile</li>
+                                    <li>Profile</li>
                                 </a>
 
                                 <!-- Authentication -->
@@ -223,8 +226,8 @@
                                     <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                         this.closest('form').submit();"
-                                        style="user-select:none">
-                                        <li>logout</li>
+                                        style="user-select:none;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;">
+                                        <li>Logout</li>
                                     </a>
                                 </form>
                             </div>
@@ -246,6 +249,39 @@
 
 </html>
 <style>
+    .bg-color{
+        background-color:#0091FF;
+        height:80px;
+        width:auto;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    .div-pro {
+        width: auto;
+        height: auto;
+        margin:0px 20px 0px 20px;
+        user-select: none;
+        cursor: pointer;
+        text-align: center;
+        background-color: transparent;
+        border-bottom:1px solid #ddd;
+        padding: 8px;
+        margin-top:-60px;
+    }
+
+    .div-pro img {
+        height: 70px;
+        width: 70px;
+        margin: 0 auto;
+        border-radius: 50%;
+        display: flex;
+        background: whitesmoke;
+        border: 3px solid #fff;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        -webkit-user-drag: none;
+    }
+
     .sidebar-content2 {
         background-color: whitesmoke;
     }
@@ -254,16 +290,18 @@
         background-color: whitesmoke;
     }
 
-    .dropdown img {
+    .dropdown-img {
         margin-top: 8px;
         width: 36px;
         height: 36px;
         border-radius: 50%;
         display: flex;
+        border: 2px solid #0FFF;
         align-items: center;
         justify-content: :center;
-        background: linear-gradient(to left, #0FFF, #0095FF);
+        background: whitesmoke;
         padding: 4px;
+        -webkit-user-drag: none;
     }
 
     .dropdown {
@@ -284,6 +322,7 @@
         box-shadow: 0px 2px 3px #ddd;
         z-index: 1;
         margin-left: -28px;
+        border-radius: 8px;
     }
 
     .dropdown-content a {
@@ -358,39 +397,24 @@
         background-color: #0091FF;
         border: 2px solid #ffff;
     }
-
-    .ck-editor__editable {
-        min-height: 100px;
-    }
 </style>
 
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            placeholder: 'Description here!',
-            tabsize: 2,
-            height: 450,
-            toolbar: [
-                ['font', ['bold', 'underline', 'italic']],
-                ['para', ['ol','ul']],
-                ['undo', ['undo']],
-                ['redo', ['redo']]
-            ]
+    ClassicEditor
+        .create(document.querySelector('#editor1'))
+        .then(editor => {
+            editor.ui.view.editable.element.style.height = '200px';
+        })
+        .catch(error => {
+            console.error(error);
         });
-    });
-    $(document).ready(function() {
-        $('#summernote2').summernote({
-            placeholder: 'Description here!',
-            tabsize: 2,
-            height: 150,
-            toolbar: [
-                ['font', ['bold', 'underline', 'italic']],
-                ['para', ['ol','ul']],
-                ['undo', ['undo']],
-                ['redo', ['redo']]
-            ]
+    ClassicEditor
+        .create(document.querySelector('#editor2'))
+        .then(editor => {
+            editor.ui.view.editable.element.style.height = '200px';
+        })
+        .catch(error => {
+            console.error(error);
         });
-    });
 </script>
-
 @yield('scripts')

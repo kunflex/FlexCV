@@ -86,21 +86,21 @@
     <div>
         <div class="data-content">
             <div class="cards-data"><br>
-                <div class="bs">Jobs (0)</div><br><br><br>
+                <div class="bs">Jobs ({{$countJobs}})</div><br><br><br>
                 <div class="bs0">
                     <div class="bs1">Available (0)</div>
                     <div class="bs2" style="color:darkred;">Occupied (0)</div>
                 </div>
             </div>
             <div class="cards-data"><br>
-                <div class="bs">Messages (0)</div><br><br><br>
+                <div class="bs">Testimonials (0)</div><br><br><br>
                 <div class="bs0">
                     <div class="bs1"></div>
                     <div class="bs2"></div>
                 </div>
             </div>
             <div class="cards-data"><br>
-                <div class="bs">Users (0)</div><br><br><br>
+                <div class="bs">Users ({{$countUsers}})</div><br><br><br>
                 <div class="bs0">
                     <div class="bs1">Employers (0)</div>
                     <div class="bs2">Jobseekers (0)</div>
