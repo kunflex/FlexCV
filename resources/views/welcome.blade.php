@@ -706,11 +706,10 @@
 
     .team-div {
         padding: 20px;
-        display: grid;
+        display: flex;
         gap: 20px;
         margin-bottom: 20px;
-        z-index: -1;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        justify-content: center;
     }
 
 
@@ -932,6 +931,7 @@
         .main-layer {
             grid-template-columns: 1fr;
         }.team-div {
+            display:inline-block;
             gap: 15px;
             padding: 15px;
         }
@@ -985,8 +985,9 @@
         }
 
         .team-div {
-            gap: 10px;
-            padding: 10px;
+            display:inline-block;
+            gap: 20px;
+            padding: 20px;
         }
     }
 </style>

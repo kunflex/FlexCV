@@ -3,109 +3,270 @@
 @section('title', 'AdminDashboard')
 
 @section('styles')
-<style>
-    .data-content{
-        width: auto;
-        height:auto;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 30px;
-    }
-    .cards-data{
-        width:100%;
-        height: 150px;
-        background-color: white;
-        box-shadow:2px 3px 8px #ddd;
-        border-radius: 8px;
-        padding:20px;
-        text-align:center;
-        user-select:none;
-        cursor:pointer;
-    }
-    .bs{
-        float:left;
-        font-size:40px;
-        color:blue;
-        text-align:center;
-    }
-    .bs0{
-        display:inline-flex;
-        gap:40px;
-        font-size:16px;
-    }
-    .bs1{
-        float:left;
-        color:darkgreen;
-    }
-    .bs2{
-        float:right;
-        color:darkblue;
-    }
-    .header{
-    user-select:none;
-    cursor:pointer;
-    }
-    .header a{
-        text-decoration:none;
-        color:black;
-    }
-    
-    /* ===========Responsive Design=========== */
-    @media (480px < width <=1080px) {
-        .data-content{
-        width: auto;
-        height:auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 30px;
-    }
-    }
+    <style>
+        .data-content {
+            width: auto;
+            height: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 30px;
+        }
+
+        .chart-box {
+            width: auto;
+            height: auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 30px;
+        }
+
+        .chart-display {
+            width: auto;
+            height: auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .cards-data {
+            width: 100%;
+            height: 150px;
+            background-color: white;
+            box-shadow: 2px 3px 8px #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .bs {
+            float: left;
+            font-size: 40px;
+            color: blue;
+            text-align: center;
+        }
+
+        .bs0 {
+            display: inline-flex;
+            gap: 40px;
+            font-size: 16px;
+        }
+
+        .bs1 {
+            float: left;
+            color: darkgreen;
+        }
+
+        .bs2 {
+            float: right;
+            color: darkblue;
+        }
+
+        .header {
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: black;
+        }
+
+        /* ===========Responsive Design=========== */
+        @media (480px < width <=1080px) {
+            .data-content {
+                width: auto;
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 30px;
+            }
+        }
 
 
-    @media (780px > width >= 430px) {
-        .data-content{
-        width: auto;
-        height:auto;
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 30px;
-    }
-    }
-</style>
+        @media (780px > width >=430px) {
+            .data-content {
+                width: auto;
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                grid-gap: 30px;
+            }
+
+            .chart-box {
+                width: auto;
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                grid-gap: 30px;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
-<div>
-
-    <div class="header">
-        <a>
-            {{ __('AdminDashboard') }}
-        </a>
-    </div><br>
-
     <div>
-        <div class="data-content">
-            <div class="cards-data"><br>
-                <div class="bs">Jobs ({{$countJobs}})</div><br><br><br>
-                <div class="bs0">
-                    <div class="bs1">Available (0)</div>
-                    <div class="bs2" style="color:darkred;">Occupied (0)</div>
+
+        <div class="header">
+            <a>
+                {{ __('AdminDashboard') }}
+            </a>
+        </div><br>
+
+        <div>
+            <div class="data-content">
+                <div class="cards-data"><br>
+                    <div class="bs">Jobs ({{ $countJobs }})</div><br><br><br>
+                    <div class="bs0">
+                        <div class="bs1">Available (0)</div>
+                        <div class="bs2" style="color:darkred;">Occupied (0)</div>
+                    </div>
+                </div>
+                <div class="cards-data"><br>
+                    <div class="bs">Testimonials ({{$countTestimonials }})</div><br><br><br>
+                    <div class="bs0">
+                        <div class="bs1"></div>
+                        <div class="bs2"></div>
+                    </div>
+                </div>
+                <div class="cards-data"><br>
+                    <div class="bs">Users ({{ $countUsers }})</div><br><br><br>
+                    <div class="bs0">
+                        <div class="bs1">Employers (0)</div>
+                        <div class="bs2">Jobseekers (0)</div>
+                    </div>
                 </div>
             </div>
-            <div class="cards-data"><br>
-                <div class="bs">Testimonials (0)</div><br><br><br>
-                <div class="bs0">
-                    <div class="bs1"></div>
-                    <div class="bs2"></div>
-                </div>
+        </div><br>
+
+        <div class="chart-box">
+            <div class="chart-display">
+                <canvas id="myChart"></canvas>
             </div>
-            <div class="cards-data"><br>
-                <div class="bs">Users ({{$countUsers}})</div><br><br><br>
-                <div class="bs0">
-                    <div class="bs1">Employers (0)</div>
-                    <div class="bs2">Jobseekers (0)</div>
-                </div>
+
+            <div class="chart-display">
+                <canvas id="myChart1"></canvas>
             </div>
+        </div><br>
+
+        <div class="chart-display">
+            <canvas id="myChart2"></canvas>
         </div>
-    </div>
-@endsection
+    @endsection
+
+
+    @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            async function fetchPieData() {
+                const response = await fetch('Doughnut');
+                const result = await response.json();
+                return result;
+            }
+
+            async function createPieChart() {
+                const ctx1 = document.getElementById('myChart');
+                const data = await fetchPieData();
+
+                new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: '# of Job Postings',
+                            data: data.data,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            createPieChart();
+        </script>
+
+
+        <script>
+            async function fetchPieData() {
+                const response = await fetch('PieChart');
+                const result = await response.json();
+                return result;
+            }
+
+            async function createPieChart() {
+                const ctx1 = document.getElementById('myChart1');
+                const data = await fetchPieData();
+
+                new Chart(ctx1, {
+                    type: 'pie',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: '# of Job Postings',
+                            data: data.data,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            createPieChart();
+        </script>
+
+        <script>
+            async function fetchData() {
+                const response = await fetch('BarChart');
+                const result = await response.json();
+                return result;
+            }
+
+            async function createChart() {
+                const ctx2 = document.getElementById('myChart2');
+                const data = await fetchData();
+
+                new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'No. of Job Postings',
+                            data: data.data,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        indexAxis: 'x', // Horizontal bar chart
+                        categoryPercentage: 0.6 // Adjust the percentage here (e.g., 0.6 for 60% width)
+                    }
+                });
+            }
+
+            createChart();
+        </script>
+
+    @endsection

@@ -131,6 +131,9 @@
             margin: 0 auto;
             -webkit-user-drag: none;
         }
+        textarea{
+            font-size: 16px;
+        }
     </style>
 
     <div>
@@ -146,7 +149,8 @@
             <div class="cvs-2">
                 <h2>Contact us through email</h2>
                 <br>
-                <form action="" method="post">
+                <form action="{{url('send/enquiries')}}" method="post">
+                    @csrf
                     <div>
                         <label for="">Fullname</label>
                         <input type="text" name="fullname" placeholder="Vincent Tetteh">
@@ -159,7 +163,7 @@
 
                     <div>
                         <label for="">How did you hear about us</label>
-                        <select name="advertisement" id="">
+                        <select name="advertisement" id="advertisement">
                             <option value="">Choose from the options</option>
                             <option value="Through recommendation">Through recommendation</option>
                             <option value="Through online adds display">Through online adds display</option>
@@ -170,7 +174,7 @@
 
                     <div>
                         <label for="">Description</label>
-                        <textarea name="description" id="" cols="30" rows="10"></textarea>
+                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
                     </div>
 
                     <button type="submit">Submit</button>

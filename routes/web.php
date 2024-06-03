@@ -107,7 +107,14 @@ Route::get('enquiries', [AdminController::class, 'Enquiries']);
 Route::get('applicants/preview/{id}', [AdminController::class, 'PdfPreview'])->name('applicants.pdf');
 Route::get('/chat-us', [AdminController::class, 'ChatUs']);
 Route::get('account', [AdminController::class, 'Account']);
+Route::post('/send/enquiries', [AdminController::class, 'SendEnquiries']);
+Route::post('/send/testimonials', [AdminController::class, 'SendTestimonials']);
 Route::get('jobs', [AdminController::class, 'Jobs']);
+
+// <==========Chart Display===========>
+Route::get('BarChart', [AdminController::class, 'BarChart']);
+Route::get('PieChart', [AdminController::class, 'PieChart']);
+Route::get('Doughnut', [AdminController::class, 'Doughnut']);
 // <================= End admin Controller=====================>
 
 

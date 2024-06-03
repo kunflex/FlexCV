@@ -3,9 +3,11 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 .hidden {
     display: none;
 }
+
 .AI-powered {
     width: 100%;
     height: 35px;
@@ -17,6 +19,7 @@
     color: #fff;
     transition: top 0.3s;
 }
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
@@ -32,18 +35,22 @@ body {
     z-index: 1000;
     border-bottom: 1px solid #ddd;
 }
+
 header {
     transition: top 0.3s;
 }
+
 header nav ul {
     width: 100%;
     height: fit-content;
     display: inline-flex;
 }
+
 .nav-menu-container {
     width: 100%;
     height: fit-content;
 }
+
 .nav-menu {
     height: fit-content;
     display: inline-flex;
@@ -52,23 +59,28 @@ header nav ul {
     float: right;
     margin-right: 30px;
 }
+
 .nav-menu a {
     text-decoration: none;
 }
+
 .nav-menu a li {
     list-style-type: none;
     font-size: 18px;
 }
+
 .logo-design {
     height: fit-content;
     width: fit-content;
     padding-left: 20px;
 }
+
 .logo-design img {
     width: 130px;
     height: 50px;
     padding: 8px;
 }
+
 .authenticate-layer {
     height: fit-content;
     width: 300px;
@@ -76,13 +88,16 @@ header nav ul {
     display: inline-flex;
     gap: 20px;
 }
+
 .authenticate-layer a {
     text-decoration: none;
 }
+
 .authenticate-layer a li {
     list-style-type: none;
     font-size: 18px;
 }
+
 .authenticate {
     padding: 6px;
     background: linear-gradient(to left, transparent 0%, transparent 50%, #0FFF 50%, #0FFF 100%);
@@ -90,6 +105,7 @@ header nav ul {
     transition: background-position 1s ease;
     border-radius: 6px;
 }
+
 .authenticate-layer a img {
     margin-top: -6px;
     width: 36px;
@@ -98,10 +114,12 @@ header nav ul {
     background: linear-gradient(to left, #0FFF, #0095FF);
     padding: 4px;
 }
+
 .authenticate:hover {
     background-position: 100% 0%;
     border: 2px solid #0FFF;
 }
+
 .authenticate2 {
     padding: 6px;
     background: linear-gradient(to right, transparent 0%, transparent 50%, #0FFF 50%, #0FFF 100%);
@@ -109,14 +127,17 @@ header nav ul {
     transition: background-position 1s ease;
     border-radius: 6px;
 }
+
 .authenticate2:hover {
     background-position: 100% 0%;
 }
+
 .copyright {
     text-align: center;
     padding: 8px;
     font-size: 16px;
 }
+
 .footer-container {
     width: 100%;
     height: auto;
@@ -129,6 +150,7 @@ header nav ul {
     font-size: 16px;
     background-color: white;
 }
+
 .footer-layer {
     width: auto;
     height: 250px;
@@ -141,11 +163,13 @@ header nav ul {
     color: #fff;
     background-color: #0095FF;
 }
+
 .footer-layer h2 {
     width: 70%;
     font-size: 46px;
     margin: 0 auto;
 }
+
 .footer-layer button {
     width: auto;
     height: auto;
@@ -157,32 +181,40 @@ header nav ul {
     margin-top: 30px;
     font-size: 18px;
 }
+
 .footer-content {
-    width: fit-content;
+    width: auto;
     height: auto;
-    display: inline-flex;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
+
 .footer-content div {
     width: auto;
     height: auto;
 }
+
 .footer-content div ul {
     width: auto;
     height: auto;
     display: block;
 }
+
 .footer-content div ul li {
     margin-bottom: 10px;
 }
+
 .footer-content div ul li b {
     color: #0095FF;
     font-size: 14px;
     user-select: none;
 }
+
 .footer-content div a:hover {
     color: #0095FF;
 }
+
 footer nav ul {
     width: fit-content;
     height: auto;
@@ -190,16 +222,19 @@ footer nav ul {
     gap: 30px;
     margin-bottom: 25px;
 }
+
 .conpany-logo {
     width: fit-content;
     height: auto;
 }
+
 .social-media-channels {
     width: fit-content;
     height: 30px;
     user-select: none;
     cursor: pointer;
 }
+
 .handles {
     width: auto;
     height: auto;
@@ -208,11 +243,13 @@ footer nav ul {
     display: block;
     border-bottom: 1px solid #ddd;
 }
+
 .body-content {
     padding: 20px;
     width: auto;
     height: auto;
 }
+
 .agreement-cont {
     width: auto;
     height: auto;
@@ -221,19 +258,23 @@ footer nav ul {
     cursor: pointer;
     font-size: 16px;
 }
+
 .agreement {
     width: 100%;
     height: auto;
     padding-left: 10px;
 }
+
 .agreement span {
     margin-left: 10px;
     float: right;
     margin-top: -20px;
 }
+
 .dropdown {
     display: inline-block;
 }
+
 .dropdown img {
     margin-top: 8px;
     width: 36px;
@@ -242,12 +283,15 @@ footer nav ul {
     background: linear-gradient(to left, #0FFF, #0095FF);
     padding: 4px;
 }
+
 .dropdown {
     display: inline-block;
 }
+
 li {
     list-style-type: none;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -256,15 +300,18 @@ li {
     z-index: 1;
     margin-left: -28px;
 }
+
 .dropdown-content a {
     color: #333;
     padding: 10px 16px;
     display: block;
     text-decoration: none;
 }
+
 .dropdown-content a li {
     font-size: 16px;
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -272,6 +319,7 @@ li {
 .scrolled {
     top: -70px;
 }
+
 .AI-powered.hidden {
     top: -35px;
 }
@@ -286,14 +334,17 @@ li {
     z-index: 1000;
     background-color: #FFF;
 }
+
 .dropdown-content a:hover {
     background-color: #0FFF;
 }
+
 .profile-content-layer {
     width: auto;
     height: auto;
     display: inline-block;
 }
+
 .profile-content {
     width: auto;
     height: auto;
@@ -302,9 +353,11 @@ li {
     border-radius: 6px;
     margin-bottom: 20px;
 }
+
 .text-content {
     margin-bottom: 20px;
 }
+
 .text-input {
     width: 100%;
     height: 50px;
@@ -314,6 +367,7 @@ li {
     border-radius: 6px;
     border: 1px solid #ddd;
 }
+
 .text-select {
     width: 100%;
     height: 50px;
@@ -323,9 +377,11 @@ li {
     border-radius: 6px;
     border: 1px solid #ddd;
 }
+
 section header {
     margin-bottom: 20px;
 }
+
 .save-btn {
     width: fit-content;
     height: 40px;
@@ -338,6 +394,7 @@ section header {
     background-color: #0095FF;
     color: white;
 }
+
 .delete-btn {
     width: fit-content;
     height: 40px;
@@ -350,6 +407,7 @@ section header {
     background-color: red;
     color: white;
 }
+
 .error {
     width: auto;
     height: auto;
@@ -361,6 +419,7 @@ section header {
     .nav-menu {
         margin-right: 20px;
     }
+
     .logo-design img {
         width: 120px;
         height: 45px;
@@ -374,17 +433,24 @@ section header {
         margin-right: 0;
         text-align: center;
     }
+
     .nav-menu a {
         display: block;
         padding: 10px 0;
     }
+
     .authenticate-layer {
         width: 100%;
         justify-content: center;
         margin-left: 60%;
     }
-    .dropdown{
-        margin-left:75%;
+    .footer-content{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .dropdown {
+        margin-left: 75%;
     }
 }
 
@@ -395,41 +461,54 @@ section header {
         margin-right: 0;
         text-align: center;
     }
+
     .nav-menu a {
         display: block;
         padding: 10px 0;
     }
+
     .authenticate-layer {
         width: 100%;
         justify-content: center;
         margin-left: 50%;
     }
-    .dropdown{
-        margin-left:70%;
+    .footer-content{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .dropdown {
+        margin-left: 70%;
     }
 }
+
 @media (max-width: 768px) {
     .AI-powered {
         font-size: 18px;
     }
+
     .footer-content {
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
+
     .footer-layer h2 {
         font-size: 36px;
     }
+
     .footer-layer button {
         font-size: 16px;
         padding: 15px;
     }
+
     .logo-design img {
         width: 100px;
         height: 40px;
     }
-    .dropdown{
-        margin-left:68%;
+
+    .dropdown {
+        margin-left: 68%;
     }
 }
 
@@ -437,40 +516,53 @@ section header {
     .AI-powered {
         font-size: 15px;
     }
+
     .footer-container {
         padding-left: 20px;
         padding-right: 20px;
     }
+    .footer-content{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
     .footer-layer h2 {
         font-size: 28px;
     }
+
     .footer-layer button {
         font-size: 14px;
         padding: 10px;
     }
+
     .logo-design img {
         width: 80px;
         height: 30px;
     }
+
     .nav-menu-container {
         text-align: center;
     }
+
     .nav-menu {
         padding: 10px;
         gap: 20px;
         display: block;
         text-align: center;
     }
+
     .authenticate-layer {
         display: inline-flex;
         width: auto;
         text-align: center;
         margin-left: 30%;
     }
+
     .authenticate-layer a img {
         margin: 0 auto;
     }
-    .dropdown{
-        margin-left:56%;
+
+    .dropdown {
+        margin-left: 56%;
     }
 }

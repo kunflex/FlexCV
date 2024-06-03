@@ -150,7 +150,7 @@
         <div style="background-color: #fff;border-radius:8px;padding:20px;">
             <div class="cont">
                 <div class="cont1">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="{{url('send/testimonials')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div>
                             <label for="name">Name</label>
