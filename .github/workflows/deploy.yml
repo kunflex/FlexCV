@@ -16,7 +16,7 @@ jobs:
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
-          server: ftp.http://flexcv.infinityfreeapp.com
+          server: ftp.flexcv.infinityfreeapp.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./FlexCV
