@@ -19,5 +19,5 @@ jobs:
           server: ftp.flexcv.infinityfreeapp.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./FlexCV
+          local-dir: FlexCV
           server-dir: /htdocs
