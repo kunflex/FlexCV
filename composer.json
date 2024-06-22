@@ -8,8 +8,6 @@
         "php": "^8.1",
         "aws/aws-sdk-php": "^3.296",
         "barryvdh/laravel-dompdf": "^2.0",
-        "barryvdh/laravel-snappy": "^1.0",
-        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.11",
@@ -19,7 +17,6 @@
         "php-ai/php-ml": "^0.10.0",
         "phpoffice/phpword": "^1.1",
         "smalot/pdfparser": "^2.8",
-        "spatie/browsershot": "^4.0",
         "spatie/laravel-data": "^3.11",
         "spatie/laravel-permission": "^6.3"
     },

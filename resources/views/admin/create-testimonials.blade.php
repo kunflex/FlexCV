@@ -183,7 +183,7 @@
                 </div>
 
                 <div class="cont2">
-                    <img id="preview-image" src="{{ asset('assets/img/cv.png') }}" alt="Image Preview" srcset="">
+                    <img id="preview-image" src="{{ asset('assets/img/avarta.png') }}" alt="Image Preview" srcset="">
                 </div>
             </div>
         </div>

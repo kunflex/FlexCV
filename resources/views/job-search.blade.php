@@ -185,31 +185,33 @@
 
     </div>
 
-    <div class="description-content">
-        <!-- ===Title=== -->
-        <div class="ctb-layer">
-            <div class="job-category">
-                <div class="job-title">Information Technology</div>
-                <div class="job-track">{{ $ITCount }}</div>
-            </div>
-            <a class="more">
-                <form action="{{ url('filter') }}" method="get">
-                    <div class="ttd-layer"><b>Filter:</b>
-                        <select class="filter-input" name="perPage" id="perPage" onchange="this.form.submit()">
-                            <option value="">...</option>
-                            <option value="4">4</option>
-                            <option value="6">6</option>
-                            <option value="8">8</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
-                </form>
-            </a>
-        </div>
-        <!-- ===End Title=== -->
 
-        <div class="job-display">
-            @foreach ($IT as $Cat1)
+    @foreach ($IT as $Cat1)
+        <div class="description-content">
+            <!-- ===Title=== -->
+            <div class="ctb-layer">
+                <div class="job-category">
+                    <div class="job-title">Information Technology</div>
+                    <div class="job-track">{{ $ITCount }}</div>
+                </div>
+                <a class="more">
+                    <form action="{{ url('filter') }}" method="get">
+                        <div class="ttd-layer"><b>Filter:</b>
+                            <select class="filter-input" name="perPage" id="perPage"
+                                onchange="this.form.submit()">
+                                <option value="">...</option>
+                                <option value="4">4</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </form>
+                </a>
+            </div>
+            <!-- ===End Title=== -->
+
+            <div class="job-display">
                 <div class="job-list">
                     <!-- =====Job Info======= -->
                     <div class="display-top">
@@ -249,21 +251,21 @@
                             <div class="dsc-details">{{ $Cat1['job']->contact }}</div>
                         </div>
                         <div class="display-contact" style="float:right;">
-                            <a href="{{url('job-details/'.$Cat1['job']->id)}}"><button class="btn-12">Read more</button></a>
+                            <a href="{{ url('job-details/' . $Cat1['job']->id) }}"><button class="btn-12">Read
+                                    more</button></a>
                         </div>
                     </div>
                     <!-- =======End Contact Info====== -->
                 </div>
-            @endforeach
-        </div><br>
+            </div><br>
 
-        {{-- Pagination links --}}
-        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-            {{ $IT->appends(['perPage' => $perPage])->links('pagination::default') }}
+            {{-- Pagination links --}}
+            <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+                {{ $IT->appends(['perPage' => $perPage])->links('pagination::default') }}
+            </div>
+
         </div>
-
-    </div>
-
+    @endforeach
 
 
 

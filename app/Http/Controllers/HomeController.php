@@ -13,6 +13,7 @@ use App\Models\CvEducation;
 use App\Models\CvExperience;
 use App\Models\CvReference;
 use App\Models\JobDisplay;
+use App\Models\Testimonials;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Log;
 
@@ -34,7 +35,8 @@ class HomeController extends Controller
 
                 $countUsers = ModelsUser::all()->count();
                 $countJobs = JobDisplay::all()->count();
-                return view('admin.dashboard', compact('countUsers', 'countJobs'));
+                $countTestimonials = Testimonials::all()->count();
+                return view('admin.dashboard', compact('countUsers', 'countJobs','countTestimonials'));
             }
 
             // Check if the user has the 'user' role

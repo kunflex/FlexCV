@@ -53,7 +53,7 @@ Route::get('finalize', [CV_Controller::class, 'Finalize']);
 Route::get('skills', [CV_Controller::class, 'Skills']);
 Route::get('more-experience', [CV_Controller::class, 'More_Experience']);
 Route::get('review-experience', [CV_Controller::class, 'Review_Experience']);
-Route::get('experience-details', [CV_Controller::class, 'Experience_Details']);
+Route::get('experience-details/{id}', [CV_Controller::class, 'Experience_Details']);
 Route::get('experience', [CV_Controller::class, 'Experience']);
 Route::get('more-education', [CV_Controller::class, 'More_Education']);
 Route::get('review-education', [CV_Controller::class, 'Review_Education']);
@@ -61,7 +61,14 @@ Route::get('education', [CV_Controller::class, 'Education']);
 Route::get('summary', [CV_Controller::class, 'Summary']);
 Route::get('finished-resume', [CV_Controller::class, 'Finished_Resume']);
 Route::get('preview-resume', [CV_Controller::class, 'Preview_Resume']);
-
+Route::get('experience/delete/{id}', [CV_Controller::class, 'ExperienceDelete']);
+Route::get('experience/update/{id}', [CV_Controller::class, 'ExperienceUpdate']);
+Route::put('update-experience-info/{id}', [CV_Controller::class, 'ExperienceEdit'])->name('update-experience-info');
+Route::put('update-responsibilities/{id}', [CV_Controller::class, 'ResponsibilitiesEdit']);
+Route::get('respnosibilities/update/{id}', [CV_Controller::class, 'DisplayRespo']);
+Route::get('education/delete/{id}', [CV_Controller::class, 'EducationDelete']);
+Route::get('education/update/{id}', [CV_Controller::class, 'EducationUpdate']); 
+Route::put('update-education-info/{id}', [CV_Controller::class, 'EducationEdit']);
 
 // <================= Post CV Controller=====================>
 Route::post('personal-info', [CV_Controller::class, 'personal_info'])->name('personal_info');

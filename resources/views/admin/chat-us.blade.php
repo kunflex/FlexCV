@@ -36,12 +36,13 @@
             position: fixed;
             background-color: whitesmoke;
             overflow-y: auto;
+            display: block;
             scroll-behavior: auto;
         }
 
         .agent,
         .customer {
-            width: calc(100% - 160px);
+            width: calc(100% - 150px);
             padding: 8px;
             background-color: white;
             border-radius: 8px;
@@ -110,6 +111,11 @@
             align-items: center;
             justify-content: center;
             padding: 10px;
+        }
+        body{
+            width:100%;
+            height:100%;
+           position: fixed; 
         }
     </style>
 </head>
