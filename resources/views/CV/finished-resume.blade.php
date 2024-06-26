@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Template</title>
+    <title>Preview | FlexCV Official Website</title>
     <link rel="stylesheet" href="{{ asset('assets/css/finished-resume.css') }}">
 </head>
 <style>
     body {
         position: fixed;
+    }
+    .cover-color{
         background-color: #0095FF;
         background-image: url('assets/img/study-group-learning-library (1).jpg');
         background-position: center;
@@ -133,6 +135,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        -webkit-user-drag: none;
     }
 
     /* bbb */
@@ -144,6 +147,9 @@
     .active {
         border: 2px solid #0095FF;
         transform: scale(0.9);
+    }
+    iframe{
+        border-radius: 8px;
     }
 </style>
 
@@ -166,7 +172,7 @@
                 </div>
             </div>
             <div class="layer-sidebar">
-                <a href="{{ url('#') }}">
+                <a href="{{ route('updateResume') }}">
                     <button class="lks-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             fill="#0095ff" height="30px" width="30px" version="1.1" id="Layer_1"
@@ -195,10 +201,6 @@
                         class="lks-btn"><img src="{{ asset('assets/icons/file_type_pdf_icon_130274.svg') }}"
                             alt="Like">
                         <h4>Download as PDF</h4>
-                    </button></a><br>
-                <a href="{{ url('MS-Word') }}"><button class="lks-btn"><img
-                            src="{{ asset('assets/icons/file_type_word_icon_130070.svg') }}" alt="Like">
-                        <h4>Download as MS-Word</h4>
                     </button></a><br>
                 <a href="{{ url('jobs-nearby') }}"><button class="lks-btn"><img
                             src="{{ asset('assets/icons/job_employment_find_recuitment_seeker_icon_192532.svg') }}"
@@ -277,7 +279,7 @@
                         <div>
                             <img class="temp-image" id="temp-image6" src="{{ asset('assets/img/template6.png') }}"
                                 alt="">
-                            <div class="temp-layer" id="6"></div>
+                            <div class="temp-layer" id="6">@include('ResumeTemplates.template6')</div>
                         </div>
 
                         <div>
@@ -319,8 +321,8 @@
                         <div class="temp-layer active" id="2">@include('ResumeTemplates.template2')</div>
                         <div class="temp-layer" id="3">@include('ResumeTemplates.template3')</div>
                         <div class="temp-layer" id="4">@include('ResumeTemplates.template4')</div>
-                        <div class="temp-layer" id="5"></div>
-                        <div class="temp-layer" id="6"></div>
+                        <div class="temp-layer" id="5">@include('ResumeTemplates.template5')</div>
+                        <div class="temp-layer" id="6">@include('ResumeTemplates.template6')</div>
                         <div class="temp-layer" id="7"></div>
                         <div class="temp-layer" id="8"></div>
                         <div class="temp-layer" id="9"></div>

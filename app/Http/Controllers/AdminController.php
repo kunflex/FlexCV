@@ -23,10 +23,192 @@ class AdminController extends Controller
         return view('admin.add-jobs');
     }
 
+    public function SearchTrackJobs(Request $request)
+    {
+        $request->validate(['search' => 'required']);
+        $search = $request->input('search');
+        $data = JobDisplay::where('job_title', 'like', '%' . $search . '%') ->get();
+            $result='';
+        if ($data->isEmpty()) {
+            $result = 'Search for "' . $search . '" not found';
+        }
+
+
+        return view('admin.track-jobs', compact('data', 'result'));
+    }
+
+    public function SearchJobs(Request $request)
+{
+    $request->validate(['search' => 'required']);
+    $search = $request->input('search');
+    
+    // Fetch jobs based on search query
+    $data = JobDisplay::where('job_title', 'like', '%' . $search . '%')->get();
+    
+    // Initialize result variable
+    $result = '';
+
+    // Check if data is empty
+    if  ($data->isEmpty()) {
+        $result = 'Search result for "' . $search . '" not found';
+    }
+
+    // Fetch paginated jobs for specific categories
+    $perPage = 4; // Default number of items per page
+    $IT = JobDisplay::where('category', 'Information Technology')->paginate($perPage);
+    $BA = JobDisplay::where('category', 'Business Administration')->paginate($perPage);
+    $SS = JobDisplay::where('category', 'Social Sciences')->paginate($perPage);
+    $EE = JobDisplay::where('category', 'Engineering')->paginate($perPage);
+    $Arts = JobDisplay::where('category', 'Arts and Fashion')->paginate($perPage);
+    $HS = JobDisplay::where('category', 'Health Sciences')->paginate($perPage);
+    $Edu = JobDisplay::where('category', 'Education')->paginate($perPage);
+    $Science = JobDisplay::where('category', 'Applied Science')->paginate($perPage);
+    $Agric = JobDisplay::where('category', 'Agriculture')->paginate($perPage);
+    $Law = JobDisplay::where('category', 'Law')->paginate($perPage);
+
+    // Count total jobs for each category
+    $ITCount = $IT->total();
+    $BACount = $BA->total();
+    $SSCount = $SS->total();
+    $EECount = $EE->total();
+    $ArtsCount = $Arts->total();
+    $HSCount = $HS->total();
+    $EduCount = $Edu->total();
+    $ScienceCount = $Science->total();
+    $AgricCount = $Agric->total();
+    $LawCount = $Law->total();
+
+    // Send data and result to the view
+    return view('job-search', compact(
+        'data', 'result',
+        'IT', 'BA', 'SS', 'EE', 'Arts', 'HS', 'Edu', 'Science', 'Agric', 'Law',
+        'ITCount', 'BACount', 'SSCount', 'EECount', 'ArtsCount', 'HSCount', 'EduCount', 'ScienceCount', 'AgricCount', 'LawCount',
+        'perPage'
+    ));
+}
+
+
+
+
+    public function SearchEnquiries(Request $request)
+    {
+        $request->validate(['search' => 'required']);
+        $search = $request->input('search');
+        $enquiries = Enquiries::where('fullname', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->orWhere('advertisement', 'like', '%' . $search . '%')
+            ->get();
+            $result='';
+        if ($enquiries->isEmpty()) {
+            $result = 'Search for "' . $search . '" not found';
+        }
+
+
+        return view('admin.enquiries', compact('enquiries', 'result'));
+    }
+
+    
+    public function SearchTestimonials(Request $request)
+    {
+        $request->validate(['search' => 'required']);
+        $search = $request->input('search');
+        $testimonials = Testimonials::where('name', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->get();
+            $result='';
+        if ($testimonials->isEmpty()) {
+            $result = 'Search for "' . $search . '" not found';
+            
+        }
+
+        return view('admin.testimonials', compact('testimonials', 'result'));
+    }
+
+    public function SearchAccount(Request $request)
+    {
+        $request->validate(['search' => 'required']);
+        $search = $request->input('search');
+        $dataUsers = User::where('name', 'like', '%' . $search . '%')
+            ->orWhere('email', 'like', '%' . $search . '%')
+            ->get();
+            $result='';
+        if ($dataUsers->isEmpty()) {
+            $result = 'Search for "' . $search . '" not found';
+        }
+
+
+        return view('admin.account', compact('dataUsers', 'result'));
+    }
+
+
+    public function UpdateJobs($id)
+    {
+        $data = JobDisplay::find($id)->first();
+        // Check if data is found
+        if ($data) {
+            // Decode HTML entities for fields that contain HTML content
+            $data->job_description = htmlspecialchars_decode($data->job_description, ENT_QUOTES);
+            $data->application_instructions = htmlspecialchars_decode($data->application_instructions, ENT_QUOTES);
+        } else {
+            // If no data is found, return an error response
+            return response()->json(['error' => 'Job details not found for ID ' . $id], 404);
+        }
+        return view('admin.update-jobs', compact('data'));
+    }
+
+    public function EditJobs($id, Request $request)
+    {
+        try {
+            $request->validate([
+                'posted_by' => 'nullable',
+                'job_title' => 'required',
+                'job_type' => 'required',
+                'company' => 'required',
+                'contact' => 'required',
+                'email' => 'required',
+                'location' => 'required',
+                'salary_range' => 'required',
+                'category' => 'required',
+                'application_instructions' => 'required',
+                'job_description' => 'required',
+                'deadline' => 'required',
+            ]);
+            $result_data = JobDisplay::find($id);
+            $result_data->posted_by = auth()->id();
+            $result_data->job_title = $request->input('job_title');
+            $result_data->job_type = $request->input('job_type');
+            $result_data->company = $request->input('company');
+            $result_data->contact = $request->input('contact');
+            $result_data->email = $request->input('email');
+            $result_data->location = $request->input('location');
+            $result_data->salary_range = $request->input('salary_range');
+            $result_data->category = $request->input('category');
+            $result_data->application_instructions = htmlspecialchars($request->input('application_instructions'), ENT_QUOTES, 'UTF-8');
+            $result_data->job_description = htmlspecialchars($request->input('job_description'), ENT_QUOTES, 'UTF-8');
+            $result_data->deadline = $request->input('deadline');
+            $saveSuccess = $result_data->save();
+
+            if ($saveSuccess) {
+                Log::info('Job display posted successfully.');
+                return redirect('track-jobs');
+            } else {
+                Log::error('Failed to save job display to the database.');
+                return redirect()->back()->withInput()->withErrors(['error' => 'Failed to save job application.']);
+            }
+        } catch (\Exception $e) {
+            Log::error('Exception during Job display: ' . $e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred.']);
+        }
+    }
+
     public function Testimonials()
     {
         $testimonials = Testimonials::all();
-        return view('admin.testimonials', compact('testimonials'));
+        $result = '';
+        if($testimonials->isEmpty()){
+            $result = 'No queries found!';
+        }
+        return view('admin.testimonials', compact('testimonials','result'));
     }
 
     public function SendTestimonials(Request $request)
@@ -58,7 +240,11 @@ class AdminController extends Controller
     public function Account()
     {
         $dataUsers = User::all();
-        return view('admin.account', compact('dataUsers'));
+        $result = '';
+        if($dataUsers->isEmpty()){
+            $result = 'No queries found!';
+        }
+        return view('admin.account', compact('dataUsers', 'result'));
     }
 
     public function Pages()
@@ -102,7 +288,11 @@ class AdminController extends Controller
     public function Enquiries()
     {
         $enquiries = Enquiries::all();
-        return view('admin.enquiries', compact('enquiries'));
+        $result = '';
+        if($enquiries->isEmpty()){
+            $result = 'No queries found!';
+        }
+        return view('admin.enquiries', compact('enquiries', 'result'));
     }
 
     public function SendEnquiries(Request $request)

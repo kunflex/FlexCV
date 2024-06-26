@@ -71,7 +71,7 @@
                                 </li>
                             </a><br>
 
-                            <a href="{{url('finalize')}}">
+                            <a href="{{url('finalize')}}" >
                                 <li class="menu-btn">
                                     <span class="progress-count"></span>
                                     <span class="progress-label">Finalize</span>
@@ -101,6 +101,10 @@
 </body>
 </html>
 <style>
+     iframe{
+        border-radius: 8px;
+        padding:20px;
+    }
     .progress-count{
         width:30px;
         height:30px;

@@ -56,16 +56,18 @@
             padding: 6px;
             border-radius: 6px;
         }
-        .search-bar{
-            margin:10px;
+
+        .search-bar {
+            margin: 10px;
             float: inline-end;
             border-bottom: 2px solid #0095ff;
             transition: 2ms ease;
         }
-        .search-bar input{
+
+        .search-bar input {
             width: 200px;
-            height:40px;
-            padding:10px;
+            height: 40px;
+            padding: 10px;
             border-style: none;
             outline-style: none;
         }
@@ -75,7 +77,7 @@
 @section('content')
     <div>
         <div class="header">
-            <a href="admin">
+            <a href="{{url('admin')}}">
                 {{ __('AdminDashboard') }}
             </a>/Account
         </div><br>
@@ -83,8 +85,8 @@
         <h3>Account Details</h3><br>
         <div style="background-color: #fff;border-radius:8px;padding:20px;">
             <div class="search-bar">
-                <form action="" method="GET">
-                    <input type="text" placeholder="Search..." name="search-box">
+                <form action="{{ route('search.account') }}" method="GET">
+                    <input type="text" placeholder="Search..." name="search">
                     <button hidden>Search</button>
                 </form>
             </div>
@@ -115,6 +117,9 @@
                         </td>
                     </tr>
                 @empty
+                    <tr>
+                        <td colspan="6">{{ $result }}</td>
+                    </tr>
                 @endforelse
             </table>
         </div>

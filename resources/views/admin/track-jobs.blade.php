@@ -151,8 +151,8 @@
     <div class="ojs">
         <div class="data-layer">
             <div class="search-bar">
-                <form action="" method="GET">
-                    <input type="text" placeholder="Search..." name="search-box">
+                <form action="{{route('search.track-jobs')}}" method="GET">
+                    <input type="text" placeholder="Search..." name="search">
                     <button hidden>Search</button>
                 </form>
             </div>
@@ -169,15 +169,15 @@
                         <td>
                             <a href="{{ url('track-applicants/' . $view->id) }}"><button
                                     class="ols-yellow">applicants</button></a>
-                            <a href="{{ url('applicants/update/' . $view->id) }}"><button
+                            <a href="{{ url('jobs/update/' . $view->id) }}"><button
                                     class="ols-blue">update</button></a>
-                            <a href="{{ url('applicants/delete/' . $view->id) }}"><button
+                            <a href="{{ url('jobs/delete/' . $view->id) }}"><button
                                     class="ols-red">delete</button></a>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">No queries found!</td>
+                        <td colspan="4">{{$result}}</td>
                     </tr>
                 @endforelse
 

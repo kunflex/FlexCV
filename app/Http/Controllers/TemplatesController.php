@@ -105,5 +105,9 @@ class TemplatesController extends Controller
     public function Template5(){
         return view('ResumeTemplates.template5');
     }
+
+    public function Template6(){
+        return view('ResumeTemplates.template6');
+    }
     
 }

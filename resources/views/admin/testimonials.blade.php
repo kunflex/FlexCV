@@ -90,8 +90,8 @@
         <div style="background-color: #fff;border-radius:8px;padding:20px;">
             <div class="search-bar">
                 <a href="{{url('new-testimonials')}}"><button class="ols-blue" type="submit" style="background-color: darkgreen">&plus; new</button></a>
-                <form action="" method="GET">
-                    <input type="text" placeholder="Search..." name="search-box">
+                <form action="{{route('search.testimonials')}}" method="GET">
+                    <input type="text" placeholder="Search..." name="search">
                     <button hidden>Search</button>
                 </form>
             </div><br><br>
@@ -120,7 +120,7 @@
                     </tr>
                 @empty
                 <tr>
-                    <td colspan="4">No queries found!</td>
+                    <td colspan="4">{{$result}}</td>
                 </tr>
                 @endforelse
             </table>

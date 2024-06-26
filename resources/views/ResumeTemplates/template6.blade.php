@@ -10,35 +10,42 @@
             size: A4;
             margin: 10mm;
         }
+        :root {
+            --primary-font: 'Helvetica Neue', Arial, sans-serif;
+            --secondary-font: 'Helvetica Neue', Arial, sans-serif;
+            --background-color: #fff;
+            --text-color:#000000;
+            --header-color: #00A8FF;
+            --border-color: #e0e0e0;
+        }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            border:20px solid #0095ff;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0px;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .head {
             text-align: center;
-            margin-top: 20px;
+            margin: 20px 0 20px;
         }
 
         .head h1 {
-            color: #0095ff;
+            color: var(--header-color);
             display: inline-block;
-            font-size: 28px;
-            margin: 0;
+            font-size: 26px;
+            margin: 0 0 6px;
         }
 
         .section {
-            margin: 20px 0;
+            margin: 0px 0 8px;
         }
 
         .section h2 {
-            background-color: #0095ff;
-            color: #fff;
-            padding: 6px;
+            color:var(--header-color);
             margin: 0;
             font-size: 18px;
         }
@@ -47,7 +54,7 @@
         .section span,
         .section ul {
             font-size: 14px;
-            margin: 10px 20px;
+            margin: 0px 0px;
             line-height: 1.6;
         }
 
@@ -79,17 +86,9 @@
             margin-top: 5px;
         }
 
-        body {
-            margin: 0px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+       
 
-        .section svg {
-            background-color: #0095ff;
-            padding: 6px;
-            border-radius: 50%;
-        }
+       
     </style>
 </head>
 

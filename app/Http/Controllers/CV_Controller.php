@@ -23,6 +23,15 @@ class CV_Controller extends Controller
         return view('CV.select-resume');
     }
 
+    public function UpdateResume()
+    {
+        // Get the stored cv_personal_details_id from the session
+        $cv_personal_details_id = session('cv_personal_details_id');
+
+        $details = CvPersonalDetails::find($cv_personal_details_id);
+        return view('CV.update-header', compact('details'));
+    }
+
     public function Additional_Details()
     {
         try {
@@ -144,11 +153,17 @@ class CV_Controller extends Controller
         // Get the stored cv_personal_details_id from the session
         $cv_personal_details_id = session('cv_personal_details_id');
 
-        // Find the CvPersonalDetails record based on the ID
-        $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        return view('CV.education', compact('cvEducation', 'cvExperience', 'cvReference'));
+        //checking if there is an entry for experience with the id
+        $result = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
+        if ($result->isEmpty()) {
+            // Find the CvPersonalDetails record based on the ID
+            $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
+            $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
+            $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
+            return view('CV.education', compact('cvEducation', 'cvExperience', 'cvReference'));
+        } else {
+            return redirect('review-education');
+        }
     }
 
     public function Review_Education()
@@ -375,6 +390,60 @@ class CV_Controller extends Controller
 
                 Log::info('Personal information posted successfully.');
                 return redirect('experience');
+            } else {
+                Log::error('Failed to save personal information to the database.');
+                return redirect()->back()->withInput()->withErrors(['error' => 'Failed to save personal information.']);
+            }
+        } catch (\Exception $e) {
+            Log::error('Exception during personal_info: ' . $e->getMessage());
+            return redirect()->back()->withInput()->withErrors(['error' => 'An error occurred.']);
+        }
+    }
+
+    public function Editpersonal_info($id, Request $request)
+    {
+        try {
+            $request->validate([
+                'picture' => 'nullable',
+                'firstname' => 'required',
+                'othername' => 'nullable',
+                'lastname' => 'required',
+                'email' => 'required|email',
+                'phone_number' => 'required',
+                'address' => 'nullable',
+                'country' => 'nullable',
+                'city_town' => 'nullable',
+                'DOB' => 'nullable|date',
+            ]);
+
+            $personal_data = CvPersonalDetails::find($id);
+
+            $personal_data->picture = $request->input('picture');
+            $personal_data->firstname = $request->input('firstname');
+            $personal_data->othername = $request->input('othername');
+            $personal_data->lastname = $request->input('lastname');
+            $personal_data->email = $request->input('email');
+            $personal_data->phone_number = $request->input('phone_number');
+            $personal_data->address = $request->input('address');
+            $personal_data->country = $request->input('country');
+            $personal_data->city_town = $request->input('city/town');
+            $personal_data->DOB = $request->input('DOB');
+
+            $saveSuccess = $personal_data->save();
+
+            if ($saveSuccess) {
+                // Store the personal details ID in the session
+                session(['cv_personal_details_id' => $personal_data->id]);
+
+                Log::info('Personal information posted successfully.');
+
+                //checking if there is an entry for experience with the id
+                $result = CvExperience::where('cv_personal_details_id', $id)->get();
+                if ($result->isEmpty()) {
+                    return redirect('experience');
+                } else {
+                    return redirect('review-experience');
+                }
             } else {
                 Log::error('Failed to save personal information to the database.');
                 return redirect()->back()->withInput()->withErrors(['error' => 'Failed to save personal information.']);

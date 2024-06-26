@@ -84,7 +84,7 @@
 @section('content')
     <div>
         <div class="header">
-            <a href="admin">
+            <a href="{{url('admin')}}">
                 {{ __('AdminDashboard') }}
             </a>/Enquiries
         </div><br>
@@ -92,8 +92,8 @@
         <h3>Enquiries Details</h3><br>
         <div style="background-color: #fff;border-radius:8px;padding:20px;">
             <div class="search-bar">
-                <form action="" method="GET">
-                    <input type="text" placeholder="Search..." name="search-box">
+                <form action="{{ route('search.enquiries') }}" method="GET">
+                    <input type="text" placeholder="Search..." name="search">
                     <button hidden>Search</button>
                 </form>
             </div><br><br>
@@ -124,7 +124,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5">No queries found!</td>
+                        <td colspan="5">{{ $result }}</td>
                     </tr>
                 @endforelse
             </table>

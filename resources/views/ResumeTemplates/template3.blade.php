@@ -8,47 +8,54 @@
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 10mm;
         }
-
+        :root {
+            --primary-font: 'Helvetica Neue', Arial, sans-serif;
+            --secondary-font: 'Helvetica Neue', Arial, sans-serif;
+            --background-color: #fff;
+            --text-color:#000000;
+            --header-color: #00A8FF;
+            --border-color: #e0e0e0;
+        }
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            color: #444;
+            font-family: var(--primary-font);
+            color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             line-height: 1.6;
-            background-color: #fff;
+            background-color:var(--background-color);
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
+            font-family: var(--secondary-font);
         }
 
         .header h1 {
-            color: #333;
-            font-size: 36px;
+            font-size: 24px;
             margin: 0;
-            color: #00A8FF;
-            border-bottom: 2px solid #00A8FF;
+            color: var(--header-color);
+            border-bottom: 2px solid var(--header-color);
             display: inline-block;
         }
 
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .section h2 {
-            color: #00A8FF;
+            color: var(--header-color);
             margin: 0 0 2px 0;
-            font-size: 24px;
-            border-bottom: 1px solid #e0e0e0;
+            font-size: 18px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .section p,
         .section span,
         .section ul {
-            font-size: 16px;
+            font-size: 14px;
             margin: 0;
             padding: 0;
         }
@@ -119,7 +126,7 @@
         <div class="section">
             <h2>Educational Background</h2>
             <div class="details">
-                <span><b>Start date - End date:</b> Program of Study | Institution</span>
+                <span><b>Start date - End date:</b><br> Program of Study | Institution</span>
             </div>
             <p>
                 <b>Course Outline</b>
@@ -137,7 +144,7 @@
         <div class="section">
             <h2>Work Experience</h2>
             <div class="details">
-                <span><b>Start date - End date:</b> Job Title | Company</span>
+                <span><b>Start date - End date:</b><br> Job Title | Company</span>
             </div>
             <p>
                 <b>Responsibilities</b>

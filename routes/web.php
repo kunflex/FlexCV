@@ -44,6 +44,7 @@ Route::get('/PDF/{templateNumber}', [PdfController::class, 'convertBladeToPdf'])
 
 
 // <================= CV Controller=====================>
+Route::get('update-resume', [CV_Controller::class, 'UpdateResume'])->name('updateResume');
 Route::get('select-resume', [CV_Controller::class, 'select_resume']);
 Route::get('reference', [CV_Controller::class, 'Reference']);
 Route::get('more-reference', [CV_Controller::class, 'More_Reference']);
@@ -71,6 +72,7 @@ Route::get('education/update/{id}', [CV_Controller::class, 'EducationUpdate']);
 Route::put('update-education-info/{id}', [CV_Controller::class, 'EducationEdit']);
 
 // <================= Post CV Controller=====================>
+Route::put('update/personal-info/{id}', [CV_Controller::class, 'Editpersonal_info'])->name('update.personal_info');
 Route::post('personal-info', [CV_Controller::class, 'personal_info'])->name('personal_info');
 Route::post('experience-info', [CV_Controller::class, 'experience_info'])->name('experience-info');
 Route::post('education-info', [CV_Controller::class, 'education_info'])->name('education-info');
@@ -87,6 +89,7 @@ Route::put('/update-other_details', [CV_Controller::class, 'updateOtherDetails']
 
 
 // <================Templates Controller=====================>
+Route::get('/template6', [TemplatesController::class, 'Template6'])->name('template6');
 Route::get('/template5', [TemplatesController::class, 'Template5'])->name('template5');
 Route::get('/template4', [TemplatesController::class, 'Template4'])->name('template4');
 Route::get('/template3', [TemplatesController::class, 'Template3'])->name('template3');
@@ -117,6 +120,19 @@ Route::get('account', [AdminController::class, 'Account']);
 Route::post('/send/enquiries', [AdminController::class, 'SendEnquiries']);
 Route::post('/send/testimonials', [AdminController::class, 'SendTestimonials']);
 Route::get('jobs', [AdminController::class, 'Jobs']);
+Route::get('jobs/update/{id}', [AdminController::class, 'UpdateJobs']);
+Route::put('jobs/edit/{id}', [AdminController::class, 'EditJobs']);
+Route::get('jobs/delete/{id}', [AdminController::class, 'DeleteJobs']);
+
+
+// <==========Search Routes===========>
+
+Route::get('search1', [AdminController::class, 'SearchJobs'])->name('search.jobs1');
+Route::get('account/search', [AdminController::class, 'SearchAccount'])->name('search.account');
+Route::get('enquiries/search', [AdminController::class, 'SearchEnquiries'])->name('search.enquiries');
+Route::get('testimonials/search', [AdminController::class, 'SearchTestimonials'])->name('search.testimonials');
+Route::get('track-jobs/search', [AdminController::class, 'SearchTrackJobs'])->name('search.track-jobs');
+// <==========End Search Routes===========>
 
 // <==========Chart Display===========>
 Route::get('BarChart', [AdminController::class, 'BarChart']);
