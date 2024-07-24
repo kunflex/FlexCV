@@ -16,7 +16,7 @@
             color: #333;
             margin: 0;
             padding: 0;
-            border:20px solid #0095ff;
+            border:15px solid {{$colorCode}};
         }
 
         .head {
@@ -25,7 +25,7 @@
         }
 
         .head h1 {
-            color: #0095ff;
+            color: {{$colorCode}};
             display: inline-block;
             font-size: 28px;
             margin: 0;
@@ -36,7 +36,7 @@
         }
 
         .section h2 {
-            background-color: #0095ff;
+            background-color: {{$colorCode}};
             color: #fff;
             padding: 6px;
             margin: 0;
@@ -83,12 +83,6 @@
             margin: 0px;
             padding: 20px;
             box-sizing: border-box;
-        }
-
-        .section svg {
-            background-color: #0095ff;
-            padding: 6px;
-            border-radius: 50%;
         }
     </style>
 </head>

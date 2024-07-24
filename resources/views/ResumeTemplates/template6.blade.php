@@ -15,14 +15,14 @@
             --secondary-font: 'Helvetica Neue', Arial, sans-serif;
             --background-color: #fff;
             --text-color:#000000;
-            --header-color: #00A8FF;
+            --header-color: #0095ff;
             --border-color: #e0e0e0;
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: var(--text-color);
-            background-color: var(--background-color);
+            color: #000;
+            background-color: #fff;
             margin: 0px;
             padding: 20px;
             box-sizing: border-box;
@@ -34,7 +34,7 @@
         }
 
         .head h1 {
-            color: var(--header-color);
+            color: {{$colorCode}};
             display: inline-block;
             font-size: 26px;
             margin: 0 0 6px;
@@ -45,7 +45,7 @@
         }
 
         .section h2 {
-            color:var(--header-color);
+            color:{{$colorCode}};
             margin: 0;
             font-size: 18px;
         }

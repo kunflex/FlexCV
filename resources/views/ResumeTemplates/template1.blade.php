@@ -10,33 +10,26 @@
             size: A4;
             margin: 10mm;
         }
-        :root {
-            --primary-font: 'Helvetica Neue', Arial, sans-serif;
-            --secondary-font: 'Helvetica Neue', Arial, sans-serif;
-            --background-color: #fff;
-            --text-color:#000000;
-            --header-color: #00A8FF;
-            --border-color: #e0e0e0;
-        }
+        
         body {
-            font-family: var(--primary-font);
-            color: var(--text-color);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color:#000;
             margin: 0;
             padding: 20px;
             line-height: 1.6;
-            background-color:var(--background-color);
+            background-color:#fff;
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
-            font-family: var(--secondary-font);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
         .header h1 {
             font-size: 24px;
             margin: 0;
-            color: var(--header-color);
+            color:{{$colorCode}};
             display: inline-block;
         }
 
@@ -45,7 +38,7 @@
         }
 
         .section h2 {
-            color: var(--header-color);
+            color:{{$colorCode}};
             margin: 0 0 0px 0;
             font-size: 18px;
         }

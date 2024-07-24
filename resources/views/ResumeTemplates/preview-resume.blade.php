@@ -1,2 +1,0 @@
-
-@include('ResumeTemplates.template3')

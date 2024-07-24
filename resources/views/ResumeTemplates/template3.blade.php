@@ -15,7 +15,7 @@
             --secondary-font: 'Helvetica Neue', Arial, sans-serif;
             --background-color: #fff;
             --text-color:#000000;
-            --header-color: #00A8FF;
+            --header-color: #0095ff;
             --border-color: #e0e0e0;
         }
         body {

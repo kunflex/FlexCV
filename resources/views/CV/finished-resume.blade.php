@@ -11,7 +11,8 @@
     body {
         position: fixed;
     }
-    .cover-color{
+
+    .cover-color {
         background-color: #0095FF;
         background-image: url('assets/img/study-group-learning-library (1).jpg');
         background-position: center;
@@ -148,8 +149,33 @@
         border: 2px solid #0095FF;
         transform: scale(0.9);
     }
-    iframe{
+
+    iframe {
         border-radius: 8px;
+    }
+
+    .style-fx-color {
+        display: inline-flex;
+        gap: 10px;
+        position: absolute;
+        background-color: white;
+        top: -86px;
+        padding: 20px;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        visibility: hidden;
+        z-index: 2;
+    }
+
+    .fx-color {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid #ddd;
+    }
+
+    .fx-color:hover {
+        border-color: #000;
     }
 </style>
 
@@ -197,7 +223,7 @@
                         <h4>Edit Resume</h4>
                     </button></a><br>
                 <a id="pdfLink"
-                    href="{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID_PLACEHOLDER']) }}"><button
+                    href="{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID_PLACEHOLDER', 'colorCode' => $colorCode]) }}"><button
                         class="lks-btn"><img src="{{ asset('assets/icons/file_type_pdf_icon_130274.svg') }}"
                             alt="Like">
                         <h4>Download as PDF</h4>
@@ -216,8 +242,71 @@
                     <div class="fks-layer">
                         <div class="fks-mask"><input class="fks-input" type="text" name=""
                                 placeholder="--- Select Preferred Template ---" id="templateInput" readonly></div>
-                        <div class="fks-mask" onclick="openColorPicker()"><input class="color-picker" type="color"
-                                name="preferredColor" id="preferredColor"><span>--- Select Preferred Color ---</span>
+                        <div class="fks-mask" onclick="openColorPicker()">
+                            <div>
+                                <form method="get">
+                                    {{-- colors layer --}}
+                                    <div class="style-fx-color" name="preferredColor" id="preferredColor">
+                                        {{-- color 1 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color1','dodgerblue')"
+                                                style="background-color:dodgerblue" id="btn1"></div>
+                                            <input type="checkbox" name="color1" id="color1" hidden>
+                                        </div>
+                                        {{-- color 2 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color2','deeppink')"
+                                                style="background-color:deeppink" id="btn2"></div>
+                                            <input type="checkbox" name="color2" id="color2" hidden>
+                                        </div>
+                                        {{-- color 3 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color3','orange')"
+                                                style="background-color:orange" id="btn3"></div>
+                                            <input type="checkbox" name="color3" id="color3" hidden>
+                                        </div>
+                                        {{-- color 4 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color4','green')"
+                                                style="background-color:green" id="btn4"></div>
+                                            <input type="checkbox" name="color4" id="color4" hidden>
+                                        </div>
+                                        {{-- color 5 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color5','mediumblue')"
+                                                style="background-color:mediumblue" id="btn5"></div>
+                                            <input type="checkbox" name="color5" id="color5" hidden>
+                                        </div>
+                                        {{-- color 6 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color6','red')"
+                                                style="background-color:red" id="btn6"></div>
+                                            <input type="checkbox" name="color6" id="color6" hidden>
+                                        </div>
+                                        {{-- color 7 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color7','darkblue')"
+                                                style="background-color:darkblue" id="btn7"></div>
+                                            <input type="checkbox" name="color7" id="color7" hidden>
+                                        </div>
+                                        {{-- color 8 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color8','orangered')"
+                                                style="background-color:orangered" id="btn8"></div>
+                                            <input type="checkbox" name="color8" id="color8" hidden>
+                                        </div>
+                                        {{-- color 9 --}}
+                                        <div>
+                                            <div class="fx-color" onclick="selectColor('color9','purple')"
+                                                style="background-color:purple" id="btn9"></div>
+                                            <input type="checkbox" name="color9" id="color9" hidden>
+                                        </div>
+                                        {{-- Submit button --}}
+                                        <button type="submit" hidden>Submit</button>
+                                        
+                                    </div>
+                                </form>
+                            </div><span>--- Select Preferred Color ---</span>
                         </div>
                         <div class="fks-mask">
                             <select class="fks-input" type="text" name="preferredFont" id="preferredFont">
@@ -368,19 +457,15 @@
         });
     }
 
-    // Use the function for each template
-    handleTemplateClick('temp-image1', '1');
-    handleTemplateClick('temp-image2', '2');
-    handleTemplateClick('temp-image3', '3');
-    handleTemplateClick('temp-image4', '4');
-    handleTemplateClick('temp-image5', '5');
-    handleTemplateClick('temp-image6', '6');
-    handleTemplateClick('temp-image7', '7');
-    handleTemplateClick('temp-image8', '8');
-    handleTemplateClick('temp-image9', '9');
-    handleTemplateClick('temp-image10', '10');
-    handleTemplateClick('temp-image11', '11');
-    handleTemplateClick('temp-image12', '12');
+    // Function to set up all templates
+    function setupTemplates(count) {
+        for (let i = 1; i <= count; i++) {
+            handleTemplateClick(`temp-image${i}`, `${i}`);
+        }
+    }
+
+    // Call setupTemplates with the number of templates
+    setupTemplates(12);
 </script>
 
 <script>
@@ -388,113 +473,139 @@
         var templateInput = document.getElementById('templateInput');
         var templatePopup = document.getElementById('templatePopup');
         var closeBtn = document.getElementById('closeBtn');
-        var backBtn = document.getElementById('backcloseBtn');
+        var backBtn = document.getElementById('backcloseBtn'); 
         var forwardBtn = document.getElementById('forwardBtn');
         var templateContent = document.querySelector('.template-popup-content');
         var tempLayers = document.querySelectorAll('.temp-layer');
         var layerMask = document.querySelector('.layer-mask');
-        var fontSelect = document.getElementById('preferredFont');
         var colorPicker = document.getElementById('preferredColor');
+        var pdfLink = document.getElementById('pdfLink');
+        var iframe = document.querySelector('iframe'); // Changed selector to target iframe directly
 
-        // Function to open the color picker
-        window.openColorPicker = function() {
-            colorPicker.click();
-        };
+        // Function to toggle visibility of the color picker
+        function toggleColorPicker() {
+            if (colorPicker) {
+                colorPicker.style.visibility = colorPicker.style.visibility === 'hidden' ? 'visible' : 'hidden';
+            }
+        }
 
-        templateInput.addEventListener('click', function() {
-            // Show the template popup when the input is clicked
-            templatePopup.style.display = 'block';
-        });
+        // Function to get the selected color code
+        function getSelectedColorCode() {
+            var selectedCheckbox = document.querySelector('input[name="color"]:checked');
+            return selectedCheckbox ? selectedCheckbox.value : '{{$colorCode}}';
+        }
 
-        closeBtn.addEventListener('click', function() {
-            // Close the template popup when the close button is clicked
-            templatePopup.style.display = 'none';
-        });
+        // Function to update the PDF link
+        function updatePdfLink(templateId) {
+            var colorCode = getSelectedColorCode();
+            console.log('Template ID:', templateId); // Debug output
+            console.log('Color Code:', colorCode); // Debug output
+            if (pdfLink) {
+                pdfLink.href = "{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID_PLACEHOLDER', 'colorCode' => 'COLOR_CODE_PLACEHOLDER']) }}"
+                    .replace('TEMPLATE_ID_PLACEHOLDER', templateId)
+                    .replace('COLOR_CODE_PLACEHOLDER', colorCode);
+                console.log('PDF Link:', pdfLink.href); // Debug output
+            }
+        }
 
-        backBtn.addEventListener('click', function() {
-            // Scroll the template content to the left when the "Back" button is clicked
-            templateContent.scrollLeft -= 200; // Adjust the scrolling amount as needed
-        });
+        // Function to handle layer click
+        function handleLayerClick(tempLayer) {
+            tempLayers.forEach(function(tl) {
+                tl.classList.remove('active');
+            });
 
-        forwardBtn.addEventListener('click', function() {
-            // Scroll the template content to the right when the "Forward" button is clicked
-            templateContent.scrollLeft += 200; // Adjust the scrolling amount as needed
-        });
+            tempLayer.classList.add('active');
+            layerMask.innerHTML = tempLayer.innerHTML;
 
-        // Set the content of layer-mask to the content of temp-layer with id "1"
-        var initialTemplate = document.getElementById('2');
-        layerMask.innerHTML = initialTemplate.innerHTML;
+            // Assuming iframe is a <iframe> element
+            if (iframe) {
+                iframe.srcdoc = tempLayer.innerHTML;
+            }
 
-        // Set the template id placeholder to "1" initially
-        var templateIdPlaceholder = document.getElementById('pdfLink');
-        templateIdPlaceholder.href = "{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID']) }}"
-            .replace('TEMPLATE_ID', 2);
+            // Pass the tempLayer.id to updatePdfLink
+            updatePdfLink(tempLayer.id);
 
-        // Add click event listeners to each temp-layer
-        tempLayers.forEach(function(tempLayer) {
-            tempLayer.addEventListener('click', function() {
-                // Remove 'active' class from all temp-layers
-                tempLayers.forEach(function(tl) {
-                    tl.classList.remove('active');
-                    templatePopup.style.display = 'none';
+            // Close the template popup
+            if (templatePopup) {
+                templatePopup.style.display = 'none';
+            }
+        }
+
+        // Function to select color and check the corresponding input
+        function selectColor(colorId, colorCode) {
+            var colorInput = document.getElementById(colorId);
+            if (colorInput) {
+                // Uncheck all checkboxes first
+                var allInputs = document.querySelectorAll('input[name="color"]');
+                allInputs.forEach(function(input) {
+                    input.checked = false;
                 });
 
-                // Add 'active' class to the clicked temp-layer
-                tempLayer.classList.add('active');
+                // Check the selected color's checkbox
+                colorInput.checked = true;
 
-                // Change the content of layer-mask to the active temp-layer
-                layerMask.innerHTML = tempLayer.innerHTML;
+                // Submit the form
+                colorInput.form.submit();
+            }
+        }
 
-                // Get the id of the active temp-layer
-                var activeTemplateId = tempLayer.id;
+        // Add event listeners
+        if (templateInput) {
+            templateInput.addEventListener('click', function() {
+                if (templatePopup) {
+                    templatePopup.style.display = 'block';
+                }
+            });
+        }
 
-                // Update the href of the PDF link with the active templateNumber
-                var pdfLink = document.getElementById('pdfLink');
-                pdfLink.href =
-                    "{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID']) }}".replace(
-                        'TEMPLATE_ID', activeTemplateId);
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                if (templatePopup) {
+                    templatePopup.style.display = 'none';
+                }
+            });
+        }
 
-                // Update the srcdoc attribute of the iframe with the content of the active temp-layer
-                var iframe = document.querySelector('.layer-mask');
-                iframe.srcdoc = tempLayer.innerHTML;
+        if (backBtn) {
+            backBtn.addEventListener('click', function() {
+                if (templateContent) {
+                    templateContent.scrollLeft -= 200; // Adjust the scrolling amount as needed
+                }
+            });
+        }
+
+        if (forwardBtn) {
+            forwardBtn.addEventListener('click', function() {
+                if (templateContent) {
+                    templateContent.scrollLeft += 200; // Adjust the scrolling amount as needed
+                }
+            });
+        }
+
+        // Set initial state
+        (function() {
+            var initialTemplate = document.getElementById('2');
+            if (initialTemplate) {
+                layerMask.innerHTML = initialTemplate.innerHTML;
+                updatePdfLink(2);
+            }
+        })();
+
+        tempLayers.forEach(function(tempLayer) {
+            tempLayer.addEventListener('click', function() {
+                handleLayerClick(tempLayer);
             });
         });
 
-        // Add change event listener to font select input
-        fontSelect.addEventListener('change', function() {
-            var selectedFont = fontSelect.value;
-            layerMask.style.fontFamily = selectedFont;
+        var colorPickerButtons = document.querySelectorAll('.fx-color');
+        colorPickerButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var colorId = this.id.replace('btn', 'color');
+                var colorCode = this.style.backgroundColor || defaultColor; // Ensure defaultColor is defined
+                selectColor(colorId, colorCode);
+            });
         });
 
-
-    });
-</script>
-<!-- Add this script to your existing code -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var colorPicker = document.getElementById('preferredColor');
-        var layerMask = document.querySelector('.layer-mask');
-
-        // Add change event listener to color picker
-        colorPicker.addEventListener('input', function() {
-            var selectedColor = colorPicker.value;
-
-            // Set the selected color to the --fine-color CSS variable
-            document.documentElement.style.setProperty('--fine-color', selectedColor);
-
-            // Update the background color of the layer-mask
-            layerMask.style.backgroundColor = selectedColor;
-
-            // Iframe contentDocument may be null if the iframe is from a different origin
-            var iframeDocument = document.getElementById('myIframe').contentDocument;
-            if (iframeDocument) {
-                // Update the background color of elements inside the iframe with a specific class or attribute
-                var iframeElements = iframeDocument.querySelectorAll(
-                    '.fine-color-class'); // replace with your specific class or attribute
-                iframeElements.forEach(function(element) {
-                    element.style.backgroundColor = selectedColor;
-                });
-            }
-        });
+        window.openColorPicker = toggleColorPicker;
     });
 </script>

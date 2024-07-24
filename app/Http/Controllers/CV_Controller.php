@@ -274,22 +274,58 @@ class CV_Controller extends Controller
         return view('CV.experience-more', compact('cvExperience', 'cvEducation', 'cvReference'));
     }
 
-    public function Preview_Resume()
+    
+    
+    public function Finished_Resume(Request $request)
     {
-        return view('CV.preview-resume');
-    }
+        $request->validate([
+            'color1' => 'nullable',
+            'color2' => 'nullable',
+            'color3' => 'nullable',
+            'color4' => 'nullable',
+            'color5' => 'nullable',
+            'color6' => 'nullable',
+            'color7' => 'nullable',
+            'color8' => 'nullable',
+            'color9' => 'nullable',
+        ]);
 
-    public function Finished_Resume()
-    {
+        $colorCodes = [
+            'color1' => 'dodgerblue',
+            'color2' => 'deeppink',
+            'color3' => 'orange',
+            'color4' => 'green',
+            'color5' => 'mediumblue',
+            'color6' => 'red',
+            'color7' => 'darkblue',
+            'color8' => 'orangered',
+            'color9' => 'purple',
+        ];
+    
+        // Initialize the default color
+        $defaultColor = 'darkblue';
+    
+        // Determine the selected color code
+        $colorCode = $defaultColor; // Start with default color
+    
+        foreach ($colorCodes as $colorKey => $colorValue) {
+            if ($request->filled($colorKey)) {
+                $colorCode = $colorValue; // Set colorCode to the value if a matching color is found
+                break; // Exit the loop once a color is found
+            }
+        }
+    
         // Get the stored cv_personal_details_id from the session
         $cv_personal_details_id = session('cv_personal_details_id');
-
+    
         // Find the CvPersonalDetails record based on the ID
         $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
         $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
         $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        return view('CV.finished-resume', compact('cvEducation', 'cvExperience', 'cvReference'));
+    
+        return view('CV.finished-resume', compact('cvEducation', 'cvExperience', 'cvReference', 'colorCode'));
     }
+    
 
     public function Reference()
     {

@@ -155,14 +155,14 @@
                 <div class="cbs">
                     <label for="Application Instructions">Application Instructions:</label>
                     <textarea id="editor1" name="application_instructions" style="height: 100px;outline-color:#0095ff"
-                        placeholder="Interested candidates should submit their resume" value="">{{ $data->application_instructions }}</textarea>
+                        placeholder="Interested candidates should submit their resume" value="{!!$data->application_instructions !!}">{!!$data->application_instructions !!}</textarea>
                 </div>
                 <br>
 
                 <div>
                     <label for="Job Description">Job Description:</label>
-                    <textarea id="editor2" name="job_description" value=""
-                        placeholder="Include Job Reposnsibilities & Requirements/Qualification">{{ $data->job_description }}</textarea>
+                    <textarea id="editor2" name="job_description" value="{!! $data->job_description !!}"
+                        placeholder="Include Job Reposnsibilities & Requirements/Qualification">{!! $data->job_description !!}</textarea>
                 </div>
 
             </form>

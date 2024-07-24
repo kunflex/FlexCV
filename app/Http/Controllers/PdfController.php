@@ -14,12 +14,11 @@ use App\Models\CvReference;
 
 class PdfController extends Controller
 {
-    public function convertBladeToPdf($templateNumber)
+    public function convertBladeToPdf($templateNumber,$colorCode)
     {
         try {
              // Determine the template name based on the condition
             $template = 'template' . $templateNumber;
-
              // Get the stored cv_personal_details_id from the session
              $cv_personal_details_id = session('cv_personal_details_id');
     
@@ -36,6 +35,7 @@ class PdfController extends Controller
                 'cvExperience' => $cvExperience,
                 'cvAdditionalDetails' => $cvAdditionalDetails,
                 'cvReference' => $cvReference,
+                'colorCode' => $colorCode,
             ];
 
             // Load the Blade view and set options

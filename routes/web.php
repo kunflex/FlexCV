@@ -40,7 +40,8 @@ Route::post('/cv/process', [PDF_TO_TEXTController::class, 'processCV'])->name('c
 
 
 Route::get('MS-Word', [WordController::class, 'convertHtmlToWord']);
-Route::get('/PDF/{templateNumber}', [PdfController::class, 'convertBladeToPdf'])->name('pdf.download');
+Route::get('/PDF/{templateNumber}/{colorCode}', [PdfController::class, 'convertBladeToPdf'])->name('pdf.download');
+
 
 
 // <================= CV Controller=====================>
@@ -61,7 +62,6 @@ Route::get('review-education', [CV_Controller::class, 'Review_Education']);
 Route::get('education', [CV_Controller::class, 'Education']);
 Route::get('summary', [CV_Controller::class, 'Summary']);
 Route::get('finished-resume', [CV_Controller::class, 'Finished_Resume']);
-Route::get('preview-resume', [CV_Controller::class, 'Preview_Resume']);
 Route::get('experience/delete/{id}', [CV_Controller::class, 'ExperienceDelete']);
 Route::get('experience/update/{id}', [CV_Controller::class, 'ExperienceUpdate']);
 Route::put('update-experience-info/{id}', [CV_Controller::class, 'ExperienceEdit'])->name('update-experience-info');
@@ -99,6 +99,7 @@ Route::get('/preview', [TemplatesController::class, 'TemplatePreview'])->name('p
 // <================ End Templates Controller=====================>
 
 // <================Templates Controller=====================>
+Route::post('select/template', [TemplatesController::class, 'TemplateChoice']);
 Route::get('modern1', function () {
     return view('ResumeTemplates.modern1');
 });

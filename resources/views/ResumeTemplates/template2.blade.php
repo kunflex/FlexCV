@@ -8,49 +8,47 @@
     <style>
         @page {
             size: A4;
-            margin: 20mm;
+            margin: 10mm;
         }
-
+       
         body {
-            font-family: 'Arial', sans-serif;
-            color: #333;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #000;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             line-height: 1.6;
-            background-color: #fff;
+            background-color:#fff;
         }
-
-        
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
         .header h1 {
-            color: #4CAF50;
-            font-size: 36px;
+            font-size: 24px;
             margin: 0;
-            padding-bottom: 2px;
-            border-bottom: 2px solid #4CAF50;
+            color: {{$colorCode}};
+            border-bottom: 2px solid {{$colorCode}};
             display: inline-block;
         }
 
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .section h2 {
-            color: #4CAF50;
+            color: {{$colorCode}};
             margin: 0 0 2px 0;
-            font-size: 24px;
-            border-bottom: 2px solid #e0e0e0;
+            font-size: 18px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .section p,
         .section span,
         .section ul {
-            font-size: 16px;
+            font-size: 14px;
             margin: 0;
             padding: 0;
         }
@@ -65,6 +63,10 @@
             margin-bottom: 5px;
         }
 
+        .details span b {
+            color: #333;
+        }
+
         .references ul {
             list-style-type: none;
             padding-left: 0;
@@ -77,6 +79,10 @@
         .reference-details span {
             display: block;
             margin-top: 5px;
+        }
+
+        .section p {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -113,7 +119,7 @@
         <div class="section">
             <h2>Educational Background</h2>
             <div class="details">
-                <span><b>Start date - End date:</b> Program of Study | Institution</span>
+                <span><b>Start date - End date:</b><br> Program of Study | Institution</span>
             </div>
             <p>
                 <b>Course Outline</b>
@@ -131,7 +137,7 @@
         <div class="section">
             <h2>Work Experience</h2>
             <div class="details">
-                <span><b>Start date - End date:</b> Job Title | Company</span>
+                <span><b>Start date - End date:</b><br> Job Title | Company</span>
             </div>
             <p>
                 <b>Responsibilities</b>

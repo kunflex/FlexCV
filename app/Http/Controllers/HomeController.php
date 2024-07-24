@@ -124,16 +124,16 @@ class HomeController extends Controller
     {
         // Default number of items per page
         $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
-    
+
         // Helper function to fetch and transform paginated jobs
-        $fetchAndTransformJobs = function($category, $perPage) {
+        $fetchAndTransformJobs = function ($category, $perPage) {
             $jobs = JobDisplay::where('category', $category)->paginate($perPage);
-    
+
             // Check if jobs collection is empty
             if ($jobs->isEmpty()) {
                 return null; // Return null if no jobs found for the category
             }
-    
+
             $transformed = $jobs->getCollection()->map(function ($job) {
                 $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
                 // Include a debug log for each job processed
@@ -143,62 +143,65 @@ class HomeController extends Controller
                     'first_letter' => $firstLetter
                 ];
             });
-    
+
             // Replace the original collection in the paginator
             $jobs->setCollection($transformed);
-    
+
             return $jobs;
         };
-    
+
         // Fetch and transform jobs for each category
         $categories = [
-            'Information Technology' => 'IT',
-            'Business Administration' => 'BA',
-            'Social Sciences' => 'SS',
-            'Engineering' => 'EE',
-            'Arts and Fashion' => 'Arts',
-            'Health Sciences' => 'HS',
-            'Education' => 'Edu',
-            'Applied Science' => 'Science',
-            'Agriculture' => 'Agric',
+            'Information Technology' => 'Information Technology',
+            'Business Administration' => 'Business Administration',
+            'Social Sciences' => 'Social Sciences',
+            'Engineering' => 'Engineering',
+            'Arts and Fashion' => 'Arts and Fashion',
+            'Health Sciences' => 'Health Sciences',
+            'Education' => 'Education',
+            'Applied Science' => 'Applied Science',
+            'Agriculture' => 'Agriculture',
             'Law' => 'Law'
         ];
-    
+
         $data = [];
         $counts = [];
+        $pages = [];
         $totalJobs = 0;
-    
+
         foreach ($categories as $category => $variable) {
             $jobs = $fetchAndTransformJobs($category, $perPage);
-    
+
             // Check if jobs variable is null (no jobs found for the category)
             if ($jobs === null) {
                 // Handle the case where no jobs are found
-                $data[$variable] = collect(); // Provide an empty collection or handle as per your requirement
-                $counts[$variable . 'Count'] = 0;
+
             } else {
                 $data[$variable] = $jobs;
-                $counts[$variable . 'Count'] = $jobs->total();
+                $counts[$variable . 'Counts'] = $jobs->total();
+                $pages[$variable . 'Pages'] = $jobs;
                 $totalJobs += $jobs->total();
             }
         }
-    
+
         // Initialize result variable
         $result = '';
-    
+
         // Check if all data arrays are empty
         if ($totalJobs === 0) {
             $result = 'No jobs found!';
         }
-    
+
         // Send data to the view
-        return view('job-search', array_merge($data, $counts, [
+        return view('job-search', array_merge($data, [
             'data' => $data,
             'result' => $result,
+            'counts' => $counts,
+            'pages' => $pages,
             'perPage' => $perPage
         ]));
     }
-    
+
 
 
     public function JobSearchNearby(Request $request)
@@ -206,24 +209,14 @@ class HomeController extends Controller
         // Default number of items per page
         $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
 
-        // Define categories and corresponding variables
-        $categories = [
-            'Information Technology' => 'IT',
-            'Business Administration' => 'BA',
-            'Social Sciences' => 'SS',
-            'Engineering' => 'EE',
-            'Arts and Fashion' => 'Arts',
-            'Health Sciences' => 'HS',
-            'Education' => 'Edu',
-            'Applied Science' => 'Science',
-            'Agriculture' => 'Agric',
-            'Law' => 'Law'
-        ];
-
-        // Helper function to fetch and transform jobs for a given category
-        function fetchJobs($category, $perPage)
-        {
+        // Helper function to fetch and transform paginated jobs
+        $fetchAndTransformJobs = function ($category, $perPage) {
             $jobs = JobDisplay::where('category', $category)->paginate($perPage);
+
+            // Check if jobs collection is empty
+            if ($jobs->isEmpty()) {
+                return null; // Return null if no jobs found for the category
+            }
 
             $transformed = $jobs->getCollection()->map(function ($job) {
                 $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
@@ -239,21 +232,56 @@ class HomeController extends Controller
             $jobs->setCollection($transformed);
 
             return $jobs;
-        }
-
-        // Initialize arrays to store data and counts
-        $data = [];
-        $counts = [];
+        };
 
         // Fetch and transform jobs for each category
+        $categories = [
+            'Information Technology' => 'Information Technology',
+            'Business Administration' => 'Business Administration',
+            'Social Sciences' => 'Social Sciences',
+            'Engineering' => 'Engineering',
+            'Arts and Fashion' => 'Arts and Fashion',
+            'Health Sciences' => 'Health Sciences',
+            'Education' => 'Education',
+            'Applied Science' => 'Applied Science',
+            'Agriculture' => 'Agriculture',
+            'Law' => 'Law'
+        ];
+
+        $data = [];
+        $counts = [];
+        $pages = [];
+        $totalJobs = 0;
+
         foreach ($categories as $category => $variable) {
-            $jobs = fetchJobs($category, $perPage);
-            $data[$variable] = $jobs;
-            $counts[$variable . 'Count'] = $jobs->total();
+            $jobs = $fetchAndTransformJobs($category, $perPage);
+
+            // Check if jobs variable is null (no jobs found for the category)
+            if ($jobs === null) {
+                // Handle the case where no jobs are found
+
+            } else {
+                $data[$variable] = $jobs;
+                $counts[$variable . 'Counts'] = $jobs->total();
+                $pages[$variable . 'Pages'] = $jobs;
+                $totalJobs += $jobs->total();
+            }
+        }
+
+        // Initialize result variable
+        $result = '';
+
+        // Check if all data arrays are empty
+        if ($totalJobs === 0) {
+            $result = 'No jobs found!';
         }
 
         // Send data to the view
-        return view('jobs-nearby', array_merge($data, $counts, [
+        return view('jobs-nearby', array_merge($data, [
+            'data' => $data,
+            'result' => $result,
+            'counts' => $counts,
+            'pages' => $pages,
             'perPage' => $perPage
         ]));
     }

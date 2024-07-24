@@ -27,8 +27,8 @@ class AdminController extends Controller
     {
         $request->validate(['search' => 'required']);
         $search = $request->input('search');
-        $data = JobDisplay::where('job_title', 'like', '%' . $search . '%') ->get();
-            $result='';
+        $data = JobDisplay::where('job_title', 'like', '%' . $search . '%')->get();
+        $result = '';
         if ($data->isEmpty()) {
             $result = 'Search for "' . $search . '" not found';
         }
@@ -38,54 +38,30 @@ class AdminController extends Controller
     }
 
     public function SearchJobs(Request $request)
-{
-    $request->validate(['search' => 'required']);
-    $search = $request->input('search');
-    
-    // Fetch jobs based on search query
-    $data = JobDisplay::where('job_title', 'like', '%' . $search . '%')->get();
-    
-    // Initialize result variable
-    $result = '';
+    {
+        $request->validate(['search' => 'required']);
+        $search = $request->input('search');
 
-    // Check if data is empty
-    if  ($data->isEmpty()) {
-        $result = 'Search result for "' . $search . '" not found';
+        // Fetch jobs based on search query
+        $data = JobDisplay::where('job_title', 'like', '%' . $search . '%')->get();
+
+        // Initialize result variable
+        $result = '';
+
+        // Check if data is empty
+        if ($data->isEmpty()) {
+            $formattedSearch = '<b>' . htmlspecialchars($search, ENT_QUOTES, 'UTF-8') . '</b>';
+            $result = 'Search result for "' . $formattedSearch . '" not found';
+        }
+        else{
+
+        }
+        // Send data and result to the view
+        return view('job-search', compact('data', 'result'));
     }
 
-    // Fetch paginated jobs for specific categories
-    $perPage = 4; // Default number of items per page
-    $IT = JobDisplay::where('category', 'Information Technology')->paginate($perPage);
-    $BA = JobDisplay::where('category', 'Business Administration')->paginate($perPage);
-    $SS = JobDisplay::where('category', 'Social Sciences')->paginate($perPage);
-    $EE = JobDisplay::where('category', 'Engineering')->paginate($perPage);
-    $Arts = JobDisplay::where('category', 'Arts and Fashion')->paginate($perPage);
-    $HS = JobDisplay::where('category', 'Health Sciences')->paginate($perPage);
-    $Edu = JobDisplay::where('category', 'Education')->paginate($perPage);
-    $Science = JobDisplay::where('category', 'Applied Science')->paginate($perPage);
-    $Agric = JobDisplay::where('category', 'Agriculture')->paginate($perPage);
-    $Law = JobDisplay::where('category', 'Law')->paginate($perPage);
 
-    // Count total jobs for each category
-    $ITCount = $IT->total();
-    $BACount = $BA->total();
-    $SSCount = $SS->total();
-    $EECount = $EE->total();
-    $ArtsCount = $Arts->total();
-    $HSCount = $HS->total();
-    $EduCount = $Edu->total();
-    $ScienceCount = $Science->total();
-    $AgricCount = $Agric->total();
-    $LawCount = $Law->total();
 
-    // Send data and result to the view
-    return view('job-search', compact(
-        'data', 'result',
-        'IT', 'BA', 'SS', 'EE', 'Arts', 'HS', 'Edu', 'Science', 'Agric', 'Law',
-        'ITCount', 'BACount', 'SSCount', 'EECount', 'ArtsCount', 'HSCount', 'EduCount', 'ScienceCount', 'AgricCount', 'LawCount',
-        'perPage'
-    ));
-}
 
 
 
@@ -98,7 +74,7 @@ class AdminController extends Controller
             ->orWhere('email', 'like', '%' . $search . '%')
             ->orWhere('advertisement', 'like', '%' . $search . '%')
             ->get();
-            $result='';
+        $result = '';
         if ($enquiries->isEmpty()) {
             $result = 'Search for "' . $search . '" not found';
         }
@@ -107,7 +83,7 @@ class AdminController extends Controller
         return view('admin.enquiries', compact('enquiries', 'result'));
     }
 
-    
+
     public function SearchTestimonials(Request $request)
     {
         $request->validate(['search' => 'required']);
@@ -115,10 +91,9 @@ class AdminController extends Controller
         $testimonials = Testimonials::where('name', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '%' . $search . '%')
             ->get();
-            $result='';
+        $result = '';
         if ($testimonials->isEmpty()) {
             $result = 'Search for "' . $search . '" not found';
-            
         }
 
         return view('admin.testimonials', compact('testimonials', 'result'));
@@ -131,7 +106,7 @@ class AdminController extends Controller
         $dataUsers = User::where('name', 'like', '%' . $search . '%')
             ->orWhere('email', 'like', '%' . $search . '%')
             ->get();
-            $result='';
+        $result = '';
         if ($dataUsers->isEmpty()) {
             $result = 'Search for "' . $search . '" not found';
         }
@@ -143,7 +118,7 @@ class AdminController extends Controller
 
     public function UpdateJobs($id)
     {
-        $data = JobDisplay::find($id)->first();
+        $data = JobDisplay::find($id);
         // Check if data is found
         if ($data) {
             // Decode HTML entities for fields that contain HTML content
@@ -205,10 +180,10 @@ class AdminController extends Controller
     {
         $testimonials = Testimonials::all();
         $result = '';
-        if($testimonials->isEmpty()){
+        if ($testimonials->isEmpty()) {
             $result = 'No queries found!';
         }
-        return view('admin.testimonials', compact('testimonials','result'));
+        return view('admin.testimonials', compact('testimonials', 'result'));
     }
 
     public function SendTestimonials(Request $request)
@@ -241,7 +216,7 @@ class AdminController extends Controller
     {
         $dataUsers = User::all();
         $result = '';
-        if($dataUsers->isEmpty()){
+        if ($dataUsers->isEmpty()) {
             $result = 'No queries found!';
         }
         return view('admin.account', compact('dataUsers', 'result'));
@@ -289,7 +264,7 @@ class AdminController extends Controller
     {
         $enquiries = Enquiries::all();
         $result = '';
-        if($enquiries->isEmpty()){
+        if ($enquiries->isEmpty()) {
             $result = 'No queries found!';
         }
         return view('admin.enquiries', compact('enquiries', 'result'));
