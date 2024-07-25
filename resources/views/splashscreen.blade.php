@@ -247,7 +247,7 @@
         width: 68%;
         background-color: #0095ff;
         height: 100%;
-        background-image: url('assets/img/young-student-learning-library.jpg');
+        background-image: url('{{ asset('assets/img/young-student-learning-library.jpg')}}');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

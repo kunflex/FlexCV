@@ -13,8 +13,8 @@
     }
 
     .cover-color {
-        background-color: #0095FF;
-        background-image: url('assets/img/study-group-learning-library (1).jpg');
+        background-color: #00000052;
+        background-image: url('{{ asset('assets/img/study-group-learning-library (1).jpg') }}');
         background-position: center;
         background-size: cover;
     }
@@ -223,7 +223,7 @@
                         <h4>Edit Resume</h4>
                     </button></a><br>
                 <a id="pdfLink"
-                    href="{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID_PLACEHOLDER', 'colorCode' => $colorCode]) }}"><button
+                    href="{{ route('pdf.download', ['templateNumber' => $template_id, 'colorCode' => $colorCode]) }}"><button
                         class="lks-btn"><img src="{{ asset('assets/icons/file_type_pdf_icon_130274.svg') }}"
                             alt="Like">
                         <h4>Download as PDF</h4>
@@ -244,7 +244,7 @@
                                 placeholder="--- Select Preferred Template ---" id="templateInput" readonly></div>
                         <div class="fks-mask" onclick="openColorPicker()">
                             <div>
-                                <form method="get">
+                                <form action="{{url('select/color')}}" method="get">
                                     {{-- colors layer --}}
                                     <div class="style-fx-color" name="preferredColor" id="preferredColor">
                                         {{-- color 1 --}}
@@ -280,7 +280,7 @@
                                         {{-- color 6 --}}
                                         <div>
                                             <div class="fx-color" onclick="selectColor('color6','red')"
-                                                style="background-color:red" id="btn6"></div>
+                                                style="background-color:darkred" id="btn6"></div>
                                             <input type="checkbox" name="color6" id="color6" hidden>
                                         </div>
                                         {{-- color 7 --}}
@@ -303,7 +303,7 @@
                                         </div>
                                         {{-- Submit button --}}
                                         <button type="submit" hidden>Submit</button>
-                                        
+
                                     </div>
                                 </form>
                             </div><span>--- Select Preferred Color ---</span>
@@ -334,97 +334,48 @@
                     <button class="back-btn" id="backcloseBtn"><img
                             src="{{ asset('assets/icons/chevron-back.svg') }}"height="20" width="20"
                             alt=""></button>
-                    <div class="template-popup-content">
-                        <div>
-                            <img class="temp-image" id="temp-image1" src="{{ asset('assets/img/template1.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="1">@include('ResumeTemplates.template1')</div>
-                        </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image2" src="{{ asset('assets/img/template2.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="2">@include('ResumeTemplates.template2')</div>
-                        </div>
+                    <form id="templateForm" action="{{ url('change/template') }}" method="get">
+                        <div class="template-popup-content">
+                            <div>
+                                <img onclick="setTemplate('1')" class="temp-image" id="temp-image1"
+                                    src="{{ asset('assets/img/template1.png') }}" alt="">
+                                <input type="checkbox" name="template1" id="1" hidden>
+                            </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image3" src="{{ asset('assets/img/template3.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="3">@include('ResumeTemplates.template3')</div>
-                        </div>
+                            <div>
+                                <img onclick="setTemplate('2')" class="temp-image" id="temp-image2"
+                                    src="{{ asset('assets/img/template2.png') }}" alt="">
+                                <input type="checkbox" name="template2" id="2" hidden>
+                            </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image4" src="{{ asset('assets/img/template4.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="4">@include('ResumeTemplates.template4')</div>
-                        </div>
+                            <div>
+                                <img onclick="setTemplate('3')" class="temp-image" id="temp-image3"
+                                    src="{{ asset('assets/img/template3.png') }}" alt="">
+                                <input type="checkbox" name="template3" id="3" hidden>
+                            </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image5" src="{{ asset('assets/img/template5.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="5">@include('ResumeTemplates.template5')</div>
-                        </div>
+                            <div>
+                                <img onclick="setTemplate('4')" class="temp-image" id="temp-image4"
+                                    src="{{ asset('assets/img/template4.png') }}" alt="">
+                                <input type="checkbox" name="template4" id="4" hidden>
+                            </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image6" src="{{ asset('assets/img/template6.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="6">@include('ResumeTemplates.template6')</div>
-                        </div>
+                            <div>
+                                <img onclick="setTemplate('5')" class="temp-image" id="temp-image5"
+                                    src="{{ asset('assets/img/template5.png') }}" alt="">
+                                <input type="checkbox" name="template5" id="5" hidden>
+                            </div>
 
-                        <div>
-                            <img class="temp-image" id="temp-image7" src="{{ asset('assets/img/template7.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="7"></div>
+                            <div>
+                                <img onclick="setTemplate('6')" class="temp-image" id="temp-image6"
+                                    src="{{ asset('assets/img/template6.png') }}" alt="">
+                                <input type="checkbox" name="template6" id="6" hidden>
+                            </div>
+                            <button type="submit" hidden>submit</button>
                         </div>
+                    </form>
 
-                        <div>
-                            <img class="temp-image" id="temp-image8" src="{{ asset('assets/img/template8.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="8"></div>
-                        </div>
-
-                        <div>
-                            <img class="temp-image" id="temp-image9" src="{{ asset('assets/img/template9.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="9"></div>
-                        </div>
-
-                        <div>
-                            <img class="temp-image" id="temp-image10" src="{{ asset('assets/img/template10.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="10"></div>
-                        </div>
-
-                        <div>
-                            <img class="temp-image" id="temp-image11" src="{{ asset('assets/img/template11.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="2"></div>
-                        </div>
-
-                        <div>
-                            <img class="temp-image" id="temp-image12" src="{{ asset('assets/img/template12.png') }}"
-                                alt="">
-                            <div class="temp-layer" id="12"></div>
-                        </div>
-                        <div class="temp-layer" id="1">@include('ResumeTemplates.template1')</div>
-                        <div class="temp-layer active" id="2">@include('ResumeTemplates.template2')</div>
-                        <div class="temp-layer" id="3">@include('ResumeTemplates.template3')</div>
-                        <div class="temp-layer" id="4">@include('ResumeTemplates.template4')</div>
-                        <div class="temp-layer" id="5">@include('ResumeTemplates.template5')</div>
-                        <div class="temp-layer" id="6">@include('ResumeTemplates.template6')</div>
-                        <div class="temp-layer" id="7"></div>
-                        <div class="temp-layer" id="8"></div>
-                        <div class="temp-layer" id="9"></div>
-                        <div class="temp-layer" id="10"></div>
-                        <div class="temp-layer" id="11"></div>
-                        <div class="temp-layer" id="12"></div>
-                        <div class="temp-layer" id="13"></div>
-                        <div class="temp-layer" id="14"></div>
-                        <div class="temp-layer" id="15"></div>
-                        <div class="temp-layer" id="16"></div>
-                        <div class="temp-layer" id="17"></div>
-                        <div class="temp-layer" id="18"></div>
-                    </div>
                     <button class="forward-btn" id="forwardBtn"><img
                             src="{{ asset('assets/icons/chevron-forward.svg') }}"height="20" width="20"
                             alt=""></button>
@@ -435,7 +386,15 @@
 
 </html>
 
-
+<script>
+    function setTemplate(templateId) {
+        var input = document.getElementById(templateId);
+        if (input) {
+            input.checked = true;
+            document.getElementById('templateForm').submit();
+        }
+    }
+</script>
 
 <script>
     // Function to handle the click event for a template
@@ -458,76 +417,38 @@
     }
 
     // Function to set up all templates
-    function setupTemplates(count) {
+    function setupTemplates(count, activeTemplateId) {
         for (let i = 1; i <= count; i++) {
-            handleTemplateClick(`temp-image${i}`, `${i}`);
+            let imageId = `temp-image${i}`;
+            handleTemplateClick(imageId, `${i}`);
+
+            // Set the active class if the imageId matches the activeTemplateId
+            if (`${i}` === activeTemplateId) {
+                document.getElementById(imageId).classList.add('active');
+            }
         }
     }
 
-    // Call setupTemplates with the number of templates
-    setupTemplates(12);
+    // Call setupTemplates with the number of templates and the active template id
+    setupTemplates(12, '{{ $template_id }}');
 </script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var templateInput = document.getElementById('templateInput');
         var templatePopup = document.getElementById('templatePopup');
         var closeBtn = document.getElementById('closeBtn');
-        var backBtn = document.getElementById('backcloseBtn'); 
+        var backBtn = document.getElementById('backcloseBtn');
         var forwardBtn = document.getElementById('forwardBtn');
         var templateContent = document.querySelector('.template-popup-content');
-        var tempLayers = document.querySelectorAll('.temp-layer');
-        var layerMask = document.querySelector('.layer-mask');
         var colorPicker = document.getElementById('preferredColor');
-        var pdfLink = document.getElementById('pdfLink');
-        var iframe = document.querySelector('iframe'); // Changed selector to target iframe directly
+        var colorPickerButtons = document.querySelectorAll('.fx-color');
 
         // Function to toggle visibility of the color picker
         function toggleColorPicker() {
             if (colorPicker) {
                 colorPicker.style.visibility = colorPicker.style.visibility === 'hidden' ? 'visible' : 'hidden';
-            }
-        }
-
-        // Function to get the selected color code
-        function getSelectedColorCode() {
-            var selectedCheckbox = document.querySelector('input[name="color"]:checked');
-            return selectedCheckbox ? selectedCheckbox.value : '{{$colorCode}}';
-        }
-
-        // Function to update the PDF link
-        function updatePdfLink(templateId) {
-            var colorCode = getSelectedColorCode();
-            console.log('Template ID:', templateId); // Debug output
-            console.log('Color Code:', colorCode); // Debug output
-            if (pdfLink) {
-                pdfLink.href = "{{ route('pdf.download', ['templateNumber' => 'TEMPLATE_ID_PLACEHOLDER', 'colorCode' => 'COLOR_CODE_PLACEHOLDER']) }}"
-                    .replace('TEMPLATE_ID_PLACEHOLDER', templateId)
-                    .replace('COLOR_CODE_PLACEHOLDER', colorCode);
-                console.log('PDF Link:', pdfLink.href); // Debug output
-            }
-        }
-
-        // Function to handle layer click
-        function handleLayerClick(tempLayer) {
-            tempLayers.forEach(function(tl) {
-                tl.classList.remove('active');
-            });
-
-            tempLayer.classList.add('active');
-            layerMask.innerHTML = tempLayer.innerHTML;
-
-            // Assuming iframe is a <iframe> element
-            if (iframe) {
-                iframe.srcdoc = tempLayer.innerHTML;
-            }
-
-            // Pass the tempLayer.id to updatePdfLink
-            updatePdfLink(tempLayer.id);
-
-            // Close the template popup
-            if (templatePopup) {
-                templatePopup.style.display = 'none';
             }
         }
 
@@ -565,6 +486,20 @@
                 }
             });
         }
+        // Function to close the template popup
+        function closeTemplatePopup() {
+            if (templatePopup && templatePopup.style.display === 'block') {
+                templatePopup.style.display = 'none';
+            }
+        }
+
+        // Add event listener to the document to close the popup when clicking anywhere
+        document.addEventListener('click', function(event) {
+            if (templatePopup && templatePopup.style.display === 'block' && !templatePopup.contains(
+                    event.target) && event.target !== templateInput) {
+                closeTemplatePopup();
+            }
+        });
 
         if (backBtn) {
             backBtn.addEventListener('click', function() {
@@ -582,26 +517,11 @@
             });
         }
 
-        // Set initial state
-        (function() {
-            var initialTemplate = document.getElementById('2');
-            if (initialTemplate) {
-                layerMask.innerHTML = initialTemplate.innerHTML;
-                updatePdfLink(2);
-            }
-        })();
-
-        tempLayers.forEach(function(tempLayer) {
-            tempLayer.addEventListener('click', function() {
-                handleLayerClick(tempLayer);
-            });
-        });
-
-        var colorPickerButtons = document.querySelectorAll('.fx-color');
         colorPickerButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var colorId = this.id.replace('btn', 'color');
-                var colorCode = this.style.backgroundColor || defaultColor; // Ensure defaultColor is defined
+                var colorCode = this.style.backgroundColor ||
+                defaultColor; // Ensure defaultColor is defined
                 selectColor(colorId, colorCode);
             });
         });

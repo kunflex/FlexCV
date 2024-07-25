@@ -100,6 +100,8 @@ Route::get('/preview', [TemplatesController::class, 'TemplatePreview'])->name('p
 
 // <================Templates Controller=====================>
 Route::post('select/template', [TemplatesController::class, 'TemplateChoice']);
+Route::get('select/color', [TemplatesController::class, 'ColorChoice']);
+Route::get('change/template', [TemplatesController::class, 'TemplateChoice']);
 Route::get('modern1', function () {
     return view('ResumeTemplates.modern1');
 });

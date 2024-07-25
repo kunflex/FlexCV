@@ -19,7 +19,7 @@ class TemplatesController extends Controller
         return view('template-page');
     }
 
-    public function TemplateChoice(Request $request)
+    public function ColorChoice(Request $request)
     {
         $colorCodes = [
             'color1' => 'dodgerblue',
@@ -27,12 +27,45 @@ class TemplatesController extends Controller
             'color3' => 'orange',
             'color4' => 'green',
             'color5' => 'mediumblue',
-            'color6' => 'red',
+            'color6' => 'darkred',
             'color7' => 'darkblue',
             'color8' => 'orangered',
             'color9' => 'purple',
         ];
-    
+
+        $defaultColor = 'darkblue';
+        $colorCode = $defaultColor; // Start with default color
+
+        foreach ($colorCodes as $colorKey => $colorValue) {
+            if ($request->filled($colorKey)) {
+                $colorCode = $colorValue; // Set colorCode to the value if a matching color is found
+                break; // Exit the loop once a color is found
+            }
+        }
+
+        // Store the selected color in session
+        session(['colorCode' => $colorCode]);
+        // Define the template codes mapping
+        $templateCodes = [
+            'template1' => '1',
+            'template2' => '2',
+            'template3' => '3',
+            'template4' => '4',
+            'template5' => '5',
+            'template6' => '6',
+        ];
+
+        // Retrieve the selected template code from the session
+        $templateCode = session('templateCode', 'template2'); // Provide a default value
+
+        // Determine the template ID based on the selected template code
+        $template_id = $templateCodes[$templateCode] ?? null;
+
+        return view('CV.finished-resume', compact('template_id'))->with('colorCode', $colorCode);
+    }
+
+    public function TemplateChoice(Request $request)
+    {
         $templateCodes = [
             'template1' => 'template1',
             'template2' => 'template2',
@@ -41,45 +74,35 @@ class TemplatesController extends Controller
             'template5' => 'template5',
             'template6' => 'template6',
         ];
-    
-        // Initialize the default color and template
-        $defaultColor = 'darkblue';
+
         $defaultTemplate = 'template2';
-    
-        // Determine the selected color code
-        $colorCode = $defaultColor; // Start with default color
-        foreach ($colorCodes as $colorKey => $colorValue) {
-            if ($request->filled($colorKey)) {
-                $colorCode = $colorValue; // Set colorCode to the value if a matching color is found
-                break; // Exit the loop once a color is found
-            }
-        }
-    
-        // Determine the selected template code
         $templateCode = $defaultTemplate; // Start with default template
+
         foreach ($templateCodes as $templateKey => $templateValue) {
             if ($request->filled($templateKey)) {
                 $templateCode = $templateValue; // Set templateCode to the value if a matching template is found
                 break; // Exit the loop once a template is found
             }
         }
-    
-        // Store the selected color and template in session
-        session(['colorCode' => $colorCode, 'templateCode' => $templateCode]);
-    
-        return redirect('select-resume');
+
+        $colorCode = session('colorCode', 'darkblue');
+        // Store the selected template in session
+        session(['templateCode' => $templateCode]);
+        // Retrieve the stored cv_personal_details_id from the session
+        $cv_personal_details_id = session('cv_personal_details_id');
+
+        if (!empty($cv_personal_details_id)) {
+            return redirect()->back()->with('colorCode', $colorCode);
+        }
+        return redirect('select-resume')->with('colorCode', $colorCode);
     }
-    
+
     public function TemplatePreview(Request $request)
     {
-        // Define default values
-        $defaultColorCode = 'darkblue'; // Replace with your actual default color code
-        $defaultTemplateCode = 'template2'; // Replace with your actual default template code
-    
         // Retrieve session variables or assign default values
-        $colorCode = session('colorCode', $defaultColorCode);
-        $templateCode = session('templateCode', $defaultTemplateCode);
-    
+        $colorCode = session('colorCode', 'darkblue');
+        $templateCode = session('templateCode', 'template2');
+
         // Check if the view exists
         if (view()->exists("ResumeTemplates.$templateCode")) {
             return view("ResumeTemplates.$templateCode", compact('colorCode'));
@@ -88,8 +111,8 @@ class TemplatesController extends Controller
             abort(404, 'Template not found');
         }
     }
-    
-    
+
+
 
     public function Template1(Request $request)
     {

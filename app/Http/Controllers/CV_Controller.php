@@ -274,58 +274,42 @@ class CV_Controller extends Controller
         return view('CV.experience-more', compact('cvExperience', 'cvEducation', 'cvReference'));
     }
 
-    
-    
-    public function Finished_Resume(Request $request)
-    {
-        $request->validate([
-            'color1' => 'nullable',
-            'color2' => 'nullable',
-            'color3' => 'nullable',
-            'color4' => 'nullable',
-            'color5' => 'nullable',
-            'color6' => 'nullable',
-            'color7' => 'nullable',
-            'color8' => 'nullable',
-            'color9' => 'nullable',
-        ]);
 
-        $colorCodes = [
-            'color1' => 'dodgerblue',
-            'color2' => 'deeppink',
-            'color3' => 'orange',
-            'color4' => 'green',
-            'color5' => 'mediumblue',
-            'color6' => 'red',
-            'color7' => 'darkblue',
-            'color8' => 'orangered',
-            'color9' => 'purple',
-        ];
-    
-        // Initialize the default color
-        $defaultColor = 'darkblue';
-    
-        // Determine the selected color code
-        $colorCode = $defaultColor; // Start with default color
-    
-        foreach ($colorCodes as $colorKey => $colorValue) {
-            if ($request->filled($colorKey)) {
-                $colorCode = $colorValue; // Set colorCode to the value if a matching color is found
-                break; // Exit the loop once a color is found
-            }
-        }
-    
-        // Get the stored cv_personal_details_id from the session
-        $cv_personal_details_id = session('cv_personal_details_id');
-    
-        // Find the CvPersonalDetails record based on the ID
-        $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
-        $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
-    
-        return view('CV.finished-resume', compact('cvEducation', 'cvExperience', 'cvReference', 'colorCode'));
-    }
-    
+
+    public function Finished_Resume(Request $request)
+{
+    // Retrieve the selected color code from the session
+    $colorCode = session('colorCode', 'darkblue'); // Provide a default value in case session is empty
+
+    // Retrieve the stored cv_personal_details_id from the session
+    $cv_personal_details_id = session('cv_personal_details_id');
+
+    // Define the template codes mapping
+    $templateCodes = [
+        'template1' => '1',
+        'template2' => '2',
+        'template3' => '3',
+        'template4' => '4',
+        'template5' => '5',
+        'template6' => '6',
+    ];
+
+    // Retrieve the selected template code from the session
+    $templateCode = session('templateCode', 'template2'); // Provide a default value
+
+    // Determine the template ID based on the selected template code
+    $template_id = $templateCodes[$templateCode] ?? null;
+
+    // Retrieve the records based on cv_personal_details_id
+    $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
+    $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
+    $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
+
+    // Pass the data to the view
+    return view('CV.finished-resume', compact('cvEducation', 'cvExperience', 'cvReference', 'colorCode', 'template_id'));
+}
+
+
 
     public function Reference()
     {

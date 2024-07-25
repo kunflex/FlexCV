@@ -123,7 +123,7 @@
     }
 
     body {
-        background-image: url('assets/img/study-group-learning-library (1).jpg');
+        background-image: url('{{ asset('assets/img/study-group-learning-library (1).jpg')}}');
         background-position: center;
         background-size: cover;
     }
