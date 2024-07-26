@@ -388,7 +388,6 @@
         margin-top: 10px;
         height: 400px;
         user-select: none;
-        background-color: #ffff;
         counter-reset: step;
     }
 

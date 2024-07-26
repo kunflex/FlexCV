@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Reference | FlexCV Official Website')
+
 @section('content')
 
 <!-- ======Page content telling the user the next step===== -->

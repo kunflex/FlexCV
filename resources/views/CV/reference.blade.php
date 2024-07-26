@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Reference | FlexCV Official Website')
+
 @section('content')
 <!-- ======Page prompt telling the user the next step===== -->
     <div class="page-prompt">
@@ -38,7 +40,7 @@
             <span>Provide detailed information about your reference</span>
         </div>
 
-        <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+        <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
             <form id="reference-info" action="{{route('reference-info')}}" method="post">
                 @csrf
                 <div class="rbs-content-layer" style="float:left;">

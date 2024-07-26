@@ -1,10 +1,12 @@
 @extends('cv_structure')
 
+@section('title', 'Professional Summary | FlexCV Official Website')
+
 @section('content')
 <!-- ======Page prompt telling the user the next step===== -->
     <div class="page-prompt">
         <div class="page-prompt1">
-            <div style="margin-top:60px;margin-bottom:20px;">
+            <div style=";margin-top:60px;margin-bottom:20px;">
                 <span>Step: 5</span>
                 <h1 style="margin-bottom:10px;font-size:60px;">Now, Let's add your summary</h1>
             </div>

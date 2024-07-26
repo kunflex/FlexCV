@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Experience | FlexCV Official Website')
+
 @section('content')
     <!-- ======Page content telling the user the next step===== -->
     <div class="page-content">
@@ -7,7 +9,7 @@
             <h1 style="margin-bottom:10px;">Update experience</h1>
         </div>
 
-        <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+        <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
             <form id="update-experience-info" action="{{ url('update-experience-info/'.$data->id) }}" method="post">
                 @csrf
                 @method('PUT')

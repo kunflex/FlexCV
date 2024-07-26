@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Additional Information | FlexCV Official Website')
+
 @section('content')
 <!-- ======Page prompt telling the user the next step===== -->
     <div class="page-prompt">

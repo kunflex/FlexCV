@@ -11,7 +11,7 @@
         </div>
 
         <div class="rbs-content">
-            <div class="double-box" style="width:60%;display:grid;">
+            <div class="double-box" style="width:50%;display:grid;">
             @foreach($cvEducation as $Education)
                <div class="play-box">
                     <div class="action">

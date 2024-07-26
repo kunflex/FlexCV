@@ -41,7 +41,7 @@
             <span>Tell us about any colleges, vocational programs, or training courses you took. Even if you didn’t finish, it’s important to list them.</span>
         </div>
 
-        <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+        <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
             <form id="education-info" action="{{route('education-info')}}" method="post">
                 @csrf
                 <div class="rbs-content-layer" style="float:left;">

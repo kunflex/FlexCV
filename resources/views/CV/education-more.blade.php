@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Education | FlexCV Official Website')
+
 @section('content')
 
 <!-- ======Page content telling the user the next step===== -->
@@ -8,7 +10,7 @@
             <h1 style="margin-bottom:10px;">Add another education</h1>
         </div>
 
-        <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+        <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
             <form id="education-info" action="{{route('education-info')}}" method="post">
                 @csrf
                 <div class="rbs-content-layer" style="float:left;">

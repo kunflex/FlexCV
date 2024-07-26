@@ -129,11 +129,11 @@
                 <h2>Educational Background</h2>
                 @forelse ($cvEducation as $cvEducation)
                     <div class="details">
-                        <span>{{ $cvEducation->start_date }} -
+                        <span>{{ \Carbon\Carbon::parse($cvEducation->start_date)->format('m/Y') }} -
                             @if (empty($cvEducation->end_date))
                                 Current
                             @else
-                                {{ $cvEducation->end_date }}
+                            {{ \Carbon\Carbon::parse($cvEducation->start_date)->format('m/Y') }}
                             @endif
                         </span>
                         <span>{{ $cvEducation->certification }} {{ $cvEducation->field_of_study }}</span>
@@ -163,11 +163,11 @@
                 <h2>Work Experience</h2>
                 @forelse ($cvExperience as $cvExperience)
                     <div class="details">
-                        <span>{{ $cvExperience->start_date }} -
+                        <span>{{ \Carbon\Carbon::parse($cvExperience->start_date)->format('m/Y') }} -
                             @if (empty($cvExperience->end_date))
                                 Current
                             @else
-                                {{ $cvExperience->end_date }}
+                            {{ \Carbon\Carbon::parse($cvExperience->end_date)->format('m/Y') }}
                             @endif
                         </span>
                         <span>{{ $cvExperience->job_title }} | <b>{{ $cvExperience->company }}</b></span>

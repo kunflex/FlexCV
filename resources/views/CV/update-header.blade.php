@@ -11,7 +11,7 @@
             <span>Including your personal details helps employeers to recognize you easily.</span>
         </div>
 
-       <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+       <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
            <form id="update-personal-info" action="{{url('update/personal-info/'.$details->id)}}" method="post">
                 @csrf 
                 @method('PUT')

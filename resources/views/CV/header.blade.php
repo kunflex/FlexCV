@@ -1,5 +1,7 @@
 @extends('cv_structure')
 
+@section('title', 'Personal Details | FlexCV Official Website')
+
 @section('content')
 <!-- ======Page prompt telling the user the next step===== -->
     <div class="page-prompt">
@@ -39,7 +41,7 @@
             <span>Including your personal details helps employeers to recognize you easily.</span>
         </div>
 
-       <div style="width:100%;height:auto;gap:20px;margin-top:35px;">
+       <div style="width:90%;height:auto;gap:20px;margin-top:35px;">
            <form id="personal-info" action="{{route('personal_info')}}" method="post">
                 @csrf 
                 <div class="rbs-content-layer" style="float:left;">
