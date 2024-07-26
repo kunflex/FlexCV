@@ -102,10 +102,17 @@ class TemplatesController extends Controller
         // Retrieve session variables or assign default values
         $colorCode = session('colorCode', 'darkblue');
         $templateCode = session('templateCode', 'template2');
+        $cv_personal_details_id = session('cv_personal_details_id');
 
+        // Find the CvPersonalDetails record based on the ID
+        $cvPersonalDetails = CvPersonalDetails::where('id', $cv_personal_details_id)->get();
+        $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
+        $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
+        $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
+        $cvAdditionalDetails = CvAdditionalDetails::where('cv_personal_details_id', $cv_personal_details_id)->get();
         // Check if the view exists
         if (view()->exists("ResumeTemplates.$templateCode")) {
-            return view("ResumeTemplates.$templateCode", compact('colorCode'));
+            return view("ResumeTemplates.$templateCode", compact('colorCode','cvReference', 'cvAdditionalDetails', 'cvEducation', 'cvExperience', 'cvPersonalDetails'));
         } else {
             // Handle the case where the view does not exist
             abort(404, 'Template not found');
@@ -113,104 +120,4 @@ class TemplatesController extends Controller
     }
 
 
-
-    public function Template1(Request $request)
-    {
-        try {
-            $colorCode = session('colorCode');
-            // Get the stored cv_personal_details_id from the session
-            $cv_personal_details_id = session('cv_personal_details_id');
-
-            // Find the CvPersonalDetails record based on the ID
-            $cvPersonalDetails = CvPersonalDetails::where('id', $cv_personal_details_id)->get();
-            $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
-
-            if ($cvEducation) {
-                // Log success
-                Log::info('Review Education page accessed successfully for cvEducation ID: ' . $cv_personal_details_id);
-
-                // Pass the cvReference model to the view
-
-                return view('ResumeTemplates.template1', compact('cvEducation', 'cvExperience', 'cvReference', 'cvPersonalDetails', 'colorCode'));
-            } else {
-                // Log error
-                Log::error('Review Education record not found for ID: ' . $cv_personal_details_id);
-
-                // Redirect or handle the case where the record is not found
-                return redirect()->back()->withErrors(['error' => 'Review Education record not found.']);
-            }
-        } catch (\Exception $e) {
-            // Log exception
-            Log::error('Exception in review education function: ' . $e->getMessage());
-
-            // Handle the exception and redirect with an error message
-            return redirect()->back()->withErrors(['error' => 'An error occurred while accessing the review education page.']);
-        }
-    }
-
-
-    public function Template2()
-    {
-        try {
-            // Get the stored cv_personal_details_id from the session
-            $cv_personal_details_id = session('cv_personal_details_id');
-            $colorCode = session('colorCode');
-
-            // Find the CvPersonalDetails record based on the ID
-            $cvPersonalDetails = CvPersonalDetails::where('id', $cv_personal_details_id)->get();
-            $cvReference = CvReference::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvEducation = CvEducation::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvExperience = CvExperience::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvAdditionalDetails = CvAdditionalDetails::where('cv_personal_details_id', $cv_personal_details_id)->get();
-            $cvPersonalDetails = CvPersonalDetails::where('cv_personal_details_id', $cv_personal_details_id)->get();
-
-            if ($cvPersonalDetails == null) {
-                // Log success
-                Log::info('Review Education page accessed successfully for cvEducation ID: ' . $cv_personal_details_id);
-
-                // Pass the cvReference model to the view
-
-                return view('ResumeTemplates.template2', compact('cvEducation', 'cvExperience', 'cvReference', 'cvPersonalDetails', 'cvAdditionalDetails', 'colorCode'));
-            } else {
-                // Log error
-                Log::error('Review Education record not found for ID: ' . $cv_personal_details_id);
-
-                // Redirect or handle the case where the record is not found
-                return redirect()->back()->withErrors(['error' => 'Review Education record not found.']);
-            }
-        } catch (\Exception $e) {
-            // Log exception
-            Log::error('Exception in review education function: ' . $e->getMessage());
-
-            // Handle the exception and redirect with an error message
-            return redirect()->back()->withErrors(['error' => 'An error occurred while accessing the review education page.']);
-        }
-    }
-
-
-    public function Template3()
-    {
-        $colorCode = session('colorCode');
-
-        return view('ResumeTemplates.template3', compact('colorCode'));
-    }
-
-
-    public function Template4()
-    {
-        return view('ResumeTemplates.template4');
-    }
-
-
-    public function Template5()
-    {
-        return view('ResumeTemplates.template5');
-    }
-
-    public function Template6()
-    {
-        return view('ResumeTemplates.template6');
-    }
 }

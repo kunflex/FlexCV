@@ -16,7 +16,7 @@
             color: #333;
             margin: 0;
             padding: 0;
-            border:15px solid {{$colorCode}};
+            border: 15px solid {{ $colorCode }};
         }
 
         .head {
@@ -25,7 +25,7 @@
         }
 
         .head h1 {
-            color: {{$colorCode}};
+            color: {{ $colorCode }};
             display: inline-block;
             font-size: 28px;
             margin: 0;
@@ -36,7 +36,7 @@
         }
 
         .section h2 {
-            background-color: {{$colorCode}};
+            background-color: {{ $colorCode }};
             color: #fff;
             padding: 6px;
             margin: 0;
@@ -88,102 +88,144 @@
 </head>
 
 <body>
-    <div class="head">
-        <h1>Kelvin Boateng Sefa</h1><br>
-        <div class="details" style="display:inline-flex; gap:20px;">
-            <span>Location: Ghana, Accra</span>
-            <span>Tel: (+233593958236)</span>
-            <span>Email:example@gmail.com</span>
+    @forelse ($cvPersonalDetails as  $cvPersonalDetails)
+
+        <div class="head">
+            <h1>{{ $cvPersonalDetails->firstname }} {{ $cvPersonalDetails->othername }}
+                {{ $cvPersonalDetails->lastname }}</h1><br>
+            <div class="details" style="display:inline-flex; gap:20px;">
+                <span>{{ $cvPersonalDetails->country }}, {{ $cvPersonalDetails->city_town }}</span>
+                <span>Tel: {{ $cvPersonalDetails->phone_number }}</span>
+                <span>{{ $cvPersonalDetails->email }}</span>
+            </div>
         </div>
-    </div>
 
-    <!-- Profile -->
-    <div class="section">
-        <h2>Profile</h2>
-        <p>
-            Describe your Profile.
-            What hobbies, activities, or subjects are you passionate about?
-            Feel free to share a bit about what makes you excited and engaged
-            in your free time or professional life.
-        </p>
-    </div>
-    <!-- End Profile -->
+        @if (!empty($cvPersonalDetails->summary))
+            <!-- Profile -->
+            <div class="section">
+                <h2>Profile</h2>
+                <p>
+                    {!! $cvPersonalDetails->summary !!}
+                </p>
+            </div>
+            <!-- End Profile -->
+        @else
+        @endif
 
-    <!-- Education -->
-    <div class="section">
-        <h2>Educational Background</h2>
-        <div class="details">
-            <span>Start date - End date</span>
-            <span>Program of Study | Institution</span>
-        </div>
-        <p>
-            <b>Course Outline</b>
-        <ul>
-            <li>List your courses</li>
-            <li>List your courses</li>
-            <li>List your courses</li>
-            <li>List your courses</li>
-        </ul>
-        </p>
-    </div>
-    <!-- End Education -->
+        @if (!empty($cvPersonalDetails->skills))
+            <!-- Profile -->
+            <div class="section">
+                <h2>Skills</h2>
+                <p>
+                    {{ $cvPersonalDetails->skills }}
+                </p>
+            </div>
+            <!-- End Profile -->
+        @else
+        @endif
 
-    <!-- Work Experience -->
-    <div class="section">
-        <h2>Work Experience</h2>
-        <div class="details">
-            <span>Start date - End date</span>
-            <span>Job Title | Company</span>
-        </div>
-        <p>
-            <b>Responsibilities</b>
-        <ul>
-            <li>Describe your responsibilities and achievements</li>
-            <li>Describe your responsibilities and achievements</li>
-            <li>Describe your responsibilities and achievements</li>
-            <li>Describe your responsibilities and achievements</li>
-        </ul>
-        </p>
-    </div>
-    <!-- End Work Experience -->
 
-    <!-- Interest -->
-    <div class="section">
-        <h2>Interest</h2>
-        <p>
-            Describe your interests.
-            What hobbies, activities, or subjects are you passionate about?
-            Feel free to share a bit about what makes you excited and engaged
-            in your free time or professional life.
-        </p>
-    </div>
-    <!-- End Interest -->
-
-    <!-- References -->
-    <div class="section references">
-        <h2>References</h2>
-        <ul>
-            <li>
-                <span>Reference 1</span>
-                <div class="reference-details">
-                    <span>Position</span>
-                    <span>Company</span>
-                    <span>Email: example@example.com</span>
-                    <span>Tel: (123) 456-7890</span>
+        <!-- Education -->
+        <div class="section">
+            <h2>Educational Background</h2>
+            @forelse ($cvEducation as $cvEducation)
+                <div class="details">
+                    <span>{{ $cvEducation->start_date }} -
+                        @if (empty($cvEducation->end_date))
+                            Current
+                        @else
+                            {{ $cvEducation->end_date }}
+                        @endif
+                    </span>
+                    <span>{{ $cvEducation->location }} | <b>{{ $cvEducation->institution }}</b></span>
+                    <span>{{ $cvEducation->certification }} {{ $cvEducation->field_of_study }}</span>
                 </div>
-            </li>
-            <li>
-                <span>Reference 2</span>
-                <div class="reference-details">
-                    <span>Position</span>
-                    <span>Company</span>
-                    <span>Email: example@example.com</span>
-                    <span>Tel: (123) 456-7890</span>
+
+                @if (!empty($cvEducation->course))
+                    <p>
+                        <b>Course Outline</b>
+                    <ul>
+                        <li>List your courses</li>
+                        <li>List your courses</li>
+                        <li>List your courses</li>
+                        <li>List your courses</li>
+                    </ul>
+                    </p>
+                @else
+                @endif
+
+            @empty
+            @endforelse
+        </div>
+        <!-- End Education -->
+
+        <!-- Work Experience -->
+        <div class="section">
+            <h2>Work Experience</h2>
+            @forelse ($cvExperience as $cvExperience)
+                <div class="details">
+                    <span>{{ $cvExperience->start_date }} -
+                        @if (empty($cvExperience->end_date))
+                            Current
+                        @else
+                            {{ $cvExperience->end_date }}
+                        @endif
+                    </span>
+                    <span>{{ $cvExperience->job_title }} | <b>{{ $cvExperience->company }}</b></span>
                 </div>
-            </li>
-        </ul>
-    </div>
-    <!-- End References -->
+
+                @if (empty($cvExperience->responsibilities))
+                @else
+                    <p>
+                        <b>Responsibilities</b>
+                    <ul>
+                        {!! $cvExperience->responsibilities !!}
+                    </ul>
+                    </p>
+                @endif
+
+            @empty
+            @endforelse
+
+        </div>
+        <!-- End Work Experience -->
+
+        @forelse($cvAdditionalDetails as  $cvAdditionalDetails)
+            <!-- Interest -->
+            <div class="section">
+                <h2>Interest</h2>
+                <p>
+                    {{ $cvAdditionalDetails->other_details }}
+                </p>
+            </div>
+            <!-- End Interest -->
+        @empty
+        @endforelse
+
+
+        <!-- References -->
+        <div class="section references">
+            <h2>References</h2>
+            <ul>
+                @forelse($cvReference as $cvReference)
+                    <li style="list-style-type: lower-roman">
+                        <span>{{ $cvReference->fullname }}</span>
+                        <div class="reference-details">
+                            <span>{{ $cvReference->position }}</span>
+                            <span> {{ $cvReference->company }}</span>
+                            <span> {{ $cvReference->email }}</span>
+                            <span>Tel: {{ $cvReference->telephone }}</span>
+                        </div>
+                    </li>
+                @empty
+                @endforelse
+            </ul>
+        </div>
+        <!-- End References -->
+
+
+    @empty
+    @endforelse
 </body>
 
 </html>

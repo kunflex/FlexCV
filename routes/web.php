@@ -89,12 +89,6 @@ Route::put('/update-other_details', [CV_Controller::class, 'updateOtherDetails']
 
 
 // <================Templates Controller=====================>
-Route::get('/template6', [TemplatesController::class, 'Template6'])->name('template6');
-Route::get('/template5', [TemplatesController::class, 'Template5'])->name('template5');
-Route::get('/template4', [TemplatesController::class, 'Template4'])->name('template4');
-Route::get('/template3', [TemplatesController::class, 'Template3'])->name('template3');
-Route::get('/template2', [TemplatesController::class, 'Template2'])->name('template2');
-Route::get('/template1', [TemplatesController::class, 'Template1'])->name('template1');
 Route::get('/preview', [TemplatesController::class, 'TemplatePreview'])->name('preview');
 // <================ End Templates Controller=====================>
 
@@ -102,10 +96,6 @@ Route::get('/preview', [TemplatesController::class, 'TemplatePreview'])->name('p
 Route::post('select/template', [TemplatesController::class, 'TemplateChoice']);
 Route::get('select/color', [TemplatesController::class, 'ColorChoice']);
 Route::get('change/template', [TemplatesController::class, 'TemplateChoice']);
-Route::get('modern1', function () {
-    return view('ResumeTemplates.modern1');
-});
-Route::get('/template1', [TemplatesController::class, 'Template1']);
 Route::get('/custom-templates', [TemplatesController::class, 'TemplatePage'])->name('template-display');
 // <================ End Templates Controller=====================>
 
