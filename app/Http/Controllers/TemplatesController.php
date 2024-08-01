@@ -53,6 +53,8 @@ class TemplatesController extends Controller
             'template4' => '4',
             'template5' => '5',
             'template6' => '6',
+            'template7' => '7',
+            'template8' => '8',
         ];
 
         // Retrieve the selected template code from the session
@@ -73,6 +75,8 @@ class TemplatesController extends Controller
             'template4' => 'template4',
             'template5' => 'template5',
             'template6' => 'template6',
+            'template7' => 'template7',
+            'template8' => 'template8',
         ];
 
         $defaultTemplate = 'template2';

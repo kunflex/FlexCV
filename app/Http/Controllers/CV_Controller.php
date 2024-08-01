@@ -292,6 +292,8 @@ class CV_Controller extends Controller
         'template4' => '4',
         'template5' => '5',
         'template6' => '6',
+        'template7' => '7',
+        'template8' => '8',
     ];
 
     // Retrieve the selected template code from the session

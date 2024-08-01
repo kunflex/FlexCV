@@ -177,7 +177,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4">{{$result}}</td>
+                        <td colspan="2" style="text-align: center">{{$result}}</td>
                     </tr>
                 @endforelse
 

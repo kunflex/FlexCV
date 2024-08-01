@@ -243,7 +243,7 @@
                     Our CV Builder has dozens of beautifully-designed templates. Each Template in the CV Builder
                     automatically formats so it stays polished no matter what you write.
                 </p><br>
-                <a href=""><button>Create a cover letter</button></a>
+                <a href=""><button>Apply for a job</button></a>
             </div>
         </div>
     </div>

@@ -8,16 +8,30 @@
     <style>
         @page {
             size: A4;
-            margin: 10mm;
+            margin: 0px;
         }
 
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             color: #000;
             margin: 0;
-            padding: 20px;
             line-height: 1.6;
             background-color: #fff;
+        }
+
+        .sy-color {
+            width: auto;
+            height: auto;
+            padding-top: 25px;
+            color: #fff;
+            background-color: {{ $colorCode }};
+        }
+
+        .by-color {
+            width: auto;
+            height: auto;
+            padding: 20px;
+            padding-top:0px;
         }
 
         .header {
@@ -29,9 +43,9 @@
         .header h1 {
             font-size: 24px;
             margin: 0;
-            color: {{ $colorCode }};
-            border-bottom: 2px solid {{ $colorCode }};
+            color: #fff;
             display: inline-block;
+            font-size: 30px;
         }
 
         .section {
@@ -42,7 +56,7 @@
             color: {{ $colorCode }};
             margin: 0 0 2px 0;
             font-size: 18px;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #ddd;
         }
 
         .section p,
@@ -89,23 +103,23 @@
 
 <body>
     @forelse ($cvPersonalDetails as  $cvPersonalDetails)
-        <div>
+        <div class="sy-color">
             <div class="header">
-                <h1>Curriculum Vitae</h1>
-            </div>
+                <h1>{{ $cvPersonalDetails->firstname }} {{ $cvPersonalDetails->othername }}
+                    {{ $cvPersonalDetails->lastname }}</h1>
 
-            <!-- Personal details -->
-            <div class="section">
-                <h2>Personal Details</h2>
-                <div class="details">
-                    <span>{{ $cvPersonalDetails->firstname }} {{ $cvPersonalDetails->othername }}
-                        {{ $cvPersonalDetails->lastname }}</span>
-                    <span>{{ $cvPersonalDetails->country }}, {{ $cvPersonalDetails->city_town }}</span>
-                    <span>Tel: {{ $cvPersonalDetails->phone_number }}</span>
-                    <span>Email: {{ $cvPersonalDetails->email }}</span>
+                <div class="section">
+                    <div class="details" style="display:inline-flex;gap:20px;padding-bottom:10px">
+                        <span>{{ $cvPersonalDetails->country }}, {{ $cvPersonalDetails->city_town }}</span>
+                        <span>Tel: {{ $cvPersonalDetails->phone_number }}</span>
+                        <span>{{ $cvPersonalDetails->email }}</span>
+                    </div>
                 </div>
             </div>
-            <!-- End Personal details -->
+        </div>
+
+        <div class="by-color">
+
 
             @if (!empty($cvPersonalDetails->summary))
                 <!-- Profile -->
@@ -230,112 +244,116 @@
 
         </div>
     @empty
-        <div class="header">
-            <h1>Curriculum Vitae</h1>
-        </div>
 
-        <div class="section">
-            <h2>Personal Details</h2>
-            <div class="details">
-                <span>Kelvin Obeng Boateng</span>
-                <span>Ghana, Accra</span>
-                <span>Tel: 0593958263</span>
-                <span>kelvinboateng56@gmail.com</span>
-            </div>
-        </div>
+        <div class="sy-color">
+            <div class="header">
+                <h1>Kelvin Obeng Boateng</h1>
 
-        <!-- Profile -->
-        <div class="section">
-            <h2>Profile</h2>
-            <p>
-                brief description about yourself
-            </p>
-        </div>
-        <!-- End Profile -->
 
-        <!-- Profile -->
-        <div class="section">
-            <h2>Skiils</h2>
-            <p>
-                brief description about your acquired skills
-            </p>
-        </div>
-        <!-- End Profile -->
-
-        <!-- Education -->
-        <div class="section">
-            <h2>Educational Background</h2>
-            <div class="details">
-                <span>2018 - 2021
-                </span>
-                <span>Accra | <b>Accra Institute of Technology</b></span>
-                <span>Higher National Diploma (HND) Financial Accounting</span>
-            </div>
-            <p>
-                <b>Course Outline</b>
-            <ul>
-                <li>List your courses</li>
-                <li>List your courses</li>
-                <li>List your courses</li>
-                <li>List your courses</li>
-            </ul>
-            </p>
-        </div>
-        <!-- End Education -->
-
-        <!-- Work Experience -->
-        <div class="section">
-            <h2>Work Experience</h2>
-            <div class="details">
-                <span>2022 - Current
-                </span>
-                <span>Sales Representative | <b>MTN Ghana</b></span>
-            </div>
-            <p>
-                <b>Responsibilities</b>
-            <ul>
-                <li>task performed during your stay in the company</li>
-                <li>task performed during your stay in the company</li>
-                <li>task performed during your stay in the company</li>
-            </ul>
-            </p>
-        </div>
-        <!-- End Work Experience -->
-
-        <!-- Interest -->
-        <div class="section">
-            <h2>Interest</h2>
-            <p>
-                brief description about your interest
-            </p>
-        </div>
-        <!-- End Interest -->
-
-        <!-- References -->
-        <div class="section references">
-            <h2>References</h2>
-            <ul>
-                <li style="list-style-type: lower-roman">
-                    <span>Frank Adjei</span>
-                    <div class="reference-details">
-                        <span>Managing Director</span>
-                        <span> Flexcotech Limited</span>
-                        <span> frankadjei@yahoo.com</span>
-                        <span>Tel: 0248513678</span>
+                <div class="section">
+                    <div class="details" style="display:inline-flex;gap:20px;padding-bottom:10px">
+                        <span>Ghana, Accra</span>
+                        <span>Tel: 0593958263</span>
+                        <span>kelvinboateng56@gmail.com</span>
                     </div>
-                </li>
-                <li style="list-style-type: lower-roman">
-                    <span>Maxwell Bruce</span>
-                    <div class="reference-details">
-                        <span>Data Analyst</span>
-                        <span> Wortech Limited</span>
-                        <span> maxbruce@gmail.com</span>
-                        <span>Tel: 0538513678</span>
-                    </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
-        <!-- End References -->
+
+        <div class="by-color">
+            <!-- Profile -->
+            <div class="section">
+                <h2>Profile</h2>
+                <p>
+                    brief description about yourself
+                </p>
+            </div>
+            <!-- End Profile -->
+
+            <!-- Profile -->
+            <div class="section">
+                <h2>Skiils</h2>
+                <p>
+                    brief description about your acquired skills
+                </p>
+            </div>
+            <!-- End Profile -->
+
+            <!-- Education -->
+            <div class="section">
+                <h2>Educational Background</h2>
+                <div class="details">
+                    <span>2018 - 2021
+                    </span>
+                    <span>Accra | <b>Accra Institute of Technology</b></span>
+                    <span>Higher National Diploma (HND) Financial Accounting</span>
+                </div>
+                <p>
+                    <b>Course Outline</b>
+                <ul>
+                    <li>List your courses</li>
+                    <li>List your courses</li>
+                    <li>List your courses</li>
+                    <li>List your courses</li>
+                </ul>
+                </p>
+            </div>
+            <!-- End Education -->
+
+            <!-- Work Experience -->
+            <div class="section">
+                <h2>Work Experience</h2>
+                <div class="details">
+                    <span>2022 - Current
+                    </span>
+                    <span>Sales Representative | <b>MTN Ghana</b></span>
+                </div>
+                <p>
+                    <b>Responsibilities</b>
+                <ul>
+                    <li>task performed during your stay in the company</li>
+                    <li>task performed during your stay in the company</li>
+                    <li>task performed during your stay in the company</li>
+                </ul>
+                </p>
+            </div>
+            <!-- End Work Experience -->
+
+            <!-- Interest -->
+            <div class="section">
+                <h2>Interest</h2>
+                <p>
+                    brief description about your interest
+                </p>
+            </div>
+            <!-- End Interest -->
+
+            <!-- References -->
+            <div class="section references">
+                <h2>References</h2>
+                <ul style="padding-left:20px;">
+                    <li style="list-style-type: lower-roman">
+                        <span>Frank Adjei</span>
+                        <div class="reference-details">
+                            <span>Managing Director</span>
+                            <span> Flexcotech Limited</span>
+                            <span> frankadjei@yahoo.com</span>
+                            <span>Tel: 0248513678</span>
+                        </div>
+                    </li>
+                    <li style="list-style-type: lower-roman">
+                        <span>Maxwell Bruce</span>
+                        <div class="reference-details">
+                            <span>Data Analyst</span>
+                            <span> Wortech Limited</span>
+                            <span> maxbruce@gmail.com</span>
+                            <span>Tel: 0538513678</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- End References -->
+        </div>
     @endforelse
 </body>
 

@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class AdminController extends Controller
 {
-    //
+
+    use HasRoles;
     public function Jobs()
     {
         return view('admin.add-jobs');
@@ -33,7 +35,6 @@ class AdminController extends Controller
             $result = 'Search for "' . $search . '" not found';
         }
 
-
         return view('admin.track-jobs', compact('data', 'result'));
     }
 
@@ -42,28 +43,188 @@ class AdminController extends Controller
         $request->validate(['search' => 'required']);
         $search = $request->input('search');
 
-        // Fetch jobs based on search query
-        $data = JobDisplay::where('job_title', 'like', '%' . $search . '%')->get();
+        // Default number of items per page
+        $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
+
+        // Helper function to fetch and transform paginated jobs
+        $fetchAndTransformJobs = function ($category, $search, $perPage) {
+            // Fetch jobs based on the search query and category
+            $jobs = JobDisplay::where('category', $category)
+                ->where('job_title', 'like', '%' . $search . '%')
+                ->paginate($perPage);
+
+            // Check if jobs collection is empty
+            if ($jobs->isEmpty()) {
+                return null; // Return null if no jobs found for the category
+            }
+
+            $transformed = $jobs->getCollection()->map(function ($job) {
+                $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
+                // Include a debug log for each job processed
+                Log::debug('Job Title: ' . $job->job_title . ' - First Letter: ' . $firstLetter);
+                return [
+                    'job' => $job,
+                    'first_letter' => $firstLetter
+                ];
+            });
+
+            // Replace the original collection in the paginator
+            $jobs->setCollection($transformed);
+
+            return $jobs;
+        };
+
+        // Define categories for pagination
+        $categories = [
+            'Information Technology',
+            'Business Administration',
+            'Social Sciences',
+            'Engineering',
+            'Arts and Fashion',
+            'Health Sciences',
+            'Education',
+            'Applied Science',
+            'Agriculture',
+            'Law'
+        ];
+
+        // Initialize data arrays
+        $data = [];
+        $counts = [];
+        $pages = [];
+        $totalJobs = 0;
+
+        foreach ($categories as $category) {
+            $jobs = $fetchAndTransformJobs($category, $search, $perPage);
+
+            // Check if jobs variable is null (no jobs found for the category)
+            if ($jobs !== null) {
+                $data[$category] = $jobs;
+                $counts[$category . 'Counts'] = $jobs->total();
+                $pages[$category . 'Pages'] = $jobs;
+                $totalJobs += $jobs->total();
+            }
+        }
 
         // Initialize result variable
         $result = '';
 
-        // Check if data is empty
-        if ($data->isEmpty()) {
+        // Check if any jobs were found
+        if ($totalJobs === 0) {
             $formattedSearch = '<b>' . htmlspecialchars($search, ENT_QUOTES, 'UTF-8') . '</b>';
             $result = 'Search result for "' . $formattedSearch . '" not found';
         }
-        else{
 
-        }
-        // Send data and result to the view
-        return view('job-search', compact('data', 'result'));
+        // Send data to the view, ensuring $data is always passed
+        return view('job-search', [
+            'data' => $data,
+            'result' => $result,
+            'counts' => $counts,
+            'pages' => $pages,
+            'perPage' => $perPage
+        ]);
     }
 
 
-
-
-
+    public function SearchJobsNearBy(Request $request)
+    {
+        $request->validate(['search1' => 'required', 'search2' => 'required']);
+        $search1 = $request->input('search1');
+        $search2 = $request->input('search2');
+    
+        // Default number of items per page
+        $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
+    
+        // Helper function to fetch and transform paginated jobs
+        $fetchAndTransformJobs = function ($category, $search1, $search2, $perPage) {
+            // Fetch jobs based on the search query and category
+            $jobs = JobDisplay::where('category', $category)
+            ->where(function ($query) use ($search1, $search2) {
+                if (!empty($search1)) {
+                    $query->where('job_title', 'like', '%' . $search1 . '%');
+                }
+                
+                if (!empty($search2)) {
+                    $query->orwhere('job_description', 'like', '%' . $search2 . '%');
+                }
+            })
+            ->paginate($perPage);
+        
+    
+            // Check if jobs collection is empty
+            if ($jobs->isEmpty()) {
+                return null; // Return null if no jobs found for the category
+            }
+    
+            $transformed = $jobs->getCollection()->map(function ($job) {
+                $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
+                // Include a debug log for each job processed
+                Log::debug('Job Title: ' . $job->job_title . ' - First Letter: ' . $firstLetter);
+                return [
+                    'job' => $job,
+                    'first_letter' => $firstLetter
+                ];
+            });
+    
+            // Replace the original collection in the paginator
+            $jobs->setCollection($transformed);
+    
+            return $jobs;
+        };
+    
+        // Define categories for pagination
+        $categories = [
+            'Information Technology',
+            'Business Administration',
+            'Social Sciences',
+            'Engineering',
+            'Arts and Fashion',
+            'Health Sciences',
+            'Education',
+            'Applied Science',
+            'Agriculture',
+            'Law'
+        ];
+    
+        // Initialize data arrays
+        $data = [];
+        $counts = [];
+        $pages = [];
+        $totalJobs = 0;
+    
+        foreach ($categories as $category) {
+            $jobs = $fetchAndTransformJobs($category, $search1, $search2, $perPage);
+    
+            // Check if jobs variable is null (no jobs found for the category)
+            if ($jobs !== null) {
+                $data[$category] = $jobs;
+                $counts[$category . 'Counts'] = $jobs->total();
+                $pages[$category . 'Pages'] = $jobs;
+                $totalJobs += $jobs->total();
+            }
+        }
+    
+        // Initialize result variable
+        $result = '';
+    
+        // Check if any jobs were found
+        if ($totalJobs === 0) {
+            $formattedSearch1 = '<b>' . htmlspecialchars($search1, ENT_QUOTES, 'UTF-8') . '</b>';
+            $formattedSearch2 = '<b>' . htmlspecialchars($search2, ENT_QUOTES, 'UTF-8') . '</b>';
+            $result = 'Search result for "' . $formattedSearch1 . '" and "' . $formattedSearch2 . '" not found';
+        }
+    
+        // Send data to the view, ensuring $data is always passed
+        return view('jobs-nearby', [
+            'data' => $data,
+            'result' => $result,
+            'counts' => $counts,
+            'pages' => $pages,
+            'perPage' => $perPage
+        ]);
+    }
+    
+    
 
 
     public function SearchEnquiries(Request $request)
@@ -224,8 +385,19 @@ class AdminController extends Controller
 
     public function Pages()
     {
-        $data = JobDisplay::where('posted_by', Auth::user()->id)->get();
-        return view('admin.track-jobs', compact('data'));
+        if (Auth::check()) {
+            // Check if the user has the 'admin' role
+            if (Auth::user()->hasRole('admin')) {
+                $data = JobDisplay::all();
+            } else {
+                $data = JobDisplay::where('posted_by', Auth::user()->id)->get();
+            }
+        }
+        $result = '';
+        if ($data->isEmpty()) {
+            $result = 'No queries found!';
+        }
+        return view('admin.track-jobs', compact('data', 'result'));
     }
 
     public function Applicants($id)

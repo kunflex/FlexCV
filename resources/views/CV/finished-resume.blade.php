@@ -372,6 +372,18 @@
                                     src="{{ asset('assets/img/template6.png') }}" alt="">
                                 <input type="checkbox" name="template6" id="6" hidden>
                             </div>
+
+                            <div>
+                                <img onclick="setTemplate('7')" class="temp-image" id="temp-image7"
+                                    src="{{ asset('assets/img/template6.png') }}" alt="">
+                                <input type="checkbox" name="template7" id="7" hidden>
+                            </div>
+
+                            <div>
+                                <img onclick="setTemplate('8')" class="temp-image" id="temp-image8"
+                                    src="{{ asset('assets/img/template6.png') }}" alt="">
+                                <input type="checkbox" name="template8" id="8" hidden>
+                            </div>
                             <button type="submit" hidden>submit</button>
                         </div>
                     </form>

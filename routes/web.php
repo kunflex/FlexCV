@@ -120,6 +120,7 @@ Route::get('jobs/delete/{id}', [AdminController::class, 'DeleteJobs']);
 
 // <==========Search Routes===========>
 
+Route::get('search/jobs-nearby', [AdminController::class, 'SearchJobsNearBy']);
 Route::get('search1', [AdminController::class, 'SearchJobs'])->name('search.jobs1');
 Route::get('account/search', [AdminController::class, 'SearchAccount'])->name('search.account');
 Route::get('enquiries/search', [AdminController::class, 'SearchEnquiries'])->name('search.enquiries');
@@ -155,7 +156,7 @@ Route::get('filter', [HomeController::class, 'JobSearch'])->name('filter');
 Route::get('Index', [HomeController::class, 'LandingPage'])->name('landingpage');
 Route::get('/about', [HomeController::class, 'About']);
 Route::get('/contact', [HomeController::class, 'Contact']);
-Route::get('job-search', [HomeController::class, 'JobSearch']);
+Route::get('job-search', [HomeController::class, 'JobSearch'])->name('job-search');
 Route::get('jobs-nearby', [HomeController::class, 'JobSearchNearby']);
 Route::get('job-details/{id}', [HomeController::class, 'Job_details']);
 Route::get('/dashboard', [HomeController::class, 'Index'])->middleware(['auth', 'verified'])->name('dashboard');

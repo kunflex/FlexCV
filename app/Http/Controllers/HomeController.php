@@ -16,6 +16,7 @@ use App\Models\JobDisplay;
 use App\Models\Testimonials;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Log;
+use OpenAI\Resources\Models;
 
 class HomeController extends Controller
 {

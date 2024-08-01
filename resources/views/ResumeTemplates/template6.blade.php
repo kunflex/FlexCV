@@ -224,6 +224,107 @@
 
         </div>
     @empty
+        <div class="head">
+            <h1>Kelvin Obeng Boateng</h1><br>
+            <div class="details" style="display:inline-flex; gap:20px;">
+                <span>Ghana, Accra</span>
+                <span>Tel: 0593958263</span>
+                <span>kelvinboateng56@gmail.com</span>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div class="section">
+            <h2>Profile</h2>
+            <p>
+                brief description about yourself
+            </p>
+        </div>
+        <!-- End Profile -->
+
+        <!-- Profile -->
+        <div class="section">
+            <h2>Skiils</h2>
+            <p>
+                brief description about your acquired skills
+            </p>
+        </div>
+        <!-- End Profile -->
+
+        <!-- Education -->
+        <div class="section">
+            <h2>Educational Background</h2>
+            <div class="details">
+                <span>2018 - 2021
+                </span>
+                <span>Accra | <b>Accra Institute of Technology</b></span>
+                <span>Higher National Diploma (HND) Financial Accounting</span>
+            </div>
+            <p>
+                <b>Course Outline</b>
+            <ul>
+                <li>List your courses</li>
+                <li>List your courses</li>
+                <li>List your courses</li>
+                <li>List your courses</li>
+            </ul>
+            </p>
+        </div>
+        <!-- End Education -->
+
+        <!-- Work Experience -->
+        <div class="section">
+            <h2>Work Experience</h2>
+            <div class="details">
+                <span>2022 - Current
+                </span>
+                <span>Sales Representative | <b>MTN Ghana</b></span>
+            </div>
+            <p>
+                <b>Responsibilities</b>
+            <ul>
+                <li>task performed during your stay in the company</li>
+                <li>task performed during your stay in the company</li>
+                <li>task performed during your stay in the company</li>
+            </ul>
+            </p>
+        </div>
+        <!-- End Work Experience -->
+
+        <!-- Interest -->
+        <div class="section">
+            <h2>Interest</h2>
+            <p>
+                brief description about your interest
+            </p>
+        </div>
+        <!-- End Interest -->
+
+        <!-- References -->
+        <div class="section references">
+            <h2>References</h2>
+            <ul>
+                <li style="list-style-type: lower-roman">
+                    <span>Frank Adjei</span>
+                    <div class="reference-details">
+                        <span>Managing Director</span>
+                        <span> Flexcotech Limited</span>
+                        <span> frankadjei@yahoo.com</span>
+                        <span>Tel: 0248513678</span>
+                    </div>
+                </li>
+                <li style="list-style-type: lower-roman">
+                    <span>Maxwell Bruce</span>
+                    <div class="reference-details">
+                        <span>Data Analyst</span>
+                        <span> Wortech Limited</span>
+                        <span> maxbruce@gmail.com</span>
+                        <span>Tel: 0538513678</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- End References -->
     @endforelse
 </body>
 

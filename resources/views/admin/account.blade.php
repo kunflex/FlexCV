@@ -105,7 +105,7 @@
                         <td>{{ $dataUsers->name }}</td>
                         <td>{{ $dataUsers->email }}</td>
                         <td>059326548</td>
-                        <td></td>
+                        <td>{{ $dataUsers->created_at->diffForHumans() }}</td>
                         <td>Accra</td>
                         <td>
                             <div>
