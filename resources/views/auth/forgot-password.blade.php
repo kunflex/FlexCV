@@ -1,4 +1,6 @@
-<x-guest-layout><h1>Forgot password?</h1>
+<x-guest-layout>
+    @section('title', 'Reset Password | FlexCV Official Website')
+    <h1>Forgot password?</h1>
     <div class="tab" style="color:gray">
         {{ __(' No problem. We will email you a password reset link that will allow you to choose a new one.') }}
     </div>
@@ -11,8 +13,7 @@
 
         <!-- Email Address -->
         <div class="tab">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" placeholder="Email" name="email" :value="old('email')" required autofocus />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 

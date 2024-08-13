@@ -1,7 +1,5 @@
 @extends('admin-layout')
 
-@section('title', 'AdminDashboard | Track Jobs')
-
 @section('styles')
     <style>
         .cbs {
@@ -43,10 +41,6 @@
             border-bottom: 2px solid whitesmoke;
             gap: 30px;
             padding-bottom: 20px;
-        }
-
-        .tracl:hover {
-          box-shadow:0px 2px 0px 2px #0095FF;
         }
 
         .tracl span {
@@ -105,6 +99,7 @@
             padding: 10px;
             font-size: 16px;
         }
+
         table {
             width: 100%;
             height: auto;
@@ -117,7 +112,7 @@
             height: 50px;
             width: auto;
             text-align: left;
-            padding-left:10px;
+            padding-left: 10px;
         }
 
         tr:nth-child(odd) {
@@ -129,60 +124,63 @@
             background-color: #f2f2f2;
             /* Color for even-numbered rows */
         }
+        .tracl:hover{
+            border-left:2px solid #0095FF;
+        }
     </style>
 @endsection
 
 @section('content')
     @if (auth()->user()->hasRole('admin'))
+        @section('title', 'AdminDashboard | Track Jobs')
         <div class="header">
             <a href="{{ url('admin') }}">
                 {{ __('Admin Dashboard') }}
             </a> /Track Jobs
         </div><br>
     @elseif (auth()->user()->hasRole('employer'))
-        <div class="header">
-            <a href="{{ url('employer') }}">
-                {{ __('Employer Dashboard') }}
-            </a> /Track Jobs
-        </div><br>
-    @endif
+    @section('title', 'Employer Dashboard | Track Jobs')
+    <div class="header">
+        <a href="{{ url('employer') }}">
+            {{ __('Employer Dashboard') }}
+        </a> /Track Jobs
+    </div><br>
+@endif
 
-    <h3>List Jobs</h3><br>
-    <div class="ojs">
-        <div class="data-layer">
-            <div class="search-bar">
-                <form action="{{route('search.track-jobs')}}" method="GET">
-                    <input type="text" placeholder="Search..." name="search">
-                    <button hidden>Search</button>
-                </form>
-            </div>
-            <br><br><br>
-            <table>
-                <tr>
-                    <th style="width:78%;">Job Title</th>
-                    <th style="text-align: center;">Action</th>
-                </tr>
-
-                @forelse($data as $view)
-                    <tr class="tracl">
-                        <td>{{ $view->job_title }}</td>
-                        <td>
-                            <a href="{{ url('track-applicants/' . $view->id) }}"><button
-                                    class="ols-yellow">applicants</button></a>
-                            <a href="{{ url('jobs/update/' . $view->id) }}"><button
-                                    class="ols-blue">update</button></a>
-                            <a href="{{ url('jobs/delete/' . $view->id) }}"><button
-                                    class="ols-red">delete</button></a>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="2" style="text-align: center">{{$result}}</td>
-                    </tr>
-                @endforelse
-
-            </table>
+<h3>List Jobs</h3><br>
+<div class="ojs">
+    <div class="data-layer">
+        <div class="search-bar">
+            <form action="{{ route('search.track-jobs') }}" method="GET">
+                <input type="text" placeholder="Search..." name="search">
+                <button hidden>Search</button>
+            </form>
         </div>
+        <br><br><br>
+        <table>
+            <tr>
+                <th style="width:78%;">Job Title</th>
+                <th style="text-align: center;">Action</th>
+            </tr>
+
+            @forelse($data as $view)
+                <tr class="tracl">
+                    <td>{{ $view->job_title }}</td>
+                    <td>
+                        <a href="{{ url('track-applicants/' . $view->id) }}"><button
+                                class="ols-yellow">applicants</button></a>
+                        <a href="{{ url('jobs/update/' . $view->id) }}"><button class="ols-blue">update</button></a>
+                        <a href="{{ url('jobs/delete/' . $view->id) }}"><button class="ols-red">delete</button></a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2" style="text-align: center">{{ $result }}</td>
+                </tr>
+            @endforelse
+
+        </table>
     </div>
+</div>
 
 @endsection

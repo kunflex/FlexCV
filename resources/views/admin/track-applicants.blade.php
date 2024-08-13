@@ -1,7 +1,5 @@
 @extends('admin-layout')
 
-@section('title', 'AdminDashboard | Track Jobs')
-
 @section('styles')
     <style>
         .cbs {
@@ -45,8 +43,8 @@
             padding-bottom: 20px;
         }
 
-        .tracl:hover {
-            background-color: whitesmoke;
+        .nls:hover{
+            border-left:2px solid #0095FF;
         }
 
         .tracl div {
@@ -121,6 +119,7 @@
 
 @section('content')
     @if (auth()->user()->hasRole('admin'))
+        @section('title', 'AdminDashboard | Track Applicants')
         <div class="header">
             <a href="{{ url('admin') }}">
                 {{ __('Admin Dashboard') }}
@@ -130,73 +129,74 @@
             </a> / Track Applicants
         </div><br>
     @elseif (auth()->user()->hasRole('employer'))
-        <div class="header">
-            <a href="{{ url('employer') }}">
-                {{ __('Employer Dashboard') }}
-            </a> /
-            <a href="{{ url('track-jobs') }}">
-                {{ __('Track Jobs') }}
-            </a> / Track Applicants
-        </div><br>
-    @endif
+    @section('title', 'Employer Dashboard | Track Applicants')
+    <div class="header">
+        <a href="{{ url('employer') }}">
+            {{ __('Employer Dashboard') }}
+        </a> /
+        <a href="{{ url('track-jobs') }}">
+            {{ __('Track Jobs') }}
+        </a> / Track Applicants
+    </div><br>
+@endif
 
-    <h3>List Applicants</h3><br>
-    <div class="ojs">
-        <div class="data-layer">
-            <table>
-                <tr>
-                    <th>Applicants Letter</th>
-                    <th>Applicants CV</th>
-                    <th>Score(100%)</th>
-                    <th>Action</th>
-                </tr>
+<h3>List Applicants</h3><br>
+<div class="ojs">
+    <div class="data-layer">
+        <table>
+            <tr>
+                <th>Applicants Letter</th>
+                <th>Applicants CV</th>
+                <th>Score(100%)</th>
+                <th>Action</th>
+            </tr>
 
-                @forelse ($data as $view)
-                    <tr class="nls">
-                        <td>{{ $view->applicant_letter }}</td>
-                        <td>{{ $view->applicant_cv }}</td>
+            @forelse ($data as $view)
+                <tr class="nls">
+                    <td>{{ $view->applicant_letter }}</td>
+                    <td>{{ $view->applicant_cv }}</td>
 
-                        @php
-                            $score = 80;
-                        @endphp
+                    @php
+                        $score = 80;
+                    @endphp
 
-                        @if ($score >= 70 && $score <= 100)
-                            <td class="score-green">
-                                {{ $score }}
-                            </td>
-                        @elseif ($score >= 45 && $score < 70)
-                            <td class="score-yellow">
-                                {{ $score }}
-                            </td>
-                        @elseif($score < 45)
-                            <td class="score-red">
-                                {{ $score }}
-                            </td>
-                        @else
-                            <td>
-                                {{ 'Not score' }}
-                            </td>
-                        @endif
-
-
-                        <td>
-                            <a href="{{ url('applicants/preview/' . $view->id) }}">
-                                <button class="ols-yellow OpenBtn">
-                                    preview
-                                </button>
-                            </a>
-
-                            <a href="{{ url('applicants/download/' . $view->id) }}"><button
-                                    class="ols-blue">download</button></a>
+                    @if ($score >= 70 && $score <= 100)
+                        <td class="score-green">
+                            {{ $score }}
                         </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4">No queries found!</td>
-                    </tr>
-                @endforelse
-            </table>
-        </div>
+                    @elseif ($score >= 45 && $score < 70)
+                        <td class="score-yellow">
+                            {{ $score }}
+                        </td>
+                    @elseif($score < 45)
+                        <td class="score-red">
+                            {{ $score }}
+                        </td>
+                    @else
+                        <td>
+                            {{ 'Not score' }}
+                        </td>
+                    @endif
+
+
+                    <td>
+                        <a href="{{ url('applicants/preview/' . $view->id) }}">
+                            <button class="ols-yellow OpenBtn">
+                                preview
+                            </button>
+                        </a>
+
+                        <a href="{{ url('applicants/download/' . $view->id) }}"><button
+                                class="ols-blue">download</button></a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4">No queries found!</td>
+                </tr>
+            @endforelse
+        </table>
     </div>
+</div>
 
 @endsection

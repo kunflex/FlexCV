@@ -43,7 +43,8 @@ class HomeController extends Controller
             // Check if the user has the 'user' role
             if (Auth::user()->hasRole('employer')) {
                 // User route logic
-                return view('employer.dashboard');
+                $countJobs = JobDisplay::where('posted_by',Auth::user()->id)->count();
+                return view('employer.dashboard', compact('countJobs'));
             } else {
                 return view('welcome');
             }

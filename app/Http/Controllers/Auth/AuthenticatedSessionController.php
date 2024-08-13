@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+use function Laravel\Prompts\alert;
+
 class AuthenticatedSessionController extends Controller
 {
     /**

@@ -237,13 +237,20 @@
         <div class="section">
             <h2>Personal Details</h2>
             <div class="details">
-                <span>Kelvin Obeng Boateng</span>
-                <span>Ghana, Accra</span>
-                <span>Tel: 0593958263</span>
-                <span>kelvinboateng56@gmail.com</span>
+                <span style="display: inline-flex; gap:10px;">
+                    <div id="preview_firstname"></div> <div id="preview_othernames"></div> <div id="preview_lastname"></div>
+                </span><br>
+                <span id="preview_DOB"></span>
+                <span style="display: inline-flex;gap:10px;">
+                    <div id="preview_country"></div>
+                <div id="preview_city_town"></div></span>
+                <span id="preview_postal_address"></span>
+                <span id="preview_phone"></span>
+                <span id="preview_email"></span>
             </div>
         </div>
-
+        
+        
         <!-- Profile -->
         <div class="section">
             <h2>Profile</h2>
@@ -338,5 +345,45 @@
         <!-- End References -->
     @endforelse
 </body>
+<script>
+    // Get references to the preview divs
+    const preview_firstname = document.getElementById('preview_firstname');
+    const preview_lastname = document.getElementById('preview_lastname');
+    const preview_othernames = document.getElementById('preview_othernames');
+    const preview_country = document.getElementById('preview_country');
+    const preview_city_town = document.getElementById('preview_city_town');
+    const preview_email = document.getElementById('preview_email');
+    const preview_phone = document.getElementById('preview_phone');
+    const preview_postal_address = document.getElementById('preview_postal_address');
+    const preview_DOB = document.getElementById('preview_DOB');
 
+    // Function to update previews based on session storage
+    function updatePreviews() {
+        const storedFirstname = sessionStorage.getItem('firstname');
+        const storedLastname = sessionStorage.getItem('lastname');
+        const storedOthernames = sessionStorage.getItem('othernames');
+        const storedCountry = sessionStorage.getItem('country');
+        const storedCity_town = sessionStorage.getItem('city_town');
+        const storedEmail = sessionStorage.getItem('email');
+        const storedPhone = sessionStorage.getItem('phone');
+        const storedPostal_address = sessionStorage.getItem('postal_address');
+        const storedDOB = sessionStorage.getItem('DOB');
+
+        preview_firstname.innerText = storedFirstname ? storedFirstname : "Firstname"; // Fallback message
+        preview_lastname.innerText = storedLastname ? storedLastname : "Lastname"; // Fallback message
+        preview_othernames.innerText = storedOthernames ? storedOthernames : "Othernames"; // Fallback message
+        preview_country.innerText = storedCountry ? storedCountry : "Country"; // Fallback message
+        preview_city_town.innerText = storedCity_town ? storedCity_town : "City/Town"; // Fallback message
+        preview_email.innerText = storedEmail ? storedEmail : "example@gmail.com"; // Fallback message
+        preview_phone.innerText = storedPhone ? storedPhone : "0593958236"; // Fallback message
+        preview_postal_address.innerText = storedPostal_address ? storedPostal_address : "Postal Address"; // Fallback message
+        preview_DOB.innerText = storedDOB ? storedDOB : "Date of Birth"; // Fallback message
+    }
+
+    // Call the function to update previews on page load
+    updatePreviews();
+
+    // Update previews if session storage changes
+    window.addEventListener('storage', updatePreviews);
+</script>
 </html>

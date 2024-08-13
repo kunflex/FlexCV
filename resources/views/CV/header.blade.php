@@ -2,6 +2,14 @@
 
 @section('title', 'Personal Details | FlexCV Official Website')
 
+@section('styles')
+    <style>
+        .preview{
+            display: none;
+        }
+    </style>
+@endsection
+
 @section('content')
 <!-- ======Page prompt telling the user the next step===== -->
     <div class="page-prompt">
@@ -49,11 +57,13 @@
                         <div class="rbs-layer">
                             <div>
                                 <label for="firstname">First Name</label>
-                                <input class="rbs-input" type="text" name="firstname" placeholder="Vincent">
+                                <input class="rbs-input" type="text" name="firstname" id="firstname" placeholder="Vincent">
+                                <div id="preview_firstname" class="preview">Country</div>
                             </div>
                             <div>
                                 <label for="lastname">Last Name</label>
-                                <input class="rbs-input" type="text" name="lastname" placeholder="Tetteh">
+                                <input class="rbs-input" type="text" name="lastname" id="lastname" placeholder="Tetteh">
+                                <div id="preview_lastname" class="preview">Country</div>
                             </div>
                         </div>
 
@@ -61,11 +71,13 @@
                         <div class="rbs-layer">
                             <div>
                                 <label for="othername">Other Name(s)</label>
-                                <input class="rbs-input" type="text" name="othername" placeholder="Adumuah">
+                                <input class="rbs-input" type="text" name="othername" id="othernames" placeholder="Adumuah">
+                                <div id="preview_othernames" class="preview">Country</div>
                             </div>
                             <div>
                                 <label for="country">Country</label>
-                                <input class="rbs-input" type="text" name="country" placeholder="Ghana">
+                                <input class="rbs-input" type="text" name="country" id="country" placeholder="Ghana">
+                                <div id="preview_country" class="preview">Country</div>
                             </div>
                         </div>
 
@@ -75,7 +87,8 @@
                         <div class="rbs-layer">
                                 <div>
                                     <label for="">Email</label>
-                                    <input class="rbs-input" type="text" name="email" placeholder="vincent@gmail.com">
+                                    <input class="rbs-input" type="text" name="email" id="email" placeholder="vincent@gmail.com">
+                                    <div id="preview_email" class="preview">email</div>
                                 </div>
                         </div>
                     </div>
@@ -85,11 +98,13 @@
                              <div class="rbs-layer">
                                 <div>
                                     <label for="city/town">City/Town</label>
-                                    <input class="rbs-input" type="text" name="city/town" placeholder="Accra">
+                                    <input class="rbs-input" type="text" name="city/town" id="city_town" placeholder="Accra">
+                                    <div id="preview_city_town" class="preview">City/Town</div>
                                 </div>
                                 <div>
                                     <label for="address">Postal Address</label>
-                                    <input class="rbs-input" type="text" name="address" placeholder="GZ-120-5412">
+                                    <input class="rbs-input" type="text" name="address" id="postal_address" placeholder="GZ-120-5412">
+                                    <div id="preview_postal_address" class="preview">postal address</div>
                                 </div>
                             </div>
 
@@ -97,11 +112,13 @@
                             <div class="rbs-layer">
                                 <div>
                                     <label for="phone_number">Phone</label>
-                                    <input class="rbs-input" type="text" name="phone_number" placeholder="+233(50) 541 1255">
+                                    <input class="rbs-input" type="text" name="phone_number" id="phone" placeholder="+233(50) 541 1255">
+                                    <div id="preview_phone" class="preview">phone</div>
                                 </div>
                                 <div>
                                     <label for="DOB">Date of Birth</label>
-                                    <input class="rbs-input" type="date" name="DOB" placeholder="">
+                                    <input class="rbs-input" type="date" name="DOB" id="DOB" placeholder="">
+                                    <div id="preview_DOB" class="preview">DOB</div>
                                 </div>
                             </div>
                             
@@ -164,4 +181,41 @@
         form.submit();
     }
 </script>
+
+<script>
+    // Function to handle input and session storage
+    function handleInput(inputId, previewId, storageKey) {
+        const inputField = document.getElementById(inputId);
+        const previewDiv = document.getElementById(previewId);
+
+        // Load the stored value from session storage if it exists
+        const storedValue = sessionStorage.getItem(storageKey);
+        if (storedValue) {
+            previewDiv.innerText = storedValue;
+            inputField.value = storedValue; // Set the input value
+        }
+
+        // Add an event listener to the input field
+        inputField.addEventListener('input', function() {
+            // Update the preview div with the input field's value
+            previewDiv.innerText = inputField.value;
+
+            // Store the input field's value in session storage
+            sessionStorage.setItem(storageKey, inputField.value);
+        });
+    }
+
+    // Call the function for each input field
+    handleInput('firstname', 'preview_firstname', 'firstname');
+    handleInput('lastname', 'preview_lastname', 'lastname');
+    handleInput('othernames', 'preview_othernames', 'othernames');
+    handleInput('country', 'preview_country', 'country');
+    handleInput('city_town', 'preview_city_town', 'city_town');
+    handleInput('email', 'preview_email', 'email');
+    handleInput('phone', 'preview_phone', 'phone');
+    handleInput('postal_address', 'preview_postal_address', 'postal_address');
+    handleInput('DOB', 'preview_DOB', 'DOB');
+</script>
+
+
 @endsection

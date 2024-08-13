@@ -40,7 +40,9 @@
             background-color: #f2f2f2;
             /* Color for even-numbered rows */
         }
-
+        .nls:hover{
+            border-left:2px solid #0095FF;
+        }
         .ols-blue {
             background-color: darkblue;
             color: white;
@@ -105,7 +107,7 @@
                 </tr>
 
                 @forelse ($testimonials as $testimonials)
-                    <tr>
+                    <tr class="nls">
                         <td>{{$testimonials->name}}</td>
                         <td>{{$testimonials->profile}}</td>
                         <td>{{$testimonials->description}}</td>

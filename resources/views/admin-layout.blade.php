@@ -53,7 +53,7 @@
                                         </li>
                                     </a><br>
 
-                                    <a href="{{url('testimonials')}}">
+                                    <a href="{{ url('testimonials') }}">
                                         <li class="menu-btn">
                                             <span class="progress-count"></span>
                                             <span class="progress-label">Testimonials</span>
@@ -67,7 +67,7 @@
                                         </li>
                                     </a><br>
 
-                                    <a href="{{url('enquiries')}}">
+                                    <a href="{{ url('enquiries') }}">
                                         <li class="menu-btn">
                                             <span class="progress-count"></span>
                                             <span class="progress-label">Enquiries</span>
@@ -114,7 +114,7 @@
                                                 <a href="">
                                                     <li class="menu-btn">
                                                         <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
+                                                        <span class="progress-label">Interviews</span>
                                                     </li>
                                                 </a><br>
 
@@ -128,21 +128,21 @@
                                                 <a href="">
                                                     <li class="menu-btn">
                                                         <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
+                                                        <span class="progress-label">Messages</span>
                                                     </li>
                                                 </a><br>
 
                                                 <a href="">
                                                     <li class="menu-btn">
                                                         <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
+                                                        <span class="progress-label">Reports</span>
                                                     </li>
                                                 </a><br>
 
                                                 <a href="">
                                                     <li class="menu-btn">
                                                         <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
+                                                        <span class="progress-label">Help Desk</span>
                                                     </li>
                                                 </a><br>
                                             </div>
@@ -198,6 +198,28 @@
 
                 @if (Route::has('login'))
                     @auth
+                        {{-- menu bar --}}
+                        <div class="mobile-menu" id="mobile-menu" onclick="Openmenu()">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px"
+                                viewBox="0 0 344.339 344.339" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <rect y="46.06" width="344.339" height="29.52" />
+                                        </g>
+                                        <g>
+                                            <rect y="156.506" width="344.339" height="29.52" />
+                                        </g>
+                                        <g>
+                                            <rect y="268.748" width="344.339" height="29.531" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        {{-- end menu bar --}}
+
                         <div class="dropdown">
                             <img class="dropdown-img" src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
                             <div class="dropdown-content" style="width:190px; margin-left: -130px;">
@@ -243,30 +265,220 @@
         </div>
     </div>
 
+    {{-- Menu contents --}}
+    <div class="phone-bg" id="mobile-device">
+        <div class="phone-cont">
+            <div style="font-size: 40px;user-select: select none;cursor: pointer;" id="closemenu"
+                onclick="Closemenu()">&LeftArrow;</div>
 
+            @if (Auth::user()->hasRole('admin'))
+                <nav>
+                    <ul>
+                        <div class="logo" style="margin-top: -32px">
+                            <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/logo1.png') }}"
+                                    alt=""></a>
+                        </div>
+                        <div class="side-menu">
+                            <a href="{{ url('jobs') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Job Posting</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('suggestions') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Suggestions</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('track-jobs') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Track Jobs</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('testimonials') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Testimonials</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('account') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Users</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('enquiries') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Enquiries</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Reports</span>
+                                </li>
+                            </a><br>
+                        </div>
+
+                        <div class="side-footer">
+                            <h5><a href="">Terms & Conditions</a> | <a href="">Contact Us</a></h5>
+                            <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
+                        </div>
+                    </ul>
+                </nav>
+            @elseif(Auth::user()->hasRole('employer'))
+                <nav>
+                    <ul>
+                        <div class="logo" style="margin-top: -32px">
+
+                            <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/logo1.png') }}"
+                                    alt=""></a>
+
+                        </div>
+                        <div class="side-menu">
+                            <a href="{{ url('jobs') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Job Posting</span>
+                                </li>
+                            </a><br>
+
+                            <a href="{{ url('track-jobs') }}">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Track Jobs</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Interviews</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">empty</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Messages</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Reports</span>
+                                </li>
+                            </a><br>
+
+                            <a href="">
+                                <li class="menu-btn">
+                                    <span class="progress-count"></span>
+                                    <span class="progress-label">Help Desk</span>
+                                </li>
+                            </a><br>
+                        </div>
+
+                        <div class="side-footer">
+                            <h5><a href="">Terms & Conditions</a> | <a href="">Contact
+                                    Us</a></h5>
+                            <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
+                        </div>
+                    </ul>
+                </nav>
+            @endif
+
+        </div>
+    </div>
+    {{-- end Menu contents --}}
 
 </body>
 
 </html>
 <style>
-    .bg-color{
-        background-color:#0091FF;
-        height:80px;
-        width:auto;
+    .phone-bg {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.185);
+    }
+
+    .mobile-menu {
+        user-select: none;
+        -webkit-user-drag: none;
+        cursor: pointer;
+        display: none;
+        margin-top: 2px;
+    }
+
+    .phone-cont {
+        width: 54%;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        position: fixed;
+        background: linear-gradient(to bottom, #0FFF, #0095FF);
+        height: 100%;
+        box-shadow: 0px 0px 3px 1px #ddd;
+    }
+
+    .mobile-menu {
+        float: left;
+    }
+
+    @media (max-width: 980px) {
+        .sidebar-content2 {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: block;
+        }
+
+        .sidebar-color {
+            display: none;
+        }
+    }
+
+    .bg-color {
+        background-color: #0091FF;
+        height: 80px;
+        width: auto;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
     }
+
     .div-pro {
         width: auto;
         height: auto;
-        margin:0px 20px 0px 20px;
+        margin: 0px 20px 0px 20px;
         user-select: none;
         cursor: pointer;
         text-align: center;
         background-color: transparent;
-        border-bottom:1px solid #ddd;
+        border-bottom: 1px solid #ddd;
         padding: 8px;
-        margin-top:-60px;
+        margin-top: -60px;
     }
 
     .div-pro img {
@@ -415,5 +627,29 @@
         .catch(error => {
             console.error(error);
         });
+</script>
+
+<script>
+    function Openmenu() {
+        const menu = document.getElementById('mobile-menu');
+        const device = document.getElementById('mobile-device');
+        if (menu) {
+            menu.addEventListener("click", function(event) {
+                event.preventDefault();
+                device.style.display = 'block';
+            });
+        }
+    }
+
+    function Closemenu() {
+        const closemenu = document.getElementById('closemenu');
+        const device = document.getElementById('mobile-device');
+        if (closemenu) {
+            closemenu.addEventListener("click", function(event) {
+                event.preventDefault();
+                device.style.display = 'none';
+            });
+        }
+    }
 </script>
 @yield('scripts')

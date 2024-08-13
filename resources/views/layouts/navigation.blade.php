@@ -6,7 +6,31 @@
             <header>
                 <nav>
                     <ul>
-                        <div class="logo-design">
+
+
+                        <div class="logo-design" style="display: inline-flex;gap:10px;">
+                            {{-- menu bar --}}
+                            <div class="mobile-menu" id="mobile-menu" onclick="Openmenu()">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px"
+                                    viewBox="0 0 344.339 344.339" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <rect y="46.06" width="344.339" height="29.52" />
+                                            </g>
+                                            <g>
+                                                <rect y="156.506" width="344.339" height="29.52" />
+                                            </g>
+                                            <g>
+                                                <rect y="268.748" width="344.339" height="29.531" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            {{-- end menu bar --}}
+
                             <a href="{{ route('landingpage') }}">
                                 <h1>Flex<span>CV</span></h1>
                             </a>
@@ -208,5 +232,4 @@
                 padding: 10px 20px;
             }
         }
-
     </style>

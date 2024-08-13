@@ -30,7 +30,9 @@
             width: auto;
             text-align: center;
         }
-
+        .nls:hover{
+            border-left:2px solid #0095FF;
+        }
         tr:nth-child(odd) {
             background-color: #ffffff;
             /* Color for odd-numbered rows */
@@ -108,7 +110,7 @@
                 </tr>
 
                 @forelse ($enquiries as $enquiries)
-                    <tr>
+                    <tr class="nls">
                         <td>{{ $enquiries->fullname }}</td>
                         <td>{{ $enquiries->email }}</td>
                         <td>{{ $enquiries->advertisement }}</td>

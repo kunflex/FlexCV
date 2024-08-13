@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Smalot\PdfParser\Parser;
 use Illuminate\Support\Facades\Log;
+use OpenAI;
 
 class PDF_TO_TEXTController extends Controller
 {
@@ -41,9 +42,10 @@ class PDF_TO_TEXTController extends Controller
             // Filter the text to extract referee information
             $refereeDetails = $this->filterRefereeDetails($text);
 
+             // Filter the text to extract interest
             $filterInterests = $this->filterInterests($text);
 
-            // Perform filtering based on extracted text
+             // Filter the text to extract personal details
             $personalDetails = $this->parsePersonalDetails($text);
 
             return view('admin.converted_cv', compact('text', 'filteredEducationalDetails', 'refereeDetails', 'filterInterests', 'personalDetails'));
@@ -84,7 +86,39 @@ class PDF_TO_TEXTController extends Controller
         return $filteredDetails;
     }
 
+    // private function filterEducationalDetails($text)
+    // {
+    //     // Prepare the prompt for ChatGPT
+    //     $prompt = "Please extract the educational details from the following text and return them in a structured format with labels:\n\n" . $text;
 
+    //     // Call OpenAI API to get the response
+    //     $client = new OpenAI\Client('YOUR_API_KEY');
+    //     $response = $client->completions()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'prompt' => $prompt,
+    //         'max_tokens' => 500,
+    //         'temperature' => 0.5,
+    //     ]);
+
+    //     // Parse the response to get the educational details
+    //     $result = json_decode($response['choices'][0]['text'], true);
+
+    //     // Format the result with labels
+    //     $formattedDetails = [];
+    //     if (is_array($result)) {
+    //         foreach ($result as $detail) {
+    //             $formattedDetails[] = [
+    //                 'Start Date' => $detail['start_date'] ?? 'N/A',
+    //                 'End Date' => $detail['end_date'] ?? 'N/A',
+    //                 'Institution' => $detail['institution'] ?? 'N/A',
+    //                 'Degree' => $detail['degree'] ?? 'N/A',
+    //                 'Courses' => $detail['courses'] ?? 'N/A',
+    //             ];
+    //         }
+    //     }
+
+    //     return $formattedDetails;
+    // }
 
     private function filterRefereeDetails($text)
     {
@@ -111,6 +145,38 @@ class PDF_TO_TEXTController extends Controller
         return $refereeDetails;
     }
 
+    // private function filterRefereeDetails($text)
+    // {
+    //     // Prepare the prompt for ChatGPT
+    //     $prompt = "Please extract the referee details from the following text and return them in a structured format with labels:\n\n" . $text;
+
+    //     // Call OpenAI API to get the response
+    //     $client = new OpenAI\Client('YOUR_API_KEY');
+    //     $response = $client->completions()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'prompt' => $prompt,
+    //         'max_tokens' => 500,
+    //         'temperature' => 0.5,
+    //     ]);
+
+    //     // Parse the response to get the referee details
+    //     $result = json_decode($response['choices'][0]['text'], true);
+
+    //     // Format the result with labels
+    //     $formattedRefereeDetails = [];
+    //     if (is_array($result)) {
+    //         foreach ($result as $referee) {
+    //             $formattedRefereeDetails[] = [
+    //                 'Name' => $referee['name'] ?? 'N/A',
+    //                 'Position' => $referee['position'] ?? 'N/A',
+    //                 'Institution' => $referee['institution'] ?? 'N/A',
+    //                 'Telephone' => $referee['tel'] ?? 'N/A',
+    //             ];
+    //         }
+    //     }
+
+    //     return $formattedRefereeDetails;
+    // }
 
     private function filterInterests($text)
     {
@@ -138,6 +204,35 @@ class PDF_TO_TEXTController extends Controller
         return $interests;
     }
 
+    // private function filterInterests($text)
+    // {
+    //     // Prepare the prompt for ChatGPT
+    //     $prompt = "Please extract the interests from the following text and return them as a list with labels:\n\n" . $text;
+
+    //     // Call OpenAI API to get the response
+    //     $client = new OpenAI\Client('YOUR_API_KEY');
+    //     $response = $client->completions()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'prompt' => $prompt,
+    //         'max_tokens' => 150,
+    //         'temperature' => 0.5,
+    //     ]);
+
+    //     // Parse the response to get the interests
+    //     $result = json_decode($response['choices'][0]['text'], true);
+
+    //     // Format the result with labels
+    //     $formattedInterests = [];
+    //     if (is_array($result)) {
+    //         foreach ($result as $interest) {
+    //             $formattedInterests[] = [
+    //                 'Interest' => $interest ?? 'N/A',
+    //             ];
+    //         }
+    //     }
+
+    //     return $formattedInterests;
+    // }
 
     private function parsePersonalDetails($text)
     {
@@ -195,4 +290,67 @@ class PDF_TO_TEXTController extends Controller
 
         return $personalDetails;
     }
+
+    // private function parsePersonalDetails($text)
+    // {
+    //     // Prepare the prompt for ChatGPT
+    //     $prompt = "Please extract the personal details from the following text and return them in a structured format with labels:\n\n" . $text;
+
+    //     // Call OpenAI API to get the response
+    //     $client = new OpenAI\Client('YOUR_API_KEY');
+    //     $response = $client->completions()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'prompt' => $prompt,
+    //         'max_tokens' => 300,
+    //         'temperature' => 0.5,
+    //     ]);
+
+    //     // Parse the response to get the personal details
+    //     $result = json_decode($response['choices'][0]['text'], true);
+
+    //     // Format the result with labels
+    //     $formattedPersonalDetails = [];
+    //     if (is_array($result)) {
+    //         $formattedPersonalDetails = [
+    //             'Firstname' => $result['firstname'] ?? 'N/A',
+    //             'Surname' => $result['surname'] ?? 'N/A',
+    //             'Othernames' => $result['othernames'] ?? 'N/A',
+    //             'Address' => $result['address'] ?? 'N/A',
+    //             'Date of Birth' => $result['date_of_birth'] ?? 'N/A',
+    //             'Nationality' => $result['nationality'] ?? 'N/A',
+    //             'Email' => $result['email'] ?? 'N/A',
+    //             'LinkedIn' => $result['linkedin'] ?? 'N/A',
+    //             'Residential Address' => $result['residential_address'] ?? 'N/A',
+    //             'Telephone' => $result['tel'] ?? 'N/A',
+    //         ];
+    //     }
+
+    //     return $formattedPersonalDetails;
+    // }
+
+    // private function parseProfileSummary($text)
+    // {
+    //     // Prepare the prompt for ChatGPT
+    //     $prompt = "Please extract the profile summary from the following text and return it in a structured format with a label:\n\n" . $text;
+
+    //     // Call OpenAI API to get the response
+    //     $client = new OpenAI\Client('YOUR_API_KEY');
+    //     $response = $client->completions()->create([
+    //         'model' => 'gpt-3.5-turbo',
+    //         'prompt' => $prompt,
+    //         'max_tokens' => 150,
+    //         'temperature' => 0.5,
+    //     ]);
+
+    //     // Parse the response to get the profile summary
+    //     $result = json_decode($response['choices'][0]['text'], true);
+
+    //     // Format the result with labels
+    //     $formattedProfileSummary = [
+    //         'Profile Summary' => $result['profile_summary'] ?? 'N/A',
+    //     ];
+
+    //     return $formattedProfileSummary;
+    // }
+
 }

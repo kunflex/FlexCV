@@ -38,6 +38,7 @@
             text-align: center;
             user-select: none;
             cursor: pointer;
+            border-left:12px solid #0095ff;
         }
 
         .bs {
@@ -106,8 +107,6 @@
 @endsection
 
 @section('content')
-    <div>
-
         <div class="header">
             <a>
                 {{ __('AdminDashboard') }}
@@ -160,15 +159,15 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            async function fetchPieData() {
+            async function fetchDoughnutData() {
                 const response = await fetch('Doughnut');
                 const result = await response.json();
                 return result;
             }
 
-            async function createPieChart() {
+            async function createDoughnutChart() {
                 const ctx1 = document.getElementById('myChart');
-                const data = await fetchPieData();
+                const data = await fetchDoughnutData();
 
                 new Chart(ctx1, {
                     type: 'doughnut',
@@ -190,7 +189,7 @@
                 });
             }
 
-            createPieChart();
+            createDoughnutChart();
         </script>
 
 
@@ -229,15 +228,15 @@
         </script>
 
         <script>
-            async function fetchData() {
+            async function fetchBarChartData() {
                 const response = await fetch('BarChart');
                 const result = await response.json();
                 return result;
             }
 
-            async function createChart() {
+            async function createBarChart() {
                 const ctx2 = document.getElementById('myChart2');
-                const data = await fetchData();
+                const data = await fetchBarChartData();
 
                 new Chart(ctx2, {
                     type: 'bar',
@@ -266,7 +265,7 @@
                 });
             }
 
-            createChart();
+            createBarChart();
         </script>
 
     @endsection

@@ -40,6 +40,9 @@
             background-color: #f2f2f2;
             /* Color for even-numbered rows */
         }
+        .nls:hover{
+            border-left:2px solid #0095FF;
+        }
 
         .ols-blue {
             background-color: darkblue;
@@ -101,11 +104,11 @@
                 </tr>
 
                 @forelse ($dataUsers as $dataUsers)
-                    <tr>
+                    <tr class="nls">
                         <td>{{ $dataUsers->name }}</td>
                         <td>{{ $dataUsers->email }}</td>
                         <td>059326548</td>
-                        <td>{{ $dataUsers->created_at->diffForHumans() }}</td>
+                        <td></td>
                         <td>Accra</td>
                         <td>
                             <div>

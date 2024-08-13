@@ -131,31 +131,27 @@ class AdminController extends Controller
         $request->validate(['search1' => 'required', 'search2' => 'required']);
         $search1 = $request->input('search1');
         $search2 = $request->input('search2');
-    
+
         // Default number of items per page
         $perPage = $request->input('perPage', 4); // Default to 4 if no input is provided
-    
+
         // Helper function to fetch and transform paginated jobs
         $fetchAndTransformJobs = function ($category, $search1, $search2, $perPage) {
             // Fetch jobs based on the search query and category
             $jobs = JobDisplay::where('category', $category)
-            ->where(function ($query) use ($search1, $search2) {
-                if (!empty($search1)) {
-                    $query->where('job_title', 'like', '%' . $search1 . '%');
-                }
-                
-                if (!empty($search2)) {
-                    $query->orwhere('job_description', 'like', '%' . $search2 . '%');
-                }
-            })
-            ->paginate($perPage);
-        
-    
+                ->where(function ($query) use ($search1, $search2) {
+                    if (!empty($search1) && !empty($search2)) {
+                        $query->where('job_title', 'like', '%' . $search1 . '%')
+                            ->orWhere('job_description', 'like', '%' . $search2 . '%');
+                    }
+                })
+                ->paginate($perPage);
+
             // Check if jobs collection is empty
             if ($jobs->isEmpty()) {
                 return null; // Return null if no jobs found for the category
             }
-    
+
             $transformed = $jobs->getCollection()->map(function ($job) {
                 $firstLetter = (!empty($job->job_title)) ? $job->job_title[0] : 'N/A';
                 // Include a debug log for each job processed
@@ -165,13 +161,13 @@ class AdminController extends Controller
                     'first_letter' => $firstLetter
                 ];
             });
-    
+
             // Replace the original collection in the paginator
             $jobs->setCollection($transformed);
-    
+
             return $jobs;
         };
-    
+
         // Define categories for pagination
         $categories = [
             'Information Technology',
@@ -185,16 +181,16 @@ class AdminController extends Controller
             'Agriculture',
             'Law'
         ];
-    
+
         // Initialize data arrays
         $data = [];
         $counts = [];
         $pages = [];
         $totalJobs = 0;
-    
+
         foreach ($categories as $category) {
             $jobs = $fetchAndTransformJobs($category, $search1, $search2, $perPage);
-    
+
             // Check if jobs variable is null (no jobs found for the category)
             if ($jobs !== null) {
                 $data[$category] = $jobs;
@@ -203,17 +199,17 @@ class AdminController extends Controller
                 $totalJobs += $jobs->total();
             }
         }
-    
+
         // Initialize result variable
         $result = '';
-    
+
         // Check if any jobs were found
         if ($totalJobs === 0) {
             $formattedSearch1 = '<b>' . htmlspecialchars($search1, ENT_QUOTES, 'UTF-8') . '</b>';
             $formattedSearch2 = '<b>' . htmlspecialchars($search2, ENT_QUOTES, 'UTF-8') . '</b>';
-            $result = 'Search result for "' . $formattedSearch1 . '" and "' . $formattedSearch2 . '" not found';
+            $result = 'Search result for "' . $formattedSearch1 . '" and location "' . $formattedSearch2 . '" not found';
         }
-    
+
         // Send data to the view, ensuring $data is always passed
         return view('jobs-nearby', [
             'data' => $data,
@@ -223,8 +219,8 @@ class AdminController extends Controller
             'perPage' => $perPage
         ]);
     }
-    
-    
+
+
 
 
     public function SearchEnquiries(Request $request)
@@ -466,36 +462,67 @@ class AdminController extends Controller
 
     public function BarChart(): JsonResponse
     {
-        $jobPostings = JobDisplay::select(DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
-            ->groupBy(DB::raw('YEAR(created_at)'))
-            ->get();
-
-        $labels = $jobPostings->pluck('year')->toArray();
-        $data = $jobPostings->pluck('count')->toArray();
-
+         // Check if the user is authenticated
+         if (Auth::check()) {
+            // Check if the user has the 'admin' role
+            if (Auth::user()->hasRole('admin')) {
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->groupBy('category')
+                    ->get();
+            } else if (Auth::user()->hasRole('employer')) {
+                $userId = auth()->user()->id; // Get the authenticated user's ID
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->where('posted_by', $userId) // Filter by the user ID
+                    ->groupBy('category')
+                    ->get();
+            }
+            $labels = $jobPostings->pluck('category')->toArray();
+            $data = $jobPostings->pluck('count')->toArray();
+        }
         return response()->json(['labels' => $labels, 'data' => $data]);
     }
 
     public function PieChart(): JsonResponse
     {
-        $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
-            ->groupBy('category')
-            ->get();
-
-        $labels = $jobPostings->pluck('category')->toArray();
-        $data = $jobPostings->pluck('count')->toArray();
-
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Check if the user has the 'admin' role
+            if (Auth::user()->hasRole('admin')) {
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->groupBy('category')
+                    ->get();
+            } else if (Auth::user()->hasRole('employer')) {
+                $userId = auth()->user()->id; // Get the authenticated user's ID
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->where('posted_by', $userId) // Filter by the user ID
+                    ->groupBy('category')
+                    ->get();
+            }
+            $labels = $jobPostings->pluck('category')->toArray();
+            $data = $jobPostings->pluck('count')->toArray();
+        }
         return response()->json(['labels' => $labels, 'data' => $data]);
     }
 
     public function Doughnut(): JsonResponse
     {
-        $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
-            ->groupBy('category')
-            ->get();
-
-        $labels = $jobPostings->pluck('category')->toArray();
-        $data = $jobPostings->pluck('count')->toArray();
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Check if the user has the 'admin' role
+            if (Auth::user()->hasRole('admin')) {
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->groupBy('category')
+                    ->get();
+            } else if (Auth::user()->hasRole('employer')) {
+                $userId = auth()->user()->id; // Get the authenticated user's ID
+                $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
+                    ->where('posted_by', $userId) // Filter by the user ID
+                    ->groupBy('category')
+                    ->get();
+            }
+            $labels = $jobPostings->pluck('category')->toArray();
+            $data = $jobPostings->pluck('count')->toArray();
+        }
 
         return response()->json(['labels' => $labels, 'data' => $data]);
     }

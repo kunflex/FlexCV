@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title> FlexCV Official Website</title>
-        
+        <link rel="shortcut icon" href="{{asset('assets/img/logo1.png')}}" type="image/png">
         <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 
 
