@@ -487,19 +487,6 @@
     </div>
     <!-- End section box -->
    
-    {{-- Menu contents --}}
-    <div class="phone-bg" id="mobile-device">
-        <div class="phone-cont">
-            <div style="font-size: 40px;user-select: select none;cursor: pointer;" id="closemenu"
-                onclick="Closemenu()">&LeftArrow;</div>
-
-            <nav>
-                <ul>hello</ul>
-            </nav>
-
-        </div>
-    </div>
-    {{-- end Menu contents --}}
 </x-app-layout>
 <style>
     .rbs-layer-box {
@@ -1004,73 +991,4 @@
         }
     }
 
-    .phone-bg {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.185);
-    }
-
-    .mobile-menu {
-        user-select: none;
-        -webkit-user-drag: none;
-        cursor: pointer;
-        display: none;
-        margin-top:15px;
-    }
-
-    .phone-cont {
-        width: 54%;
-        top: 0;
-        left: 0;
-        padding: 10px;
-        position: fixed;
-        background: #fff;
-        height: 100%;
-        box-shadow: 0px 0px 3px 1px #ddd;
-    }
-
-
-
-    @media (max-width: 980px) {
-        .sidebar-content2 {
-            width: 100%;
-        }
-
-        .mobile-menu{
-            display: block;
-        }
-
-        .sidebar-color {
-            display: none;
-        }
-    }
-
 </style>
-<script>
-    function Openmenu() {
-        const menu = document.getElementById('mobile-menu');
-        const device = document.getElementById('mobile-device');
-        if (menu) {
-            menu.addEventListener("click", function(event) {
-                event.preventDefault();
-                device.style.display = 'block';
-            });
-        }
-    }
-
-    function Closemenu() {
-        const closemenu = document.getElementById('closemenu');
-        const device = document.getElementById('mobile-device');
-        if (closemenu) {
-            closemenu.addEventListener("click", function(event) {
-                event.preventDefault();
-                device.style.display = 'none';
-            });
-        }
-    }
-</script>

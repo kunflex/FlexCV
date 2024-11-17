@@ -89,7 +89,10 @@ trait HasPermissions
             return $relation;
         }
 
-        return $relation->wherePivot(app(PermissionRegistrar::class)->teamsKey, getPermissionsTeamId());
+        $teamsKey = app(PermissionRegistrar::class)->teamsKey;
+        $relation->withPivot($teamsKey);
+
+        return $relation->wherePivot($teamsKey, getPermissionsTeamId());
     }
 
     /**
@@ -187,7 +190,7 @@ trait HasPermissions
         }
 
         if (! $permission instanceof Permission) {
-            throw new PermissionDoesNotExist();
+            throw new PermissionDoesNotExist;
         }
 
         return $permission;
