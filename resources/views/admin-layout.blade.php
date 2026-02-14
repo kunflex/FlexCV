@@ -5,651 +5,422 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/cv.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
 
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    @yield('styles')
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 240px;
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #94a3b8;
+        }
+
+        .menu-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+
+        .menu-section li {
+            margin-bottom: 6px;
+        }
+
+        .menu-section a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: inherit;
+            font-size: 14px;
+        }
+
+        .menu-section a:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .menu-section a.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .side-footer {
+            margin-top: auto;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        /* ===== Content ===== */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Fixed Topbar */
+        .topbar {
+            height: 60px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 25px;
+            flex-shrink: 0;
+        }
+
+        .mobile-toggle {
+            display: none;
+            margin-right: auto;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Scrollable main content */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+
+            /* Hide scrollbars */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        main::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 180px;
+            overflow: hidden;
+        }
+
+        .dropdown-content a,
+        .dropdown-content button {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            background: none;
+            border: none;
+            text-align: left;
+            text-decoration: none;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .dropdown-content a:hover,
+        .dropdown-content button:hover {
+            background: var(--bg);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ===== Overlay ===== */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+
+            body {
+                overflow: auto;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -260px;
+                top: 0;
+                width: 240px;
+                height: 100%;
+                transition: 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .sidebar.active~.content-wrapper .overlay,
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .topbar {
+                justify-content: space-between;
+                padding: 0 15px;
+            }
+
+            main {
+                padding: 20px 15px;
+            }
+
+            .dropdown-content {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 220px;
+            }
+
+            main {
+                padding: 15px 12px;
+            }
+
+            .topbar {
+                height: 55px;
+            }
+        }
+    </style>
 </head>
-@yield('styles')
 
 <body>
-    <header>
 
-        <div>
+    <div class="layout">
 
-            <section>
+        <!-- Overlay -->
+        <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
+        @auth
+            <aside class="sidebar" id="sidebar">
+
+                <div class="logo">FlexCV</div>
 
                 @if (Auth::user()->hasRole('admin'))
-                    <div class="sidebar-color" style="z-index:2;">
-                        <nav>
-                            <ul>
-                                <div class="logo">
-
-                                    <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/logo1.png') }}"
-                                            alt=""></a>
-
-                                </div>
-                                <div class="side-menu">
-                                    <a href="{{ url('jobs') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Job Posting</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="{{ url('suggestions') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Suggestions</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="{{ url('track-jobs') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Track Jobs</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="{{ url('testimonials') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Testimonials</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="{{ url('account') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Users</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="{{ url('enquiries') }}">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Enquiries</span>
-                                        </li>
-                                    </a><br>
-
-                                    <a href="">
-                                        <li class="menu-btn">
-                                            <span class="progress-count"></span>
-                                            <span class="progress-label">Reports</span>
-                                        </li>
-                                    </a><br>
-                                </div>
-
-                                <div class="side-footer">
-                                    <h5><a href="">Terms & Conditions</a> | <a href="">Contact Us</a></h5>
-                                    <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
-                                </div>
-                            @elseif(Auth::user()->hasRole('employer'))
-                                <div class="sidebar-color" style="z-index:2;">
-                                    <nav>
-                                        <ul>
-                                            <div class="logo">
-
-                                                <a href="{{ route('landingpage') }}"><img
-                                                        src="{{ asset('assets/img/logo1.png') }}" alt=""></a>
-
-                                            </div>
-                                            <div class="side-menu">
-                                                <a href="{{ url('jobs') }}">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Job Posting</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="{{ url('track-jobs') }}">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Track Jobs</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Interviews</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">empty</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Messages</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Reports</span>
-                                                    </li>
-                                                </a><br>
-
-                                                <a href="">
-                                                    <li class="menu-btn">
-                                                        <span class="progress-count"></span>
-                                                        <span class="progress-label">Help Desk</span>
-                                                    </li>
-                                                </a><br>
-                                            </div>
-
-                                            <div class="side-footer">
-                                                <h5><a href="">Terms & Conditions</a> | <a href="">Contact
-                                                        Us</a></h5>
-                                                <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
-                                            </div>
-                                        </ul>
-                                    </nav>
-                                </div>
-            </section>
-        </div>
-    @else
-        <style>
-            .sidebar-content2 {
-                width: 100%;
-            }
-
-            .logo-design h1 {
-                font-size: 35px;
-                font-family: Arial, Helvetica, sans-serif;
-                position: absolute;
-                margin-top: -10px;
-                margin-left: 10px;
-            }
-
-            a {
-                text-decoration: none;
-                color: black;
-            }
-
-            .logo-design h1 span {
-                color: #0095ff;
-            }
-        </style>
-        @endif
-    </header>
-
-
-    <div>
-        <div class="sidebar-content2">
-            <div class="top-mkc">
-                @role('user')
-                    <div class="logo-design">
-                        <a href="{{ route('landingpage') }}">
-                            <h1>Flex<span>CV</span></h1>
-                        </a>
+                    <div class="menu-section">
+                        <div class="menu-title">Main</div>
+                        <ul>
+                            <li><a href="{{ route('dashboard') }}" class="active"><i data-feather="home"></i> Dashboard</a>
+                            </li>
+                            <li><a href="{{ route('jobpostings') }}"><i data-feather="briefcase"></i> Job Postings</a></li>
+                            <li><a href="{{route('joblists')}}"><i data-feather="file-text"></i>Job Applications</a></li>
+                            <li><a href="#"><i data-feather="calendar"></i> Interviews</a></li>
+                        </ul>
                     </div>
-                @endrole
 
-
-                @if (Route::has('login'))
-                    @auth
-                        {{-- menu bar --}}
-                        <div class="mobile-menu" id="mobile-menu" onclick="Openmenu()">
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                fill="#000000" version="1.1" id="Capa_1" width="20px" height="20px"
-                                viewBox="0 0 344.339 344.339" xml:space="preserve">
-                                <g>
-                                    <g>
-                                        <g>
-                                            <rect y="46.06" width="344.339" height="29.52" />
-                                        </g>
-                                        <g>
-                                            <rect y="156.506" width="344.339" height="29.52" />
-                                        </g>
-                                        <g>
-                                            <rect y="268.748" width="344.339" height="29.531" />
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
-                        </div>
-                        {{-- end menu bar --}}
-
-                        <div class="dropdown">
-                            <img class="dropdown-img" src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
-                            <div class="dropdown-content" style="width:190px; margin-left: -130px;">
-                                <div class="bg-color"></div>
-                                <div class="div-pro">
-                                    @if (!empty(Auth::user()->profile))
-                                        <img src="{{ Auth::user()->profile }}" alt="avarta">
-                                    @else
-                                        <img src="{{ asset('assets/img/avarta.png') }}" alt="avarta">
-                                    @endif
-                                    <b>{{ Auth::user()->name }}</b> <br>
-                                    <span style="font-size:12px;color:gray;margin-right:10px;">
-                                        {{ Auth::user()->email }}
-                                    </span>
-                                </div>
-                                <a style="user-select:none"href="{{ route('dashboard') }}">
-                                    <li>Dashboard</li>
-                                </a>
-                                <a style="user-select:none"href="{{ route('profile.edit') }}">
-                                    <li>Profile</li>
-                                </a>
-
-                                <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                        this.closest('form').submit();"
-                                        style="user-select:none;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;">
-                                        <li>Logout</li>
-                                    </a>
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                    @endauth
+                    <div class="menu-section">
+                        <div class="menu-title">Candidates</div>
+                        <ul>
+                            <li><a href="#"><i data-feather="users"></i> All Candidates</a></li>
+                            <li><a href="#"><i data-feather="check-circle"></i> Shortlisted</a></li>
+                            <li><a href="#"><i data-feather="database"></i> Talent Pool</a></li>
+                        </ul>
+                    </div>
+                @elseif (Auth::user()->hasRole('employer'))
+                    <div class="menu-section">
+                        <div class="menu-title">Main</div>
+                        <ul>
+                            <li><a href="{{ route('dashboard') }}"><i data-feather="home"></i> Dashboard</a></li>
+                            <li><a href="#"><i data-feather="plus-circle"></i> Post Job</a></li>
+                            <li><a href="#"><i data-feather="layers"></i> Manage Jobs</a></li>
+                            <li><a href="#"><i data-feather="file-text"></i> Applications</a></li>
+                        </ul>
+                    </div>
                 @endif
-            </div><br><br><br>
+
+                <div class="side-footer">
+                    © {{ date('Y') }} FlexCV
+                </div>
+
+            </aside>
+        @endauth
+
+        <div class="content-wrapper">
+
+            <div class="topbar">
+                <div class="mobile-toggle" onclick="toggleSidebar()">☰</div>
+
+                @auth
+                    <div class="dropdown">
+                        <img src="{{ asset('assets/img/avarta.png') }}" alt="Avatar">
+                        <div class="dropdown-content">
+                            <a href="#">Dashboard</a>
+                            <a href="#">Profile</a>
+                            <form action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <button type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @endauth
+            </div>
 
             <main>
                 @yield('content')
             </main>
-        </div>
-    </div>
-
-    {{-- Menu contents --}}
-    <div class="phone-bg" id="mobile-device">
-        <div class="phone-cont">
-            <div style="font-size: 40px;user-select: select none;cursor: pointer;" id="closemenu"
-                onclick="Closemenu()">&LeftArrow;</div>
-
-            @if (Auth::user()->hasRole('admin'))
-                <nav>
-                    <ul>
-                        <div class="logo" style="margin-top: -32px">
-                            <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/logo1.png') }}"
-                                    alt=""></a>
-                        </div>
-                        <div class="side-menu">
-                            <a href="{{ url('jobs') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Job Posting</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('suggestions') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Suggestions</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('track-jobs') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Track Jobs</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('testimonials') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Testimonials</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('account') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Users</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('enquiries') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Enquiries</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Reports</span>
-                                </li>
-                            </a><br>
-                        </div>
-
-                        <div class="side-footer">
-                            <h5><a href="">Terms & Conditions</a> | <a href="">Contact Us</a></h5>
-                            <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
-                        </div>
-                    </ul>
-                </nav>
-            @elseif(Auth::user()->hasRole('employer'))
-                <nav>
-                    <ul>
-                        <div class="logo" style="margin-top: -32px">
-
-                            <a href="{{ route('landingpage') }}"><img src="{{ asset('assets/img/logo1.png') }}"
-                                    alt=""></a>
-
-                        </div>
-                        <div class="side-menu">
-                            <a href="{{ url('jobs') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Job Posting</span>
-                                </li>
-                            </a><br>
-
-                            <a href="{{ url('track-jobs') }}">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Track Jobs</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Interviews</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">empty</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Messages</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Reports</span>
-                                </li>
-                            </a><br>
-
-                            <a href="">
-                                <li class="menu-btn">
-                                    <span class="progress-count"></span>
-                                    <span class="progress-label">Help Desk</span>
-                                </li>
-                            </a><br>
-                        </div>
-
-                        <div class="side-footer">
-                            <h5><a href="">Terms & Conditions</a> | <a href="">Contact
-                                    Us</a></h5>
-                            <span><b>&copy;</b> 2023 FlexCV. All Copyright Reserved</span>
-                        </div>
-                    </ul>
-                </nav>
-            @endif
 
         </div>
     </div>
-    {{-- end Menu contents --}}
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+
+            if (document.querySelector('#editor1')) {
+                ClassicEditor.create(document.querySelector('#editor1'));
+            }
+            if (document.querySelector('#editor2')) {
+                ClassicEditor.create(document.querySelector('#editor2'));
+            }
+        });
+    </script>
+    <script>
+        // Sidebar toggle for mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            feather.replace();
+
+            // CKEditor
+            if (document.querySelector('#editor1')) {
+                ClassicEditor.create(document.querySelector('#editor1'));
+            }
+            if (document.querySelector('#editor2')) {
+                ClassicEditor.create(document.querySelector('#editor2'));
+            }
+
+            // ===== Sidebar Active Menu =====
+            const menuLinks = document.querySelectorAll('.sidebar a');
+
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Remove active class from all links
+                    menuLinks.forEach(l => l.classList.remove('active'));
+
+                    // Add active to the clicked link
+                    this.classList.add('active');
+                });
+            });
+
+            // ===== Optional: Highlight based on current URL =====
+            const currentURL = window.location.href;
+            menuLinks.forEach(link => {
+                if (link.href === currentURL) {
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+    @yield('scripts')
 
 </body>
 
 </html>
-<style>
-    .phone-bg {
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.185);
-    }
-
-    .mobile-menu {
-        user-select: none;
-        -webkit-user-drag: none;
-        cursor: pointer;
-        display: none;
-        margin-top: 2px;
-    }
-
-    .phone-cont {
-        width: 54%;
-        top: 0;
-        left: 0;
-        padding: 10px;
-        position: fixed;
-        background: linear-gradient(to bottom, #0FFF, #0095FF);
-        height: 100%;
-        box-shadow: 0px 0px 3px 1px #ddd;
-    }
-
-    .mobile-menu {
-        float: left;
-    }
-
-    @media (max-width: 980px) {
-        .sidebar-content2 {
-            width: 100%;
-        }
-
-        .mobile-menu {
-            display: block;
-        }
-
-        .sidebar-color {
-            display: none;
-        }
-    }
-
-    .bg-color {
-        background-color: #0091FF;
-        height: 80px;
-        width: auto;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-    }
-
-    .div-pro {
-        width: auto;
-        height: auto;
-        margin: 0px 20px 0px 20px;
-        user-select: none;
-        cursor: pointer;
-        text-align: center;
-        background-color: transparent;
-        border-bottom: 1px solid #ddd;
-        padding: 8px;
-        margin-top: -60px;
-    }
-
-    .div-pro img {
-        height: 70px;
-        width: 70px;
-        margin: 0 auto;
-        border-radius: 50%;
-        display: flex;
-        background: whitesmoke;
-        border: 3px solid #fff;
-        margin-bottom: 10px;
-        margin-top: 20px;
-        -webkit-user-drag: none;
-    }
-
-    .sidebar-content2 {
-        background-color: whitesmoke;
-    }
-
-    body {
-        background-color: whitesmoke;
-    }
-
-    .dropdown-img {
-        margin-top: 8px;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: flex;
-        border: 2px solid #0FFF;
-        align-items: center;
-        justify-content: :center;
-        background: whitesmoke;
-        padding: 4px;
-        -webkit-user-drag: none;
-    }
-
-    .dropdown {
-        float: right;
-        margin-right: 16px;
-        margin-top: -15px;
-        display: inline-block;
-    }
-
-    li {
-        list-style-type: none;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #FFFF;
-        box-shadow: 0px 2px 3px #ddd;
-        z-index: 1;
-        margin-left: -28px;
-        border-radius: 8px;
-    }
-
-    .dropdown-content a {
-        color: #333;
-        padding: 10px 16px;
-        display: block;
-        text-decoration: none;
-    }
-
-    .dropdown-content a li {
-        font-size: 16px;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown-content a:hover {
-        background-color: #0FFF;
-    }
-
-    .top-mkc {
-        width: 100%;
-        height: 60px;
-        position: inherit;
-        padding: 20px;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        background-color: white;
-        border-bottom: 1px solid #ddd;
-        transition: top 0.3s ease;
-    }
-
-    .progress-count {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        text-align: center;
-        background-color: white;
-        position: relative;
-        color: #0095FF;
-    }
-
-    .progress-count::before {
-        counter-increment: step;
-        content: counter(step);
-    }
-
-    .progress-label {
-        width: auto;
-        height: auto;
-    }
-
-    .side-menu::before {
-        content: "";
-        position: absolute;
-        justify-content: center;
-        text-align: center;
-        transform: translateX(50%);
-        width: 4px;
-        margin-left: 12px;
-        margin-top: 10px;
-        height: 400px;
-        user-select: none;
-        counter-reset: step;
-    }
-
-    .active {
-        color: white;
-        background-color: #0091FF;
-        border: 2px solid #ffff;
-    }
-</style>
-
-<script>
-    ClassicEditor
-        .create(document.querySelector('#editor1'))
-        .then(editor => {
-            editor.ui.view.editable.element.style.height = '200px';
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    ClassicEditor
-        .create(document.querySelector('#editor2'))
-        .then(editor => {
-            editor.ui.view.editable.element.style.height = '200px';
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
-
-<script>
-    function Openmenu() {
-        const menu = document.getElementById('mobile-menu');
-        const device = document.getElementById('mobile-device');
-        if (menu) {
-            menu.addEventListener("click", function(event) {
-                event.preventDefault();
-                device.style.display = 'block';
-            });
-        }
-    }
-
-    function Closemenu() {
-        const closemenu = document.getElementById('closemenu');
-        const device = document.getElementById('mobile-device');
-        if (closemenu) {
-            closemenu.addEventListener("click", function(event) {
-                event.preventDefault();
-                device.style.display = 'none';
-            });
-        }
-    }
-</script>
-@yield('scripts')

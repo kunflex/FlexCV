@@ -23,4 +23,9 @@ class JobDisplay extends Model
         'job_description',
         'deadline',
     ];
+
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class, 'job_display_id');
+    }
 }

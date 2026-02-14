@@ -2,185 +2,220 @@
 
 @section('styles')
     <style>
-        .cbs {
-            width: 100%;
-            display: block;
-        }
-
-        .cbs-group {
-            width: 100%;
-            height: auto;
-            display: inline-flex;
-            gap: 30px;
-            margin-bottom: 10px;
-        }
-
-        h3 {
-            text-align: center;
-        }
-
+        /* ===== Container & Cards ===== */
         .ojs {
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             margin-bottom: 40px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
+        .ojs:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+        }
+
+        /* ===== Header ===== */
         .header {
-            user-select: none;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
         }
 
         .header a {
             text-decoration: none;
-            color: black;
+            color: #2563eb;
         }
 
-        .tracl {
-            width: 100%;
-            padding: 10px;
-            border-bottom: 2px solid whitesmoke;
-            gap: 30px;
-            padding-bottom: 20px;
+        h3 {
+            text-align: center;
+            font-size: 22px;
+            color: #2563eb;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
-        .tracl span {
-            width: 70%;
-            padding-top: 10px;
-        }
-
-        .tracl div {
-            width: 20%;
-            gap: 20px;
-            float: inline-end;
-        }
-
-        .ols-blue {
-            background-color: darkblue;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
-        .ols-yellow {
-            background-color: orange;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
-        .ols-red {
-            background-color: darkred;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
+        /* ===== Search ===== */
         .search-bar {
-            width: auto;
-            height: auto;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            gap: 10px;
         }
 
         .search-bar input {
-            width: 200px;
-            height: 40px;
-            padding: 10px;
-            float: inline-end;
-            border-style: none;
-            outline-style: none;
-            border-bottom: 2px solid #0095FF;
+            padding: 10px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.2s ease;
+            width: 250px;
         }
 
-        .search-bar .ols-blue {
-            float: inline-start;
-            height: 40px;
-            padding: 10px;
-            font-size: 16px;
+        .search-bar input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
+        .search-bar button {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            background-color: #2563eb;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #3b82f6;
+        }
+
+        /* ===== Table ===== */
         table {
             width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(0,0,0,0.03);
         }
 
-        tr th,
-        td {
-            height: 50px;
-            width: auto;
+        th, td {
+            padding: 15px 20px;
             text-align: left;
-            padding-left: 10px;
+            font-size: 14px;
         }
 
-        tr:nth-child(odd) {
-            background-color: #ffffff;
-            /* Color for odd-numbered rows */
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        tr {
+            transition: background 0.2s ease, transform 0.2s ease;
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2;
-            /* Color for even-numbered rows */
+            background-color: #f9fafb;
         }
-        .tracl:hover{
-            border-left:2px solid #0095FF;
+
+        tr:hover {
+            background-color: #e0f2fe;
+            transform: translateY(-1px);
+        }
+
+        /* ===== Action Buttons ===== */
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-right: 5px;
+        }
+
+        .action-btn.update {
+            background-color: #2563eb;
+            color: #fff;
+        }
+
+        .action-btn.update:hover {
+            background-color: #3b82f6;
+        }
+
+        .action-btn.applicants {
+            background-color: #f59e0b;
+            color: #fff;
+        }
+
+        .action-btn.applicants:hover {
+            background-color: #fbbf24;
+        }
+
+        .action-btn.delete {
+            background-color: #dc2626;
+            color: #fff;
+        }
+
+        .action-btn.delete:hover {
+            background-color: #ef4444;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .search-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-bar input {
+                width: 100%;
+            }
+
+            th, td {
+                padding: 12px 10px;
+            }
         }
     </style>
 @endsection
 
 @section('content')
     @if (auth()->user()->hasRole('admin'))
-        @section('title', 'AdminDashboard | Track Jobs')
+        @section('title', 'Admin Dashboard | Track Jobs')
         <div class="header">
-            <a href="{{ url('admin') }}">
-                {{ __('Admin Dashboard') }}
-            </a> /Track Jobs
-        </div><br>
+            <a href="{{ url('admin') }}">Admin Dashboard</a> / Track Jobs
+        </div>
     @elseif (auth()->user()->hasRole('employer'))
-    @section('title', 'Employer Dashboard | Track Jobs')
-    <div class="header">
-        <a href="{{ url('employer') }}">
-            {{ __('Employer Dashboard') }}
-        </a> /Track Jobs
-    </div><br>
-@endif
+        @section('title', 'Employer Dashboard | Track Jobs')
+        <div class="header">
+            <a href="{{ url('employer') }}">Employer Dashboard</a> / Track Jobs
+        </div>
+    @endif
 
-<h3>List Jobs</h3><br>
-<div class="ojs">
-    <div class="data-layer">
+    <h3>Job Listings</h3>
+
+    <div class="ojs">
         <div class="search-bar">
-            <form action="{{ route('search.track-jobs') }}" method="GET">
-                <input type="text" placeholder="Search..." name="search">
-                <button hidden>Search</button>
+            <form action="{{ route('search.track-jobs') }}" method="GET" class="flex gap-2">
+                <input type="text" placeholder="Search jobs..." name="search">
+                <button type="submit">Search</button>
             </form>
         </div>
-        <br><br><br>
+
         <table>
-            <tr>
-                <th style="width:78%;">Job Title</th>
-                <th style="text-align: center;">Action</th>
-            </tr>
-
-            @forelse($data as $view)
-                <tr class="tracl">
-                    <td>{{ $view->job_title }}</td>
-                    <td>
-                        <a href="{{ url('track-applicants/' . $view->id) }}"><button
-                                class="ols-yellow">applicants</button></a>
-                        <a href="{{ url('jobs/update/' . $view->id) }}"><button class="ols-blue">update</button></a>
-                        <a href="{{ url('jobs/delete/' . $view->id) }}"><button class="ols-red">delete</button></a>
-                    </td>
-                </tr>
-            @empty
+            <thead>
                 <tr>
-                    <td colspan="2" style="text-align: center">{{ $result }}</td>
+                    <th>Job Title</th>
+                    <th style="text-align: center;">Action</th>
                 </tr>
-            @endforelse
-
+            </thead>
+            <tbody>
+                @forelse($data as $view)
+                    <tr>
+                        <td>{{ $view->job_title }}</td>
+                        <td style="text-align: center;">
+                            <a href="{{ url('track-applicants/' . $view->id) }}">
+                                <button class="action-btn applicants">Applicants</button>
+                            </a>
+                            <a href="{{ url('jobs/update/' . $view->id) }}">
+                                <button class="action-btn update">Update</button>
+                            </a>
+                            <a href="{{ url('jobs/delete/' . $view->id) }}">
+                                <button class="action-btn delete">Delete</button>
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" style="text-align: center;">No jobs found</td>
+                    </tr>
+                @endforelse
+            </tbody>
         </table>
     </div>
-</div>
-
 @endsection

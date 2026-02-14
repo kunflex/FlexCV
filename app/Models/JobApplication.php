@@ -13,5 +13,12 @@ class JobApplication extends Model
         'job_display_id',
         'applicant_cv',
         'applicant_letter',
+        'score', // optional
+        'interview_status', // 'Scheduled', 'Completed', 'Rejected'
     ];
+
+    public function job()
+    {
+        return $this->belongsTo(JobDisplay::class, 'job_display_id');
+    }
 }

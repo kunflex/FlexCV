@@ -2,192 +2,227 @@
 
 @section('styles')
     <style>
-        .cbs {
-            width: 100%;
-            display: block;
-        }
-
-        .cbs-group {
-            width: 100%;
-            height: auto;
-            display: inline-flex;
-            gap: 30px;
-            margin-bottom: 10px;
-        }
-
-        h3 {
-            text-align: center;
-        }
-
+        /* ===== Card Container ===== */
         .ojs {
-            padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             margin-bottom: 40px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
+        .ojs:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== Header & Breadcrumb ===== */
         .header {
-            user-select: none;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
 
         .header a {
             text-decoration: none;
-            color: black;
+            color: #2563eb;
+            font-weight: 500;
         }
 
-        .tracl {
+        h3 {
+            text-align: center;
+            font-size: 22px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        /* ===== Table Styling ===== */
+       table {
             width: 100%;
-            padding: 10px;
-            border-bottom: 2px solid whitesmoke;
-            gap: 30px;
-            padding-bottom: 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(0,0,0,0.03);
         }
 
-        .nls:hover{
-            border-left:2px solid #0095FF;
-        }
-
-        .tracl div {
-            float: right;
-            gap: 20px;
-        }
-
-        .ols-blue {
-            background-color: darkblue;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
-        .ols-yellow {
-            background-color: orange;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
-        .ols-red {
-            background-color: darkred;
-            color: white;
-            border-style: none;
-            padding: 6px;
-            border-radius: 6px;
-        }
-
-        table {
-            width: 100%;
-            border: 2px solid whitesmoke;
-            border-collapse: collapse;
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: center;
         }
 
         th {
-            width: 10%;
-            height: 50px;
-            padding: 2px;
-            text-align: center;
-            border-bottom: 2px solid whitesmoke;
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 2px solid #e5e7eb;
         }
 
-        td {
-            height: 50px;
-            text-align: center;
+        tr.nls {
+            transition: background 0.2s ease;
         }
 
-        .nls:nth-child(odd) {
-            background-color: white;
+        tr.nls:nth-child(odd) {
+            background-color: #ffffff;
         }
 
-        .nls:nth-child(even) {
-            background-color: whitesmoke;
+        tr.nls:nth-child(even) {
+            background-color: #f9fafb;
         }
 
+        tr.nls:hover {
+            background-color: #f0f9ff;
+            border-left: 4px solid #2563eb;
+        }
+
+        /* ===== Score Badges ===== */
         .score-green {
-            color: darkgreen;
+            color: #047857;
+            font-weight: 600;
         }
 
         .score-yellow {
-            color: darkorange;
+            color: #b45309;
+            font-weight: 600;
         }
 
         .score-red {
-            color: darkred;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        /* ===== Action Buttons ===== */
+        .action-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+            font-size: 14px;
+            margin: 2px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-preview {
+            background-color: #f59e0b;
+            /* orange */
+        }
+
+        .btn-preview:hover {
+            background-color: #d97706;
+        }
+
+        .btn-download {
+            background-color: #1e40af;
+            /* dark blue */
+        }
+
+        .btn-download:hover {
+            background-color: #3b82f6;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            th {
+                text-align: left;
+            }
+
+            td {
+                text-align: left;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            td::before {
+                position: absolute;
+                left: 15px;
+                top: 12px;
+                content: attr(data-label);
+                font-weight: 600;
+                color: #1e293b;
+            }
+
+            tr {
+                margin-bottom: 15px;
+                border-bottom: 2px solid #e5e7eb;
+            }
+
+            table {
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            }
         }
     </style>
 @endsection
 
 @section('content')
     @if (auth()->user()->hasRole('admin'))
-        @section('title', 'AdminDashboard | Track Applicants')
+        @section('title', 'Admin Dashboard | Track Applicants')
         <div class="header">
-            <a href="{{ url('admin') }}">
-                {{ __('Admin Dashboard') }}
-            </a> /
-            <a href="{{ url('track-jobs') }}">
-                {{ __('Track Jobs') }}
-            </a> / Track Applicants
-        </div><br>
+            <a href="{{ url('admin') }}">Admin Dashboard</a> /
+            <a href="{{ url('track-jobs') }}">Track Jobs</a> / Track Applicants
+        </div>
     @elseif (auth()->user()->hasRole('employer'))
     @section('title', 'Employer Dashboard | Track Applicants')
     <div class="header">
-        <a href="{{ url('employer') }}">
-            {{ __('Employer Dashboard') }}
-        </a> /
-        <a href="{{ url('track-jobs') }}">
-            {{ __('Track Jobs') }}
-        </a> / Track Applicants
-    </div><br>
+        <a href="{{ url('employer') }}">Employer Dashboard</a> /
+        <a href="{{ url('track-jobs') }}">Track Jobs</a> / Track Applicants
+    </div>
 @endif
 
-<h3>List Applicants</h3><br>
+<h3>List Applicants</h3>
 <div class="ojs">
-    <div class="data-layer">
-        <table>
+    <table>
+        <thead>
             <tr>
                 <th>Applicants Letter</th>
                 <th>Applicants CV</th>
                 <th>Score(100%)</th>
                 <th>Action</th>
             </tr>
-
+        </thead>
+        <tbody>
             @forelse ($data as $view)
+                @php $score = $view->score ?? 80; @endphp
                 <tr class="nls">
-                    <td>{{ $view->applicant_letter }}</td>
-                    <td>{{ $view->applicant_cv }}</td>
+                    <td data-label="Applicants Letter">{{ $view->applicant_letter }}</td>
+                    <td data-label="Applicants CV">{{ $view->applicant_cv }}</td>
 
-                    @php
-                        $score = 80;
-                    @endphp
-
-                    @if ($score >= 70 && $score <= 100)
-                        <td class="score-green">
-                            {{ $score }}
-                        </td>
-                    @elseif ($score >= 45 && $score < 70)
-                        <td class="score-yellow">
-                            {{ $score }}
-                        </td>
+                    @if ($score >= 70)
+                        <td data-label="Score" class="score-green">{{ $score }}</td>
+                    @elseif ($score >= 45)
+                        <td data-label="Score" class="score-yellow">{{ $score }}</td>
                     @elseif($score < 45)
-                        <td class="score-red">
-                            {{ $score }}
-                        </td>
+                        <td data-label="Score" class="score-red">{{ $score }}</td>
                     @else
-                        <td>
-                            {{ 'Not score' }}
-                        </td>
+                        <td data-label="Score">Not scored</td>
                     @endif
 
-
-                    <td>
+                    <td data-label="Action">
                         <a href="{{ url('applicants/preview/' . $view->id) }}">
-                            <button class="ols-yellow OpenBtn">
-                                preview
-                            </button>
+                            <button class="action-btn btn-preview">Preview</button>
                         </a>
-
-                        <a href="{{ url('applicants/download/' . $view->id) }}"><button
-                                class="ols-blue">download</button></a>
+                        <a href="{{ url('applicants/download/' . $view->id) }}">
+                            <button class="action-btn btn-download">Download</button>
+                        </a>
+                        <a href="{{ url('interviews/schedule/' . $view->id) }}">
+                            <button class="action-btn btn-download">Interview</button>
+                        </a>
                     </td>
                 </tr>
             @empty
@@ -195,8 +230,7 @@
                     <td colspan="4">No queries found!</td>
                 </tr>
             @endforelse
-        </table>
-    </div>
+        </tbody>
+    </table>
 </div>
-
 @endsection

@@ -102,7 +102,7 @@ Route::get('/custom-templates', [TemplatesController::class, 'TemplatePage'])->n
 // <================= admin Controller=====================>
 Route::get('admin', [AdminController::class, 'ControlPanel']);
 Route::get('suggestions', [AdminController::class, 'Suggestions']);
-Route::get('track-jobs', [AdminController::class, 'Pages']);
+Route::get('track-jobs', [AdminController::class, 'Pages'])->name('joblists');
 Route::get('track-applicants/{id}', [AdminController::class, 'Applicants']);
 Route::get('new-testimonials', [AdminController::class, 'UploadTestimonials']);
 Route::get('testimonials', [AdminController::class, 'Testimonials']);
@@ -110,9 +110,11 @@ Route::get('enquiries', [AdminController::class, 'Enquiries']);
 Route::get('applicants/preview/{id}', [AdminController::class, 'PdfPreview'])->name('applicants.pdf');
 Route::get('/chat-us', [AdminController::class, 'ChatUs']);
 Route::get('account', [AdminController::class, 'Account']);
+
+Route::get('interviews/schedule/{id}', [AdminController::class, 'InterviewPage'])->name('interviews');
 Route::post('/send/enquiries', [AdminController::class, 'SendEnquiries']);
 Route::post('/send/testimonials', [AdminController::class, 'SendTestimonials']);
-Route::get('jobs', [AdminController::class, 'Jobs']);
+Route::get('jobs', [AdminController::class, 'Jobs'])->name('jobpostings');
 Route::get('jobs/update/{id}', [AdminController::class, 'UpdateJobs']);
 Route::put('jobs/edit/{id}', [AdminController::class, 'EditJobs']);
 Route::get('jobs/delete/{id}', [AdminController::class, 'DeleteJobs']);

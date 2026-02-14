@@ -25,6 +25,15 @@ class AdminController extends Controller
         return view('admin.add-jobs');
     }
 
+    public function InterviewPage($id)
+    {
+        // Fetch all job applications with related job and user (optional if you need it)
+        $data = JobApplication::with('job')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('admin.interview', compact('data'));
+    }
+
     public function SearchTrackJobs(Request $request)
     {
         $request->validate(['search' => 'required']);
@@ -462,8 +471,8 @@ class AdminController extends Controller
 
     public function BarChart(): JsonResponse
     {
-         // Check if the user is authenticated
-         if (Auth::check()) {
+        // Check if the user is authenticated
+        if (Auth::check()) {
             // Check if the user has the 'admin' role
             if (Auth::user()->hasRole('admin')) {
                 $jobPostings = JobDisplay::select('category', DB::raw('COUNT(*) as count'))
